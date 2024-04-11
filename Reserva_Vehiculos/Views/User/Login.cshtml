@@ -1,0 +1,42 @@
+@model Usuarios
+@{
+  ViewData["Title"] = "Login";
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shorcut icon" href="Imagenes/colombia.png">
+  <link rel="stylesheet" href="EstilosCSS/Css.css">
+  <link rel="stylesheet" href="~/EstilosCSS/Css.css" />
+  <title>Login</title>
+</head>
+
+<body>
+
+  <div class="login">
+    <h1>Login Here</h1>
+    <form asp-action="Login" asp-controller="User" method="post">
+
+
+      <!-- USERNAME INPUT -->
+      <label for="usuario">Usuario</label>
+      <input asp-for="usuario" type="text" placeholder="Enter Username">
+
+
+      <!-- PASSWORD INPUT -->
+      <label for="contrasenia">Contraseña</label>
+      <input name="contrasenia" type="password" placeholder="Enter Password">
+
+
+      <button type="submit">Login</button>
+
+      <a href="CreatCount.html">Create new account</a>
+    </form>
+  </div>
+</body>
+
+</html>

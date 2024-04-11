@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "reserva.ctxihy5pm927.us-east-1.rds.amazonaws.com",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "reserva",
+            "database": "arquiler",
+            "username": "jkgamer"
+        }
+    ]
+}
