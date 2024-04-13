@@ -4,9 +4,7 @@ create table usuario (
     CONTRASENIA VARCHAR(40)
 );
 
-create table pet_reserva (
-    id_pet_reserva INT NOT NULL
-);
+
 
 create table persona (
     id_persona INT NOT NULL
@@ -15,11 +13,9 @@ create table persona (
 create table cliente (
     id_cliente INT NOT NULL
 );
-create table vehiculo(
-    id_vehiculo int not null
-);
+
 --------------------------------------------
-create database alquiler;
+create database reserva;
 
 \c alquiler;
 
@@ -32,10 +28,6 @@ segundo_apellido varchar(45),
 num_telefonico int
 );
 
-create table cliente(
-correo varchar(45)
-);
-
 create table administrador(
 correo varchar(45)
 );
@@ -44,11 +36,6 @@ create table prestador_vehiculo(
 correo varchar(45)
 );
 
-create table usuario(
-id_usuario int not null,
-usuario varchar(45),
-contrasena varchar(45)
-);
 
 create table usuario_rol(
 );
