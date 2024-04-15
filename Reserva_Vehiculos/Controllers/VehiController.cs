@@ -24,16 +24,6 @@ namespace Reserva_Vehiculos.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Upload(Vehiculo_doc upload){
-
-            var filename = System.IO.Path.Combine(_environment.ContentRootPath,"PDF",upload.doc_legal.FileName);
-            using(var fs = new System.IO.FileStream(filename, System.IO.FileMode.Create)){
-                await upload.doc_legal.CopyToAsync(fs);
-            }
-            
-            Console.WriteLine("Ruta :",filename);
-            return View();
-        }  
+ 
     }
 }

@@ -19,6 +19,9 @@ namespace Reserva_Vehiculos.Controllers
 
         [HttpPost]
         public IActionResult Login(Usuarios us){
+
+            Console.WriteLine(us.usuario);
+            Console.WriteLine(us.contrasenia);
             Console.WriteLine(UDAO.validar_User(us.usuario,us.contrasenia));
             
             return View();

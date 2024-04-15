@@ -1,0 +1,42 @@
+@model Pet_reserva
+@{
+    ViewData["Title"] = "peticion";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ASP.NET Example</title>
+</head>
+
+<body>
+    <form asp-action="peticion" asp-controller="Peticion" method="post">
+        <fieldset>
+            <legend>Información Inicial</legend>
+
+            <label for="fecha">Fecha:</label>
+            <input asp-for="fecha" type="date" id="fecha" name="fecha">
+
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora">
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Información Final</legend>
+
+            <label for="fecha">Fecha:</label>
+            <input asp-for="fecha_fin" type="date" id="fecha" name="fecha">
+
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora" >
+
+
+        </fieldset>
+
+    <button type="submit">Guardar</button>
+    </form>
+</body>
+
+</html>

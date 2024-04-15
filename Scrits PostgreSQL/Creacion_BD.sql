@@ -1,24 +1,18 @@
+create database alquiler;
+
+\c alquiler;
+
 create table usuario (
     id_usuario serial,
     USUARIO VARCHAR(40),
     CONTRASENIA VARCHAR(40)
 );
 
-
-
 create table persona (
     id_persona INT NOT NULL
 );
 
-create table cliente (
-    id_cliente INT NOT NULL
-);
-
 --------------------------------------------
-create database reserva;
-
-\c alquiler;
-
 create table persona(
 num_documento int not null,
 primer_nombre varchar(45),
@@ -28,11 +22,7 @@ segundo_apellido varchar(45),
 num_telefonico int
 );
 
-create table administrador(
-correo varchar(45)
-);
-
-create table prestador_vehiculo(
+create table (
 correo varchar(45)
 );
 
@@ -46,16 +36,23 @@ tipo_rol varchar(45)
 );
 
 create table reserva(
-id_reserva int not null,
-fecha_reserva date,
-estado_reserva varchar(45),
-costo decimal(10,2)
+id_reserva serial not null,
+acep_fecha date,
+estado_reserva varchar(20) default 'activa',
+valor_reserva decimal(10,2),
+
 );
 
 create table pet_reserva(
-id_pet_reserva int not null,
-estado varchar(45)
+id_pet_reserva serial not null,
+fecha_ini DATE,
+fecha_fin DATE,
+hora_ini varchar(20),
+hora_fin varchar(20),
+estado varchar(15) not null default 'wait',
+costo decimal(10,2)
 );
+
 
 create table acuerdo(
 id_acuerdo int not null,
@@ -81,7 +78,7 @@ estado varchar(45)
 );
 
 create table categoria(
-id_categoria int not null,
+id_categoria serial not null,
 tipo_vehiculo varchar(45),
 costo decimal(10,2)
 );
@@ -136,17 +133,14 @@ alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_es
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 
-alter table cliente add cliente_num_documento int;
 alter table prestador_vehiculo add prestador_num_documento int;
-alter table administrador add administrador_num_documento int;
 alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
 alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario add fk_num_documento int;
-alter table usuario add fk_administrador_num_documento int;
-alter table pet_reserva add fk_administrador_num_documento int;
 alter table pet_reserva add fk_id_categoria int;
+alter table pet_reserva add fk_id_usuario int;
 alter table reserva add fk_id_pet_reserva int;
 alter table reserva add fk_num_placa int;
 alter table acuerdo add fk_prestador_num_documento int;
@@ -161,20 +155,15 @@ alter table espec_vehiculo add fk_id_tipo_combustible int;
 alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 
-alter table cliente add constraint cliente_num_documento foreign key (cliente_num_documento) references persona (num_documento);
-alter table prestador_vehiculo add constraint prestador_num_documento foreign key (prestador_num_documento) references persona (num_documento);
-alter table administrador add constraint administrador_num_documento foreign key (administrador_num_documento) references persona (num_documento);
 alter table usuario_rol add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table usuario_rol add constraint fk_id_rol foreign key (fk_id_rol) references rol (id_rol);
 alter table vehiculo_doc_legal add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id_doc_legal) references doc_legal (id_doc_legal);
 alter table usuario add constraint fk_num_documento foreign key (fk_num_documento) references persona (num_documento);
-alter table usuario add constraint fk_administrador_num_documento foreign key (fk_administrador_num_documento) references administrador (administrador_num_documento);
-alter table pet_reserva add constraint fk_administrador_num_documento foreign key (fk_administrador_num_documento) references administrador (administrador_num_documento);
 alter table pet_reserva add constraint fk_id_categoria foreign key (fk_id_categoria) references categoria (id_categoria);
+alter table pet_reserva add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table reserva add constraint fk_id_pet_reserva foreign key (fk_id_pet_reserva) references pet_reserva (id_pet_reserva);
 alter table reserva add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
-alter table acuerdo add constraint fk_prestador_num_documento foreign key (fk_prestador_num_documento) references prestador_vehiculo (prestador_num_documento);
 alter table acuerdo add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo add constraint fk_id_marca foreign key (fk_id_marca) references marca (id_marca);
 alter table vehiculo add constraint fk_id_estado_vehiculo foreign key (fk_id_estado_vehiculo) references estado_vehiculo (id_estado_vehiculo);
@@ -189,12 +178,6 @@ alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id
 
 
 
-
-
-----la base de datos se llama reserva
-
-
-
 alter table alquiler. add constraint pk_ primary key();
 alter table alquiler. add constraint pk_ primary key();
 alter table alquiler. add constraint pk_ primary key();
@@ -203,38 +186,10 @@ alter table alquiler. add constraint pk_ primary key();
 
 
 
+insert into usuario(usuario,contrasenia) values('arango','root');
 
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camión', 123000);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin)
+VALUES ('2024-05-01', '2024-05-01', '10:00:00', '12:00:00');
