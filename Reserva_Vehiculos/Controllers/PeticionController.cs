@@ -11,6 +11,8 @@ namespace Reserva_Vehiculos.Controllers
     public class Peticion : Controller
     {
         Pet_reserva _Reserva;
+        DateTime fecha_i;
+        DateTime fecha_f;
         public IActionResult peticion()
         {
             return View();
@@ -22,19 +24,21 @@ namespace Reserva_Vehiculos.Controllers
             _Reserva = pet_Reserva;
 
             _Reserva.separa_feha(_Reserva.fecha);
+            _Reserva.separa_feha2(_Reserva.fecha1);
 
-            Console.WriteLine(pet_Reserva.año);
-            //_Reserva.separa_feha2(_Reserva.fecha_2);
-    
-            //DateTime fecha_ini = new DateTime(int.Parse(_Reserva.año), int.Parse(_Reserva.mes), int.Parse(_Reserva.dia));
-            //DateTime fecha_fin = new DateTime(int.Parse(_Reserva.año2), int.Parse(_Reserva.año2), int.Parse(_Reserva.año2));
+            fecha_i = new DateTime(int.Parse(_Reserva.año), int.Parse(_Reserva.mes), int.Parse(_Reserva.dia));
+            fecha_f = new DateTime(int.Parse(_Reserva.año2), int.Parse(_Reserva.mes2), int.Parse(_Reserva.dia2));
 
-            //TimeSpan diferencia = fecha_fin.Subtract(fecha_ini);
-            //int diferenciaDias = diferencia.Days;
+            TimeSpan diferencia = fecha_f - fecha_i;
+            int diferenciaDias = diferencia.Days;
+
             
-            //Console.WriteLine(fecha_ini);
-           // Console.WriteLine(fecha_fin);
-            //Console.WriteLine(diferenciaDias);
+           _Reserva.fecha_ini = new DateOnly(fecha_i.Year, fecha_i.Month, fecha_i.Day);
+           _Reserva.fecha_fin = new DateOnly(fecha_f.Year, fecha_f.Month, fecha_f.Day);
+
+         Console.WriteLine(_Reserva.fecha_ini);
+
+            Console.WriteLine(diferenciaDias);
             return View();
         }
 
