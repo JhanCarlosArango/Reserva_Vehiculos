@@ -189,7 +189,11 @@ alter table alquiler. add constraint pk_ primary key();
 insert into usuario(usuario,contrasenia) values('arango','root');
 
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camión', 123000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camióneta', 123000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Baja CC', 45000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Media CC', 70000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Alta CC', 100000);
+INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Depotivo', 320000);
 
 INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin)
 VALUES ('2024-05-01', '2024-05-01', '10:00:00', '12:00:00');

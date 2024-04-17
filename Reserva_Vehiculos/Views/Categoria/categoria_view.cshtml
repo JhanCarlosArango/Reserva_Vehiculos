@@ -1,0 +1,31 @@
+@model List<Categoria>
+@{
+    ViewData["Title"] = "categoria_view";
+}
+
+<h1 style="text-align: center;">Categorías de vehículos</h1>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="card" style="width: 20rem; ">
+        <div style="text-align: center;">
+            <h5 class="card-title">@item.tipo_vehiculo</h5>
+        </div>
+
+
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+
+            <p class="card-text" style="font-size: 5px;">*Su reserva garantiza uno de los modelos de autos a continuación,
+                sujeto a disponibilidad de la agencia.</p>
+
+
+            <div style="text-align: center">
+                <h4>Costo : @item.costo</h4>
+                <a href="#" class="btn btn-primary">Seleccionar Categoria</a>
+            </div>
+        </div>
+    </div>
+}

@@ -28,7 +28,7 @@ namespace Reserva_Vehiculos.Models.DAO
                 using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "SELECT * FROM USUARIO;";  
+                    var query = "SELECT * FROM USUARIO;";  // corregir, llamar un vista 
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
                         using (var dr = cmd.ExecuteReader())

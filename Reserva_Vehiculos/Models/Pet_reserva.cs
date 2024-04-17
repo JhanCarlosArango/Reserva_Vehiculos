@@ -15,7 +15,6 @@ namespace Reserva_Vehiculos.Models
         public String estado { set; get; }
         public Double costo { set; get; }
 
-
         public String año { set; get; }
         public String mes { set; get; }
         public String dia { set; get; }
@@ -35,25 +34,20 @@ namespace Reserva_Vehiculos.Models
         {
 
             string[] partesFecha = Fecha.Split('-');
-
             año2 = partesFecha[0];
             mes2 = partesFecha[1];
             dia2 = partesFecha[2];
-
         }
 
         public void separa_feha(string Fecha)
         {
 
-
-            // Dividir la fecha en partes separadas
             string[] partesFecha = Fecha.Split('-');
 
             año = partesFecha[0];
             mes = partesFecha[1];
             dia = partesFecha[2];
             
-
         }
     }
 

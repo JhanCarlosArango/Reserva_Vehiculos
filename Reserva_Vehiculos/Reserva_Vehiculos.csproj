@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Categoria\" />
     <Folder Include="Views\Resgistro_Vehi\" />
   </ItemGroup>
 

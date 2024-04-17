@@ -13,24 +13,26 @@ namespace Reserva_Vehiculos.Models.DAO
         public Conexion()
         {
             // Configura la cadena de conexión con tus propios valores
-            _connectionString = "Host=reservas.chea08gwkn1d.us-east-1.rds.amazonaws.com;Port=5432;Database=reserva;Username=jkgamer;Password=01760091;";
+            _connectionString = "Host=localhost;Port=5432;Database=alquiler;Username=postgres;Password=root;";
         }
 
-        public void Conectar()
+        public NpgsqlConnection Conectar()
         {
+            NpgsqlConnection connection = null;
             try
             {
-                using (var connection = new NpgsqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    Console.WriteLine("Conexión exitosa a PostgreSQL.");
-                    // Realiza operaciones con la base de datos aquí
-                }
+                connection = new NpgsqlConnection(_connectionString);
+                connection.Open();
+
+                Console.WriteLine("Conexión exitosa a PostgreSQL.");
+                
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al conectar a la base de datos: {ex.Message}");
             }
+            return connection;
         }
     }
 }
