@@ -11,7 +11,7 @@
 
 @foreach (var item in Model.ListaCategorias)
 {
-    <div class="card" style="width: 18rem; ">
+    <div class="card" style="width: 20rem; ">
         <div style="text-align: center;">
             <h5 class="card-title">@item.tipo_vehiculo</h5>
         </div>
@@ -27,10 +27,6 @@
             <div style="text-align: center">
                 <h4>Costo : @item.costo</h4>
 
-
-
-
-                <!--campo oculto para enviarlo-->
                 <!-- Button para abrir el modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleModal-@(item.tipo_vehiculo.Replace(" ", "_"))">
@@ -74,12 +70,9 @@
                                                     </button>
                                                 </form>
                                             </td>
-
                                         </tr>
                                         <tr>
                                             <td>
-
-
                                                 Lugar de Devolucion:
                                                 <br>
                                                 Fecha: @Model._Pet_Reserva.fecha_fin
@@ -97,17 +90,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td>Categoria: @item.tipo_vehiculo
-
-                                            </td>
-                                            <td>
-                                                <form name="editar" asp-action="" method="GET">
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block"
-                                                        style="background-color: green; margin-left:15px">
-                                                        Editar
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            <td>Categoria: @item.tipo_vehiculo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Valor Total $: @(Model._Pet_Reserva.temp_costo * item.costo)</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -120,7 +106,6 @@
                                     <button type="submit" class="btn btn-primary">Reservar</button>
                                     <input type="hidden" name="id_cate" id="id_cate" value="@item.id_categoria">
                                 </form>
-
                             </div>
                         </div>
                     </div>

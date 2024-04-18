@@ -13,7 +13,7 @@ namespace Reserva_Vehiculos.Models
         public String hora_ini { set; get; }
         public String hora_fin { set; get; }
         public String estado { set; get; }
-        public Double costo { set; get; }
+        public Double temp_costo { set; get; }
 
         public String año { set; get; }
         public String mes { set; get; }
@@ -51,7 +51,12 @@ namespace Reserva_Vehiculos.Models
 
         }
 
-        
+        public Double calcular_costo(Double a,Double b)
+        {
+            Double c = a * b;
+            return c;
+        }
+
     }
 
 }

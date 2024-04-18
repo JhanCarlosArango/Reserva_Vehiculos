@@ -29,14 +29,14 @@ namespace Reserva_Vehiculos.Controllers
             fecha_f = new DateTime(int.Parse(_Reserva.año2), int.Parse(_Reserva.mes2), int.Parse(_Reserva.dia2));
 
             TimeSpan diferencia = fecha_f - fecha_i;
-            int diferenciaDias = diferencia.Days;
+            _Reserva.temp_costo = diferencia.Days;
 
             _Reserva.fecha_ini = new DateOnly(fecha_i.Year, fecha_i.Month, fecha_i.Day);
             _Reserva.fecha_fin = new DateOnly(fecha_f.Year, fecha_f.Month, fecha_f.Day);
 
-            Console.WriteLine("Dias de arquiler :"+ diferenciaDias);
+            Console.WriteLine("Dias de arquiler :" + _Reserva.temp_costo);
 
-            return RedirectToAction("categoria_view", "Categoria",_Reserva);
+            return RedirectToAction("categoria_view", "Categoria", _Reserva);
         }
 
         public IActionResult listar()
