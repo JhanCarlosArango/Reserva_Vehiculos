@@ -24,6 +24,7 @@ namespace Reserva_Vehiculos.Models
         public String dia2 { set; get; }
         public String fecha { set; get; }
         public String fecha1 { set; get; }
+
         public Pet_reserva()
         {
 
@@ -47,8 +48,10 @@ namespace Reserva_Vehiculos.Models
             año = partesFecha[0];
             mes = partesFecha[1];
             dia = partesFecha[2];
-            
+
         }
+
+        
     }
 
 }

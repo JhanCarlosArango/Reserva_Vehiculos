@@ -6,18 +6,18 @@ using Reserva_Vehiculos.Models.DAO;
 using Npgsql;
 namespace Reserva_Vehiculos.Models.DAO
 {
-    public class Categoria_DAO
+    public class Pet_reserva_DAO
     {
+        List<Pet_reserva> list_pet;
         private readonly Conexion conn;
-        List<Categoria> l_cate;
-        public Categoria_DAO()
+
+        public Pet_reserva_DAO()
         {
             conn = new Conexion();
         }
-
-        public List<Categoria> ListarCategoria()
+        public List<Pet_reserva> ListarPeticion()
         {
-            l_cate = new List<Categoria>();
+            list_pet = new List<Pet_reserva>();
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
 
             if (connection != null)
@@ -34,12 +34,11 @@ namespace Reserva_Vehiculos.Models.DAO
                             {
                                 while (dr.Read())
                                 {
-                                    Categoria cate = new Categoria();
-                                    cate.id_categoria = int.Parse(dr["id_categoria"].ToString());
-                                    cate.tipo_vehiculo = dr["tipo_vehiculo"].ToString();
-                                    cate.costo = Double.Parse(dr["costo"].ToString());
+                                    Pet_reserva _pet = new Pet_reserva();
+                                    // _pet.tipo_vehiculo = dr["tipo_vehiculo"].ToString();
+                                    // _pet.costo = Double.Parse(dr["costo"].ToString());
 
-                                    l_cate.Add(cate);
+                                    list_pet.Add(_pet);
                                 }
                             }
                         }
@@ -49,11 +48,12 @@ namespace Reserva_Vehiculos.Models.DAO
                 {
                     Console.WriteLine($"Error al listar usuarios: {ex.Message}");
                 }
-            } else
+            }
+            else
             {
                 Console.WriteLine("Conn Null");
             }
-            return l_cate;
+            return list_pet;
         }
     }
 }

@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
-namespace Reserva_Vehiculos.Controllers {
-    public class Peticion : Controller {
+namespace Reserva_Vehiculos.Controllers
+{
+    public class Peticion : Controller
+    {
         Pet_reserva _Reserva;
         DateTime fecha_i;
         DateTime fecha_f;
-        public IActionResult peticion(){
+        public IActionResult peticion()
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult peticion(Pet_reserva pet_Reserva){
+        public IActionResult peticion(Pet_reserva pet_Reserva)
+        {
             _Reserva = pet_Reserva;
             _Reserva.separa_feha(_Reserva.fecha);
             _Reserva.separa_feha2(_Reserva.fecha1);
@@ -29,12 +33,19 @@ namespace Reserva_Vehiculos.Controllers {
 
             _Reserva.fecha_ini = new DateOnly(fecha_i.Year, fecha_i.Month, fecha_i.Day);
             _Reserva.fecha_fin = new DateOnly(fecha_f.Year, fecha_f.Month, fecha_f.Day);
-            //Console.WriteLine("Dias de arquiler "+ diferenciaDias + "Costos total $ :" + (diferenciaDias * 93000));
-            return View();
+
+            Console.WriteLine("Dias de arquiler :"+ diferenciaDias);
+
+            return RedirectToAction("categoria_view", "Categoria",_Reserva);
         }
 
+        public IActionResult listar()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()        {
+        public IActionResult Error()
+        {
             return View("Error!");
         }
     }

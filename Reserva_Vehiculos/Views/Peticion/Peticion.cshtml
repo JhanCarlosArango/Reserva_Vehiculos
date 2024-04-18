@@ -3,71 +3,62 @@
     ViewData["Title"] = "peticion";
 }
 
-<!DOCTYPE html>
-<html>
+<form asp-action="peticion" asp-controller="Peticion" method="post">
+    <fieldset>
+        <legend>Información Inicial</legend>
 
-<head>
-    <title>ASP.NET Example</title>
-</head>
+        <label for="fecha">Fecha:</label>
+        <input asp-for="fecha" type="date" id="fecha">
 
-<body>
-    <form asp-action="peticion" asp-controller="Peticion" method="post">
-        <fieldset>
-            <legend>Información Inicial</legend>
+        <label for="hora">Hora:</label>
+        <input asp-for="hora_ini" type="time" id="hora">
+    </fieldset>
 
-            <label for="fecha">Fecha:</label>
-            <input asp-for="fecha" type="date" id="fecha" name="fecha">
-
-            <label for="hora">Hora:</label>
-            <input type="time" id="hora" name="hora">
-        </fieldset>
-
-        <div style="text-align: right;"> <!-- Contenedor para alinear a la derecha -->
-            <a asp-action="categoria_view" asp-controller="Categoria" class="btn btn-primary">Continuar</a>
-        </div>
-
-
-        <fieldset>
-            <legend>Información Final</legend>
-
-            <label for="fecha">Fecha:</label>
-            <input asp-for="fecha1" type="date" id="fecha" name="fecha1">
-
-            <label for="hora">Hora:</label>
-            <input type="time" id="hora" name="hora">
-        </fieldset>
-    </form>
-
-    <br>
-
-    <div style="text-align: center;"> 
-        <h1>
-            Conoce nuestra flota
-        </h1>
-        <h3>Las mejores opciones para que reserves y aproveches</h3>
-    </div>
-
-    <div id="carouselExample" class="carousel slide">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+    <div style="text-align: right;"> <!-- Contenedor para alinear a la derecha -->
+        <button type="submit" class="btn btn-primary">
+            Continuar
         </button>
     </div>
-</body>
 
-</html>
+
+    <fieldset>
+        <legend>Información Final</legend>
+
+        <label for="fecha">Fecha:</label>
+        <input asp-for="fecha1" type="date" id="fecha">
+
+        <label for="hora">Hora:</label>
+        <input asp-for="hora_fin" type="time" id="hora">
+    </fieldset>
+</form>
+
+<br>
+
+<div style="text-align: center;">
+    <h1>
+        Conoce nuestra flota
+    </h1>
+    <h3>Las mejores opciones para que reserves y aproveches</h3>
+</div>
+
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="..." class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="..." class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="..." class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
