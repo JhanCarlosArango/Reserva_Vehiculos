@@ -2,7 +2,11 @@
 @{
     ViewData["Title"] = "peticion";
 }
-
+    <div style="text-align: left;"> <!-- Contenedor para alinear a la derecha -->
+        <a  class="btn btn-primary" asp-action="Login" asp-controller="User">
+            Login
+        </a>
+    </div>
 <form asp-action="peticion" asp-controller="Peticion" method="post">
     <fieldset>
         <legend>Información Inicial</legend>

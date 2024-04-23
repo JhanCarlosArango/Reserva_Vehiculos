@@ -7,24 +7,28 @@ namespace Reserva_Vehiculos.Controllers
 {
     public class UserController : Controller
     {
-
         Usuario_DAO UDAO = new Usuario_DAO();
-        public IActionResult Listar(){
+        Usuarios user; 
+        public IActionResult Listar()
+        {
             return View();
         }
-        public IActionResult Login(){
+        public IActionResult Login()
+        {
             //view
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(Usuarios us){
-
-            Console.WriteLine(us.usuario);
-            Console.WriteLine(us.contrasenia);
-            Console.WriteLine(UDAO.validar_User(us.usuario,us.contrasenia));
-            
+        public IActionResult Login(Usuarios us)
+        {
+            user = UDAO.Search_user(us.usuario, us.contrasenia);
+            Console.WriteLine("Roles obtenidos:");
+            foreach (var rol in user.rols)
+            {
+                Console.WriteLine(rol);
+            }
             return View();
         }
     }
-    }
+}

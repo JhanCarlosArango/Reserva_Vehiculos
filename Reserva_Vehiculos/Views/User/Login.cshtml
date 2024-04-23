@@ -1,42 +1,38 @@
 @model Usuarios
 @{
   ViewData["Title"] = "Login";
-  Layout = null;
+  Layout = "~/Views/Shared/_Layout_Modifi.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
+<body style="background-color: #E8F3FC;">
 
-<head>
-  <meta charset="utf-8">
-  <link rel="shorcut icon" href="Imagenes/colombia.png">
-  <link rel="stylesheet" href="EstilosCSS/Css.css">
-  <link rel="stylesheet" href="~/EstilosCSS/Css.css" />
-  <title>Login</title>
-</head>
+  <div class="card bg-light mt-lg-5 mx-auto text-center" style="max-width: 500px; height: 500px;">
+    <h1>Login</h1>
+    <main class="form-signin" style="max-width: 400px; margin: 0 auto;">
+      <nav class="navbar bg-body-tertiary d-flex justify-content-center">
+        <img src="~/images/login.png" alt="Login" width="100" height="100" />
+      </nav>
 
-<body>
+      <form asp-action="Login" asp-controller="User" method="post">
+        <div class="form-floating mb-3">
+          <input asp-for="usuario" type="text" class="form-control" id="floatingInput" placeholder="Usuario" autocomplete="off" required>
+          <label for="floatingInput">Usuario</label>
+        </div>
 
-  <div class="login">
-    <h1>Login Here</h1>
-    <form asp-action="Login" asp-controller="User" method="post">
+        <div class="form-floating mb-3">
+          <input asp-for="contrasenia" type="password" class="form-control" id="floatingPassword"
+            placeholder="Password" required>
+          <label for="floatingPassword">Password</label>
+        </div>
 
+        <div class="mb-3">
+          <a  class="d-block">Mostrar datos</a>
+          <a asp-action="DatosPersonales" asp-controller="DatosPersonales" class="d-block">Registrarse</a>
+        </div>
 
-      <!-- USERNAME INPUT -->
-      <label for="usuario">Usuario</label>
-      <input asp-for="usuario" type="text" placeholder="Enter Username">
+        <button class="w-80 btn btn-lg btn-primary" type="submit">Ingresar</button>
 
-
-      <!-- PASSWORD INPUT -->
-      <label for="contrasenia">Contraseña</label>
-      <input asp-for="contrasenia" type="password" placeholder="Enter Password">
-
-
-      <button type="submit">Login</button>
-
-      <a href="CreatCount.html">Create new account</a>
-    </form>
+      </form>
+    </main>
   </div>
 </body>
-
-</html>

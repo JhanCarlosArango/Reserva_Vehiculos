@@ -12,36 +12,71 @@ namespace Reserva_Vehiculos.Models.DAO
 {
     public class Usuario_DAO
     {
-        private readonly string _connectionString;
+        private readonly Conexion conn;
+        Usuarios user;
         public Usuario_DAO()
         {
-            _connectionString = "Host=reservas.chea08gwkn1d.us-east-1.rds.amazonaws.com;Port=5432;Database=reserva;Username=jkgamer;Password=01760091;";
+            conn = new Conexion();
         }
 
-        public List<Usuarios> ListarUsuarios()
+        public List<Rol> GetRoles(int id)
         {
-            List<Usuarios> l_usuarios = new List<Usuarios>();
-            var cn = new Conexion();
-            l_usuarios = new List<Usuarios>();
-            try
+            List<Rol> roles = new List<Rol>();
+            using (var connection = conn.Conectar())
             {
-                using (var connection = new NpgsqlConnection(_connectionString))
+                try
                 {
-                    connection.Open();
-                    var query = "SELECT * FROM USUARIO;";  // corregir, llamar un vista 
+                    // Consulta para obtener los roles del usuario
+                    string query = "SELECT r.id_rol FROM usuario_rol ur JOIN rol r ON ur.fk_id_rol = r.id_rol join usuario u on ur.fk_id_usuario = u.id_usuario WHERE ur.fk_id_usuario = @id";
+
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
+                        cmd.Parameters.AddWithValue("@id", id);
+
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
                             {
-                                Usuarios user = new Usuarios();
+                                String id_Rol = dr["id_rol"].ToString();
+                                Rol rol = (Rol)Enum.Parse(typeof(Rol), id_Rol);
+                                roles.Add(rol);
+
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al obtener rol: {ex.Message}");
+                }
+            }
+
+            return roles;
+        }
+
+        public Usuarios Search_user(String use, String pass)
+        {
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+            try
+            {
+                using (connection)
+                {
+                    var query = "SELECT * from usuario  WHERE usuario = @use and contrasenia = @pass;";  // corregir, llamar un vista 
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@use", use);
+                        cmd.Parameters.AddWithValue("@pass", pass);
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                user = new Usuarios();
+                                user.id_user = int.Parse(dr["id_usuario"].ToString());
                                 user.usuario = dr["usuario"].ToString();
                                 user.contrasenia = dr["contrasenia"].ToString();
-                                Console.WriteLine(user.contrasenia);
-                                Console.WriteLine(user.usuario);
-                                l_usuarios.Add(user);
+
                             }
+                            user.rols = GetRoles(user.id_user);
                         }
                     }
                 }
@@ -50,83 +85,9 @@ namespace Reserva_Vehiculos.Models.DAO
             {
                 Console.WriteLine($"Error al listar usuarios: {ex.Message}");
             }
+            return user;
+        }
 
-            return l_usuarios;
-        }
-        public Boolean validar_User(String user, String pass)
-        {
-            Boolean auth = false;
-            List<Usuarios> l_us = new List<Usuarios>();
-            l_us = ListarUsuarios();
-            foreach (Usuarios item in l_us)
-            {
-                if (item.Get_Usuario().Equals(user))
-                {
-                    if (item.Get_Contrasenia().Equals(pass))
-                    {
-                        auth = true;
-                    }
-                }
-            }
-            return auth;
-        }
     }
 
 }
-/*
-   public boolean validarUser(String user, String pass) {
-
-        boolean vali = false;
-        List<Usuario> listauser = new ArrayList<Usuario>();
-        listauser = controlPersis.listareUsuarios_JPA();
-        for (Usuario usuario : listauser) {
-            if (usuario.getNom_Usuario().equals(user)) {
-                if (usuario.getPassword().equals(pass)) {
-                    vali = true;
-                }
-            }
-        }
-        return vali;
-    }
-
-    public List<ContactoModel> Listar() {
-    var oLista = new List<ContactoModel>();
-    var cn = new Conexion();
-    using (var conexion = new SqlConnection(cn.getCadenaSQL())) {
-        conexion.Open();
-        SqlCommand cmd = new SqlCommand("SELECT * FROM usuarios", conexion);
-        using (var dr = cmd.ExecuteReader()) {
-            while (dr.Read()) {
-                oLista.Add(new ContactoModel() {
-                    IdContacto = Convert.ToInt32(dr["IdContacto"]),
-                    Nombre = dr["Nombre"].ToString(),
-                    Telefono = dr["Telefono"].ToString(),
-                    Correo = dr["Correo"].ToString()
-                });
-            }
-        }
-        return oLista;
-    }
-}
-
-
-        public List<Usuarios> listar_Users(){
-            user = new Usuarios();
-            l_usuarios = new List<Usuarios>();
-            Conexion cn = new Conexion();
-            using (var conexion = new SqlConnection(cn.getCadenaSQL())){
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM usuarios", conexion);
-                using (var dr = cmd.ExecuteReader()){
-                    while (dr.Read()){
-                        user = new Usuarios();
-                        user.Set_Usuario(dr["usuario"].ToString());
-                        user.Set_Contrasenia(dr["contrasenia"].ToString());
-                        l_usuarios.Add(user);
-                    }
-                }
-
-                return l_usuarios;
-            }
-        }
-*/

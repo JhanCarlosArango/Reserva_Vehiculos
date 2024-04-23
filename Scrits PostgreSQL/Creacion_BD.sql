@@ -31,7 +31,7 @@ create table usuario_rol(
 );
 
 create table rol(
-id_rol int not null,
+id_rol serial not null,
 tipo_rol varchar(45)
 );
 
@@ -133,6 +133,7 @@ alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_es
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 
+
 alter table prestador_vehiculo add prestador_num_documento int;
 alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
@@ -154,6 +155,9 @@ alter table vehiculo add fk_id_espec_vehiculo int;
 alter table espec_vehiculo add fk_id_tipo_combustible int;
 alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
+alter table usuario_rol add pk_usuario_rol int;
+
+
 
 alter table usuario_rol add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table usuario_rol add constraint fk_id_rol foreign key (fk_id_rol) references rol (id_rol);
@@ -175,18 +179,13 @@ alter table espec_vehiculo add constraint fk_id_tipo_combustible foreign key (fk
 alter table vehiculo_doc_legal add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id_doc_legal) references doc_legal (id_doc_legal);
 
-
-
-
-alter table alquiler. add constraint pk_ primary key();
-alter table alquiler. add constraint pk_ primary key();
-alter table alquiler. add constraint pk_ primary key();
-alter table alquiler. add constraint pk_ primary key();
-alter table alquiler. add constraint pk_ primary key();
+---- primaria compuesta
+alter table usuario_rol add constraint pk_usuario_rol primary key(fk_id_usuario, fk_id_rol);
 
 
 
 insert into usuario(usuario,contrasenia) values('arango','root');
+insert into usuario(usuario,contrasenia) values('prueba','root');
 
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camióneta', 123000);
@@ -197,3 +196,14 @@ INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Depotivo', 320000);
 
 INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin)
 VALUES ('2024-05-01', '2024-05-01', '10:00:00', '12:00:00');
+
+insert into rol(tipo_rol)values('Administrador');
+insert into rol(tipo_rol)values('Proveerdor');
+insert into rol(tipo_rol)values('Cliente');
+
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
+
+select r.tipo_rol from rol r where id_rol = 2;
+
