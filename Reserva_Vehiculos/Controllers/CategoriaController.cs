@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
@@ -11,7 +12,7 @@ using Reserva_Vehiculos.Models.DAO;
 namespace Reserva_Vehiculos.Controllers
 {
 
-
+    [Authorize]
     public class CategoriaController : Controller
     {
         Categoria_DAO categoria_ = new Categoria_DAO();
@@ -25,12 +26,7 @@ namespace Reserva_Vehiculos.Controllers
             };
             return View(viewModel);
         }
-        [HttpPost]
-        public IActionResult categoria_view(String id_cate)
-        {
-            Console.WriteLine(" Categoria ID:--------> "+id_cate );
-            return RedirectToAction("peticion", "Peticion");
-        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

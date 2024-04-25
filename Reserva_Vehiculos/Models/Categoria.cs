@@ -14,6 +14,10 @@ namespace Reserva_Vehiculos.Models
         {
 
         }
+        public Categoria(int id_categoria)
+        {
+            this.id_categoria = id_categoria;
+        }
 
     }
 }

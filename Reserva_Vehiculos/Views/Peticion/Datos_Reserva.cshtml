@@ -1,0 +1,65 @@
+@model Obj_ViewModel
+@{
+    ViewData["Title"] = "Datos_Reserva";
+}
+
+<form asp-action="" method="GET">
+    <div class="container text-center">
+        <h1>Datos Personales</h1><br>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <fieldset style="text-align: left;">
+                        <legend>Nombre Completo @Model.categoria.id_categoria</legend>
+                        <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                            readonly>
+                    </fieldset>
+                    <br>
+                    <fieldset style="text-align: left;">
+                        <legend>Correo electrónico</legend>
+                        <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
+                            style="height: 50px;" aria-describedby="emailHelp" readonly>
+                    </fieldset>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <fieldset style="text-align: left;">
+                        <legend>Telefono</legend>
+                        <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
+                            readonly>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <fieldset style="text-align: left;">
+                        <legend>Tipo Documento</legend>
+                        <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                            readonly>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <fieldset style="text-align: left;">
+                        <legend> Documento</legend>
+                        <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
+                            readonly>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="border-bottom my-3">
+
+                <div class="form-group mb-4">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Realizar Peticion</button>
+                </div>
+            </div>
+        </div>
+</form>

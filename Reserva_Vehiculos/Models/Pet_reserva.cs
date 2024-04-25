@@ -29,6 +29,13 @@ namespace Reserva_Vehiculos.Models
         {
 
         }
+        public Pet_reserva(DateOnly fecha_ini,DateOnly fecha_fin,String hora_ini,String hora_fin)
+        {
+            this.fecha_ini = fecha_ini;
+            this.fecha_fin = fecha_fin;
+            this.hora_ini = hora_ini;
+            this.hora_fin = hora_fin;
+        }
 
 
         public void separa_feha2(String Fecha)

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Amazon.S3" Version="0.31.2" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.307.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.3" />
     <PackageReference Include="Npgsql" Version="8.0.2" />
     <PackageReference Include="Npgsql.ConfigureConnection" Version="0.1.1" />

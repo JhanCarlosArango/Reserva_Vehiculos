@@ -10,7 +10,7 @@ namespace Reserva_Vehiculos.Models
         public List<Categoria> ListaCategorias { get; set; }
         public Pet_reserva _Pet_Reserva { get; set; }
 
-      
+        public Categoria categoria{ get; set; }
 
         public Obj_ViewModel()
         {

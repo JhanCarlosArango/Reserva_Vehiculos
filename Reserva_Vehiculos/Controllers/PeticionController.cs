@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
@@ -43,6 +44,21 @@ namespace Reserva_Vehiculos.Controllers
         {
             return View();
         }
+
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate)
+        {
+            var viewModel_1 = new Obj_ViewModel
+            {
+
+                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin), // este contexto
+                categoria = new Categoria(int.Parse(id_cate)),
+            };
+            return View(viewModel_1);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-
+using Microsoft.AspNetCore.Mvc;
 using Reserva_Vehiculos.Models;
 using System.Configuration;
 using Npgsql;
+using System.Data;
 
 namespace Reserva_Vehiculos.Models.DAO
 {
@@ -70,13 +70,17 @@ namespace Reserva_Vehiculos.Models.DAO
                         {
                             while (dr.Read())
                             {
-                                user = new Usuarios();
-                                user.id_user = int.Parse(dr["id_usuario"].ToString());
-                                user.usuario = dr["usuario"].ToString();
-                                user.contrasenia = dr["contrasenia"].ToString();
+                                if (dr["usuario"] != null)
+                                {
+                                    user = new Usuarios();
+                                    user.id_user = int.Parse(dr["id_usuario"].ToString());
+                                    user.usuario = dr["usuario"].ToString();
+                                    user.contrasenia = dr["contrasenia"].ToString();
+                                    user.rols = GetRoles(user.id_user);
+                                }
+
 
                             }
-                            user.rols = GetRoles(user.id_user);
                         }
                     }
                 }

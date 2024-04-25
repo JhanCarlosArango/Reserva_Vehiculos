@@ -101,10 +101,17 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <form asp-action="categoria_view" asp-controller="Categoria" method="post">
+                                <form asp-action="Datos_Reserva" asp-controller="Peticion" method="post">
 
+                                    <input type="hidden" name="fecha_ini" id="fecha_ini" value="@Model._Pet_Reserva.fecha_ini">
+                                    <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_ini">
+                                    <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.fecha_fin">
+                                    <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_fin">
+
+                                    
                                     <button type="submit" class="btn btn-primary">Reservar</button>
                                     <input type="hidden" name="id_cate" id="id_cate" value="@item.id_categoria">
+                                    
                                 </form>
                             </div>
                         </div>

@@ -12,7 +12,7 @@ namespace Reserva_Vehiculos.Models.DAO
 
         public Conexion()
         {
-            // Configura la cadena de conexión con tus propios valores
+            
             _connectionString = "Host=localhost;Port=5432;Database=alquiler;Username=postgres;Password=root;";
         }
 

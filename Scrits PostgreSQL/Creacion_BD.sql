@@ -117,7 +117,7 @@ id_doc_legal int not null,
 tipo_doc varchar(45)
 );
 
-alter table persona add constraint pk_num_documento primary key(num_documento);
+alter table persona add constraint pk_num_documento primary key(num_documento);---
 alter table usuario add constraint pk_id_usuario primary key(id_usuario);
 alter table rol add constraint pk_id_rol primary key(id_rol);
 alter table reserva add constraint pk_id_reserva primary key(id_reserva);
@@ -139,7 +139,7 @@ alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
 alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
-alter table usuario add fk_num_documento int;
+alter table usuario add fk_num_documento int;--
 alter table pet_reserva add fk_id_categoria int;
 alter table pet_reserva add fk_id_usuario int;
 alter table reserva add fk_id_pet_reserva int;
@@ -163,7 +163,7 @@ alter table usuario_rol add constraint fk_id_usuario foreign key (fk_id_usuario)
 alter table usuario_rol add constraint fk_id_rol foreign key (fk_id_rol) references rol (id_rol);
 alter table vehiculo_doc_legal add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id_doc_legal) references doc_legal (id_doc_legal);
-alter table usuario add constraint fk_num_documento foreign key (fk_num_documento) references persona (num_documento);
+alter table usuario add constraint fk_num_documento foreign key (fk_num_documento) references persona (num_documento);--
 alter table pet_reserva add constraint fk_id_categoria foreign key (fk_id_categoria) references categoria (id_categoria);
 alter table pet_reserva add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table reserva add constraint fk_id_pet_reserva foreign key (fk_id_pet_reserva) references pet_reserva (id_pet_reserva);
@@ -184,8 +184,7 @@ alter table usuario_rol add constraint pk_usuario_rol primary key(fk_id_usuario,
 
 
 
-insert into usuario(usuario,contrasenia) values('arango','root');
-insert into usuario(usuario,contrasenia) values('prueba','root');
+---se debe porganizar que va primero
 
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camióneta', 123000);
@@ -205,5 +204,10 @@ insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
 
-select r.tipo_rol from rol r where id_rol = 2;
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
+VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', 321490569);
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
+VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', 112);
 
+insert into usuario(usuario,contrasenia) values('arango','root',117987265);
+insert into usuario(usuario,contrasenia) values('prueba','root',112);
