@@ -4,30 +4,45 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
+using Reserva_Vehiculos.Models.DAO;
 namespace Reserva_Vehiculos.Controllers
 {
     public class Peticion : Controller
     {
         Pet_reserva _Reserva;
+        Persona_DAO persona_DAO;
+
+        Persona per;
         DateTime fecha_i;
         DateTime fecha_f;
-        public IActionResult peticion()
+        private readonly IHttpContextAccessor _IHttpContextAccessor;
+        public Peticion(IHttpContextAccessor httpContextAccessor)
         {
-            return View();
+            _IHttpContextAccessor = httpContextAccessor;
+        }
+        public IActionResult peticion(Usuarios _user) // recibo user
+        {
+            Console.WriteLine("aqui " + _user.id_user);
+            return View(_user);
         }
 
         [HttpPost]
-        public IActionResult peticion(Pet_reserva pet_Reserva)
+        public IActionResult peticion(DateOnly fechaini, String hora_ini, DateOnly fechafin, String hora_fin, String id_user)
         {
-            _Reserva = pet_Reserva;
-            _Reserva.separa_feha(_Reserva.fecha);
-            _Reserva.separa_feha2(_Reserva.fecha1);
+            _Reserva = new Pet_reserva();
+            string fechainiStr = fechaini.ToString();
 
-            fecha_i = new DateTime(int.Parse(_Reserva.año), int.Parse(_Reserva.mes), int.Parse(_Reserva.dia));
-            fecha_f = new DateTime(int.Parse(_Reserva.año2), int.Parse(_Reserva.mes2), int.Parse(_Reserva.dia2));
+            _Reserva.separa_feha(fechainiStr);
+
+            string fechafinStr = fechafin.ToString();
+            _Reserva.separa_feha2(fechafinStr);
+
+            fecha_i = new DateTime(int.Parse(_Reserva.dia), int.Parse(_Reserva.mes), int.Parse(_Reserva.año));
+            fecha_f = new DateTime(int.Parse(_Reserva.dia2), int.Parse(_Reserva.mes2), int.Parse(_Reserva.año2));
 
             TimeSpan diferencia = fecha_f - fecha_i;
             _Reserva.temp_costo = diferencia.Days;
@@ -37,19 +52,24 @@ namespace Reserva_Vehiculos.Controllers
 
             Console.WriteLine("Dias de arquiler :" + _Reserva.temp_costo);
 
+            int id_users = int.Parse(id_user);
+
             return RedirectToAction("categoria_view", "Categoria", _Reserva);
         }
 
-        public IActionResult listar()
-        {
-            return View();
-        }
-
-
         [Authorize]
-        [HttpPost]
-        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate)
+        [HttpPost] // GET
+        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, String id_user)
         {
+            persona_DAO = new Persona_DAO();
+            String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user"); 
+
+            Console.WriteLine("Usuario . "+ usuario_session);
+
+            per = persona_DAO.Search_persona(usuario_session);
+            
+            
+            
             var viewModel_1 = new Obj_ViewModel
             {
 

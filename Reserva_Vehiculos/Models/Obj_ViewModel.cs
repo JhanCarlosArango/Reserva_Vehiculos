@@ -11,6 +11,8 @@ namespace Reserva_Vehiculos.Models
         public Pet_reserva _Pet_Reserva { get; set; }
 
         public Categoria categoria{ get; set; }
+        public Categoria _persona{ get; set; }
+        public Usuarios _user_{ get; set; }
 
         public Obj_ViewModel()
         {

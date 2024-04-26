@@ -41,7 +41,7 @@ namespace Reserva_Vehiculos.Models
         public void separa_feha2(String Fecha)
         {
 
-            string[] partesFecha = Fecha.Split('-');
+            string[] partesFecha = Fecha.Split('/');
             año2 = partesFecha[0];
             mes2 = partesFecha[1];
             dia2 = partesFecha[2];
@@ -50,7 +50,7 @@ namespace Reserva_Vehiculos.Models
         public void separa_feha(string Fecha)
         {
 
-            string[] partesFecha = Fecha.Split('-');
+            string[] partesFecha = Fecha.Split('/');
 
             año = partesFecha[0];
             mes = partesFecha[1];

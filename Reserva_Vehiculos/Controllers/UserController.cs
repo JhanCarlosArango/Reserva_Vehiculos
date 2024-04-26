@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
+using Newtonsoft.Json;
 
 
 
@@ -13,11 +16,14 @@ namespace Reserva_Vehiculos.Controllers
 {
     public class UserController : Controller
     {
+
         Usuario_DAO UDAO = new Usuario_DAO();
         Usuarios user;
-        public IActionResult Listar()
+
+        IHttpContextAccessor _httpContextAccessor;  
+        public UserController(IHttpContextAccessor httpContextAccessor)
         {
-            return View();
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Login()
         {
@@ -28,26 +34,29 @@ namespace Reserva_Vehiculos.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Usuarios us)
         {
+            _httpContextAccessor.HttpContext.Session.SetString("name_user", us.usuario); // REcordar registrar el controlador para traer la session
             user = UDAO.Search_user(us.usuario, us.contrasenia);
 
             if (user != null)
             {
                 // Crear las claims del usuario
-                var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.usuario),
+                var claims = new List<Claim>{
+                new Claim(ClaimTypes.Name, user.usuario)
+
 
             };
 
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 // Crear las propiedades de autenticación
-                AuthenticationProperties authProperties = new ();
-                
-                    authProperties.AllowRefresh = true;
-                    authProperties.IsPersistent = false;
-                    authProperties.ExpiresUtc = DateTime.UtcNow.AddMinutes(10);
+                AuthenticationProperties authProperties = new()
+                {
+                    AllowRefresh = true,
+                    IsPersistent = false,
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
+                };
+
+
 
                 // Iniciar sesión del usuario
                 await HttpContext.SignInAsync(
@@ -55,7 +64,7 @@ namespace Reserva_Vehiculos.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("peticion", "Peticion");
+                return RedirectToAction("peticion", "Peticion", user); //Envio el usuario
             }
             else
             {
@@ -75,17 +84,3 @@ namespace Reserva_Vehiculos.Controllers
         }
     }
 }
-/*
-
-        [HttpPost]
-        public IActionResult Login(Usuarios us)
-        {
-            user = UDAO.Search_user(us.usuario, us.contrasenia);
-
-            if (user == null)
-            {
-               // FormsAuthentication.setAthCookie(user.usuario);
-            }
-            return View();
-        }
-        */

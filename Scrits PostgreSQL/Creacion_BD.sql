@@ -19,7 +19,7 @@ primer_nombre varchar(45),
 segundo_nombre varchar(45),
 primer_apellido varchar(45),
 segundo_apellido varchar(45),
-num_telefonico int
+num_telefonico varchar(45)
 );
 
 create table (
@@ -205,9 +205,9 @@ insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
 
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
-VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', 321490569);
+VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699');
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
-VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', 112);
+VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112');
 
 insert into usuario(usuario,contrasenia) values('arango','root',117987265);
-insert into usuario(usuario,contrasenia) values('prueba','root',112);
+insert into usuario(usuario,contrasenia) values('manuel','root',117987269);

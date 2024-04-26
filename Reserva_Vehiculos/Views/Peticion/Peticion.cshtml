@@ -1,27 +1,28 @@
-@model Pet_reserva
+@model Usuarios
 @{
     ViewData["Title"] = "peticion";
 }
-    <div style="text-align: left;"> <!-- Contenedor para alinear a la derecha -->
-        <a  class="btn btn-primary" asp-action="Login" asp-controller="User">
-            Login
-        </a>
-    </div>
+<div style="text-align: left;"> <!-- Contenedor para alinear a la derecha -->
+    <a class="btn btn-primary" asp-action="Login" asp-controller="User">
+        Login
+    </a>
+</div>
 <form asp-action="peticion" asp-controller="Peticion" method="post">
     <fieldset>
         <legend>Información Inicial</legend>
 
         <label for="fecha">Fecha:</label>
-        <input asp-for="fecha" type="date" id="fecha">
+        <input name="fechaini" type="date" id="fechaini">
 
         <label for="hora">Hora:</label>
-        <input asp-for="hora_ini" type="time" id="hora">
+        <input name="hora_ini" id="hora_ini" type="time">
     </fieldset>
 
     <div style="text-align: right;"> <!-- Contenedor para alinear a la derecha -->
-        <button type="submit" class="btn btn-primary">
-            Continuar
-        </button>
+        <input name="id_user" id="id_user" type="hidden" value="@Model.id_user">
+            <button type="submit" class="btn btn-primary">
+                Continuar
+            </button>
     </div>
 
 
@@ -29,10 +30,10 @@
         <legend>Información Final</legend>
 
         <label for="fecha">Fecha:</label>
-        <input asp-for="fecha1" type="date" id="fecha">
+        <input type="date" name="fechafin" id="fechafin">
 
         <label for="hora">Hora:</label>
-        <input asp-for="hora_fin" type="time" id="hora">
+        <input aname="hora_fin" id="hora_fin" type="time">
     </fieldset>
 </form>
 

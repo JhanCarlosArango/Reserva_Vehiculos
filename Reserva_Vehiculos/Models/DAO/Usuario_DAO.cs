@@ -14,6 +14,7 @@ namespace Reserva_Vehiculos.Models.DAO
     {
         private readonly Conexion conn;
         Usuarios user;
+        
         public Usuario_DAO()
         {
             conn = new Conexion();
@@ -91,6 +92,7 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             return user;
         }
+
 
     }
 
