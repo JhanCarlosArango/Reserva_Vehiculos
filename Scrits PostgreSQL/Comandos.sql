@@ -1,3 +1,55 @@
+CREATE OR REPLACE PROCEDURE insertar_datos_pet(
+    fecha_ini DATE,
+    fecha_fin DATE,
+    hora_ini VARCHAR(20),
+    hora_fin VARCHAR(20),
+    fk_id_categoria INT,
+    fk_id_usuario INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario)
+    VALUES (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario);
+    
+    COMMIT;
+    
+  END;
+$$;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --Rol Administrador...
 
 --CREATE ROLE Administrador;

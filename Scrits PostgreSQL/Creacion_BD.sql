@@ -12,7 +12,7 @@ create table persona (
     id_persona INT NOT NULL
 );
 
---------------------------------------------
+-------------------------------------------- Importante en la vista para acpetar reserva incluir capos para el vehiculo
 create table persona(
 num_documento int not null,
 primer_nombre varchar(45),
@@ -20,6 +20,11 @@ segundo_nombre varchar(45),
 primer_apellido varchar(45),
 segundo_apellido varchar(45),
 num_telefonico varchar(45)
+);
+
+create table tipo_doc(
+id_tipo_doc serial not null,
+tipo_documento varchar(45)
 );
 
 create table (
@@ -40,7 +45,7 @@ id_reserva serial not null,
 acep_fecha date,
 estado_reserva varchar(20) default 'activa',
 valor_reserva decimal(10,2),
-
+costo decimal(10,2)
 );
 
 create table pet_reserva(
@@ -49,8 +54,7 @@ fecha_ini DATE,
 fecha_fin DATE,
 hora_ini varchar(20),
 hora_fin varchar(20),
-estado varchar(15) not null default 'wait',
-costo decimal(10,2)
+estado varchar(15) not null default 'wait'
 );
 
 
@@ -118,9 +122,10 @@ tipo_doc varchar(45)
 );
 
 alter table persona add constraint pk_num_documento primary key(num_documento);---
+alter table tipo_doc add constraint pk_id_tipo_doc primary key(id_tipo_doc);---
 alter table usuario add constraint pk_id_usuario primary key(id_usuario);
 alter table rol add constraint pk_id_rol primary key(id_rol);
-alter table reserva add constraint pk_id_reserva primary key(id_reserva);
+alter table reserva add constraint pk_id_reserva primary key(id_reserva);--
 alter table pet_reserva add constraint pk_id_pet_reserva primary key(id_pet_reserva);
 alter table acuerdo add constraint pk_id_acuerdo primary key(id_acuerdo);
 alter table vehiculo add constraint pk_num_placa primary key(num_placa);
@@ -140,10 +145,10 @@ alter table usuario_rol add fk_id_rol int;
 alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario add fk_num_documento int;--
-alter table pet_reserva add fk_id_categoria int;
-alter table pet_reserva add fk_id_usuario int;
-alter table reserva add fk_id_pet_reserva int;
-alter table reserva add fk_num_placa int;
+alter table pet_reserva add fk_id_categoria int;--
+alter table pet_reserva add fk_id_usuario int;--
+alter table reserva add fk_id_pet_reserva int;--
+alter table reserva add fk_num_placa int;--
 alter table acuerdo add fk_prestador_num_documento int;
 alter table acuerdo add fk_num_placa int;
 alter table vehiculo add fk_id_marca int;
@@ -157,6 +162,8 @@ alter table vehiculo_doc_legal add fk_num_placa int;
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario_rol add pk_usuario_rol int;
 
+alter table persona add fk_id_tipo_doc int;
+
 
 
 alter table usuario_rol add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
@@ -164,6 +171,7 @@ alter table usuario_rol add constraint fk_id_rol foreign key (fk_id_rol) referen
 alter table vehiculo_doc_legal add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id_doc_legal) references doc_legal (id_doc_legal);
 alter table usuario add constraint fk_num_documento foreign key (fk_num_documento) references persona (num_documento);--
+alter table persona add constraint fk_id_tipo_doc foreign key (fk_id_tipo_doc) references tipo_doc (id_tipo_doc);--
 alter table pet_reserva add constraint fk_id_categoria foreign key (fk_id_categoria) references categoria (id_categoria);
 alter table pet_reserva add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table reserva add constraint fk_id_pet_reserva foreign key (fk_id_pet_reserva) references pet_reserva (id_pet_reserva);
@@ -186,6 +194,10 @@ alter table usuario_rol add constraint pk_usuario_rol primary key(fk_id_usuario,
 
 ---se debe porganizar que va primero
 
+INSERT INTO tipo_doc (tipo_documento) VALUES ('Cedula');
+INSERT INTO tipo_doc (tipo_documento) VALUES ('CC Extranjera');
+
+
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camióneta', 123000);
 INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Baja CC', 45000);
@@ -204,10 +216,10 @@ insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
 
-INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
-VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699');
-INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico) 
-VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112');
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
+VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699',1);
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
+VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',1);
 
 insert into usuario(usuario,contrasenia) values('arango','root',117987265);
 insert into usuario(usuario,contrasenia) values('manuel','root',117987269);

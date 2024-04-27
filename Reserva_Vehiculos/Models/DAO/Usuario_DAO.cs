@@ -14,7 +14,7 @@ namespace Reserva_Vehiculos.Models.DAO
     {
         private readonly Conexion conn;
         Usuarios user;
-        
+
         public Usuario_DAO()
         {
             conn = new Conexion();
@@ -93,7 +93,35 @@ namespace Reserva_Vehiculos.Models.DAO
             return user;
         }
 
+        public int Obtener_ID_usuario(String use)
+        {
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+            try
+            {
+                using (connection)
+                {
+                    var query = "select u.id_usuario from usuario u where u.usuario = @use;";  // corregir, llamar un vista 
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@use", use);
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
 
+                                user = new Usuarios();
+                                user.id_user = int.Parse(dr["id_usuario"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al listar usuarios: {ex.Message}");
+            }
+            return user.id_user;
+        }
     }
 
 }

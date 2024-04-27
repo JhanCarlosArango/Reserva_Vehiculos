@@ -20,7 +20,8 @@ namespace Reserva_Vehiculos.Controllers
         Usuario_DAO UDAO = new Usuario_DAO();
         Usuarios user;
 
-        IHttpContextAccessor _httpContextAccessor;  
+        IHttpContextAccessor _httpContextAccessor { get; set; }
+
         public UserController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -79,7 +80,8 @@ namespace Reserva_Vehiculos.Controllers
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-
+            _httpContextAccessor.HttpContext.Session.Remove("name_user");
+            _httpContextAccessor.HttpContext.Session.Clear();
             return RedirectToAction("peticion", "Peticion");
         }
     }

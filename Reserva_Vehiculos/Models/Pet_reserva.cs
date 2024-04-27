@@ -7,7 +7,6 @@ namespace Reserva_Vehiculos.Models
 {
     public class Pet_reserva
     {
-        int id_pet_reserva;
         public DateOnly fecha_ini { set; get; }
         public DateOnly fecha_fin { set; get; }
         public String hora_ini { set; get; }
