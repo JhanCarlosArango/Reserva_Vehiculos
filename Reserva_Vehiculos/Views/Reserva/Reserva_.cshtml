@@ -1,0 +1,160 @@
+@model Obj_ViewModel
+@{
+    ViewData["Title"] = "Reserva_";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tabla con filas tipo ListGroup</title>
+        <style>
+            /* Estilos para la tabla */
+            .container {
+                display: flex;
+            }
+
+            table {
+                width: 50%;
+                border-collapse: collapse;
+                margin-right: 20px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                border: 1px solid #dddddd;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #f5f5f5;
+                cursor: pointer;
+            }
+
+            /* Estilos para el listgroup */
+            .list-group {
+                list-style-type: none;
+                padding-left: 0;
+                margin-top: 0;
+            }
+
+            .list-group-item {
+                padding: .75rem 1.25rem;
+                margin-bottom: 0;
+                background-color: #fff;
+                border: 1px solid rgba(0, 0, 0, .125);
+            }
+
+            .list-group-item:hover {
+                background-color: #f5f5f5;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <table id="tabla" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model._lis_Pet_Reserva)
+                    {
+                        var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos,
+                        2);
+                        <tr onclick="seleccionarFila(event, '@item.fk_id_categoria')">
+                            <td>
+                                Lugar de Retiro: <br>
+                                Fecha de Retiro: @item.fecha_ini <br>
+                                Fecha de Devolución: @item.fecha_fin <br>
+                                Hora de Retiro: @item.hora_ini <br>
+                                Hora de Devolución: @item.hora_fin
+                                Categoria id : @item.fk_id_categoria
+                            </td>
+                            <td>
+                                <!-- Aquí puedes hacer algo con la información del vehículo si lo deseas -->
+                                @foreach (var vehiculo in _vehiculo)
+                                {
+                                    <ul id="listgroup" class="list-group">
+                                    <!-- Por ejemplo, imprimir la información del vehículo -->
+                                    @vehiculo.num_placa, @vehiculo.capacidad_carga
+                                    </ul>
+                                }
+                                
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+
+            <ul id="listgroup" class="list-group"></ul>
+                <!-- Items del listgroup -->
+            
+        </div>
+                         <script>
+            function seleccionarFila(event, horaIni) {
+                console.log('Hora de inicio pasada a seleccionarFila:', horaIni);
+                var fila = event.currentTarget;
+                var rowData = Array.from(fila.children).map(cell => cell.textContent);
+                //cargarListGroup(rowData, horaIni);
+
+                // Llamar al método de filtrado de vehículos por categoría
+                var categoriaId = horaIni; // Id de la categoría que deseas filtrar
+                $.ajax({
+                    type: 'GET',
+                    url: '/Reserva/FiltrarVehiculosPorCategoria',
+                    data: { categoriaId: categoriaId },
+                    success: function (data) {
+                        // Manejar la respuesta del servidor
+                        console.log('Vehículos filtrados por categoría:', data);
+                    },
+                    error: function (error) {
+                        // Manejar errores
+                        console.error('Error al filtrar vehículos por categoría:', error);
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '/Reserva/FiltrarVehiculosPorCategoria',
+                    data: { categoriaId: categoriaId },
+                    success: function (data) {
+                        // Limpiar la lista antes de agregar nuevos elementos
+                        $('#listaVehiculos').empty();
+
+                        // Iterar sobre los datos y agregar elementos a la lista
+                        data.forEach(function (vehiculo) {
+                            var listItem = $('<li class="list-group-item"></li>').text(data); // Suponiendo que 'nombre' es la propiedad que deseas mostrar
+                            $('#listaVehiculos').append(listItem);
+                        });
+                    },
+                    error: function (error) {
+                        // Manejar errores
+                        console.error('Error al filtrar vehículos por categoría:', error);
+                    }
+                });
+
+            }
+        </script>
+    </body>
+
+    </html>
+
+</div>
