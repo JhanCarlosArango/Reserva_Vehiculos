@@ -7,6 +7,7 @@ namespace Reserva_Vehiculos.Models
 {
     public class Pet_reserva
     {
+        public int id_pet_reserva { set; get; }
         public DateOnly fecha_ini { set; get; }
         public DateOnly fecha_fin { set; get; }
         public String hora_ini { set; get; }
@@ -23,12 +24,15 @@ namespace Reserva_Vehiculos.Models
         public String dia2 { set; get; }
         public String fecha { set; get; }
         public String fecha1 { set; get; }
-
+        public int fk_id_categoria { set; get; }
+        public int fk_id_usuario { set; get; }
+        public String ubicacion_inicial { set; get; }
+        public String ubicacion_final { set; get; }
         public Pet_reserva()
         {
 
         }
-        public Pet_reserva(DateOnly fecha_ini,DateOnly fecha_fin,String hora_ini,String hora_fin)
+        public Pet_reserva(DateOnly fecha_ini, DateOnly fecha_fin, String hora_ini, String hora_fin)
         {
             this.fecha_ini = fecha_ini;
             this.fecha_fin = fecha_fin;
@@ -56,8 +60,12 @@ namespace Reserva_Vehiculos.Models
             dia = partesFecha[2];
 
         }
-
-        public Double calcular_costo(Double a,Double b)
+        public  string ObtenerPrimeraParteSeparadaPorEspacio(string input)
+        { 
+            string[] partes = input.Split(' ');
+            return partes[0]; // Devolver la primera parte
+        }
+        public Double calcular_costo(Double a, Double b)
         {
             Double c = a * b;
             return c;

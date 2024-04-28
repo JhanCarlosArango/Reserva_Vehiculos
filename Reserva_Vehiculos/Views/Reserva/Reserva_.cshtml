@@ -77,7 +77,7 @@
                     @foreach (var item in Model._lis_Pet_Reserva)
                     {
                         var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos,
-                        2);
+                        @item.fk_id_categoria);
                         <tr onclick="seleccionarFila(event, '@item.fk_id_categoria')">
                             <td>
                                 Lugar de Retiro: <br>
@@ -88,16 +88,17 @@
                                 Categoria id : @item.fk_id_categoria
                             </td>
                             <td>
+                                @*
                                 <!-- Aquí puedes hacer algo con la información del vehículo si lo deseas -->
                                 @foreach (var vehiculo in _vehiculo)
                                 {
                                     <ul id="listgroup" class="list-group">
-                                    <!-- Por ejemplo, imprimir la información del vehículo -->
-                                    @vehiculo.num_placa, @vehiculo.capacidad_carga
+                                        <!-- Por ejemplo, imprimir la información del vehículo -->
+                                        @vehiculo.num_placa, @vehiculo.capacidad_carga
                                     </ul>
                                 }
-                                
-                            </td>
+*@
+                            
                         </tr>
                     }
 
@@ -106,18 +107,19 @@
             </table>
 
             <ul id="listgroup" class="list-group"></ul>
-                <!-- Items del listgroup -->
-            
+            <!-- Items del listgroup -->
+
         </div>
-                         <script>
-            function seleccionarFila(event, horaIni) {
-                console.log('Hora de inicio pasada a seleccionarFila:', horaIni);
+        <script>
+            function seleccionarFila(event, fk_id_categoria) {
+                console.log('Hora de inicio pasada a seleccionarFila:', fk_id_categoria);
                 var fila = event.currentTarget;
                 var rowData = Array.from(fila.children).map(cell => cell.textContent);
                 //cargarListGroup(rowData, horaIni);
 
                 // Llamar al método de filtrado de vehículos por categoría
-                var categoriaId = horaIni; // Id de la categoría que deseas filtrar
+                var categoriaId = fk_id_categoria; // Id de la categoría que deseas filtrar
+
                 $.ajax({
                     type: 'GET',
                     url: '/Reserva/FiltrarVehiculosPorCategoria',
@@ -131,25 +133,7 @@
                         console.error('Error al filtrar vehículos por categoría:', error);
                     }
                 });
-                $.ajax({
-                    type: 'GET',
-                    url: '/Reserva/FiltrarVehiculosPorCategoria',
-                    data: { categoriaId: categoriaId },
-                    success: function (data) {
-                        // Limpiar la lista antes de agregar nuevos elementos
-                        $('#listaVehiculos').empty();
 
-                        // Iterar sobre los datos y agregar elementos a la lista
-                        data.forEach(function (vehiculo) {
-                            var listItem = $('<li class="list-group-item"></li>').text(data); // Suponiendo que 'nombre' es la propiedad que deseas mostrar
-                            $('#listaVehiculos').append(listItem);
-                        });
-                    },
-                    error: function (error) {
-                        // Manejar errores
-                        console.error('Error al filtrar vehículos por categoría:', error);
-                    }
-                });
 
             }
         </script>
@@ -158,3 +142,27 @@
     </html>
 
 </div>
+
+@*
+
+$.ajax({
+type: 'GET',
+url: '/Reserva/FiltrarVehiculosPorCategoria',
+data: { categoriaId: categoriaId },
+success: function (data) {
+// Limpiar la lista antes de agregar nuevos elementos
+$('#listaVehiculos').empty();
+
+// Iterar sobre los datos y agregar elementos a la lista
+data.forEach(function (vehiculo) {
+var listItem = $('<li class="list-group-item"></li>').text(data); // Suponiendo que 'nombre' es la propiedad que deseas
+mostrar
+$('#listaVehiculos').append(listItem);
+});
+},
+error: function (error) {
+// Manejar errores
+console.error('Error al filtrar vehículos por categoría:', error);
+}
+});
+*@
