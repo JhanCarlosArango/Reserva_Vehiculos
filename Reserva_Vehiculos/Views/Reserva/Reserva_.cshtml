@@ -3,144 +3,99 @@
     ViewData["Title"] = "Reserva_";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="text-align: center;" >Listado de reservas por Confimar</h1>
 
 <div>
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tabla con filas tipo ListGroup</title>
+    <body>
         <style>
-            /* Estilos para la tabla */
-            .container {
+            .contenedor {
                 display: flex;
+                /* Esto establece un contenedor de tipo flex */
             }
 
-            table {
-                width: 50%;
-                border-collapse: collapse;
-                margin-right: 20px;
-            }
-
-            th,
-            td {
-                padding: 10px;
-                border: 1px solid #dddddd;
-                text-align: left;
-            }
-
-            th {
-                background-color: #f2f2f2;
-            }
-
-            tr:hover {
-                background-color: #f5f5f5;
-                cursor: pointer;
-            }
-
-            /* Estilos para el listgroup */
-            .list-group {
-                list-style-type: none;
-                padding-left: 0;
-                margin-top: 0;
-            }
-
-            .list-group-item {
-                padding: .75rem 1.25rem;
-                margin-bottom: 0;
-                background-color: #fff;
-                border: 1px solid rgba(0, 0, 0, .125);
-            }
-
-            .list-group-item:hover {
-                background-color: #f5f5f5;
-                cursor: pointer;
+            .columna {
+                flex: 1;
+                /* Esto hace que cada columna tome el mismo espacio dentro del contenedor */
+                padding: 20px;
+                /* Puedes ajustar el espacio interno según lo necesites */
+                border: 1px solid #ccc;
+                /* Agrega un borde para visualizar mejor las columnas */
             }
         </style>
-    </head>
-
-    <body>
         <div class="container">
+            <div class="columna">
 
-            <table id="tabla" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Accion</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var item in Model._lis_Pet_Reserva)
-                    {
-                        var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos,
-                        @item.fk_id_categoria);
-                        <tr onclick="seleccionarFila(event, '@item.fk_id_categoria')">
-                            <td>
-                                Lugar de Retiro: <br>
-                                Fecha de Retiro: @item.fecha_ini <br>
-                                Fecha de Devolución: @item.fecha_fin <br>
-                                Hora de Retiro: @item.hora_ini <br>
-                                Hora de Devolución: @item.hora_fin
-
-                            </td>
-                            <td>
+                <table id="tabla" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Accion</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
 
+                        @foreach (var item in Model._lis_Pet_Reserva)
+                        {
+                            var _vehiculo =
+                            Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
+                            <tr onclick="seleccionarFila(event, '@item.fk_id_categoria')">
+                                <td>
+                                    Lugar de Retiro: <br>
+                                    Fecha de Retiro: @item.fecha_ini <br>
+                                    Fecha de Devolución: @item.fecha_fin <br>
+                                    Hora de Retiro: @item.hora_ini <br>
+                                    Hora de Devolución: @item.hora_fin
 
-                </tbody>
-            </table>
+                                </td>
 
-            <div class="container mt-5">
-                <!-- Lista desordenada para mostrar los datos -->
-                <ul id="listaDatos" class="list-group"></ul>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal-@(@item.id_pet_reserva)">
+                                        Confirmar Reserva
+                                    </button>
+                                    <!-- Modal con identificador único basado en el tipo de vehículo -->
+
+                                    <div class="modal fade" id="exampleModal-@(@item.id_pet_reserva)" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel-@(@item.id_pet_reserva)" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1  class="modal-title fs-5" id="exampleModalLabel">Vehículos Disponible para Reservar</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @foreach (var ite in _vehiculo)
+                                                    {
+                                                        <div class="columna">
+                                                            <ul class="list-group">
+                                                          <li class="list-group-item">
+                                                            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" required>
+                                                            <label class="form-check-label" for="firstRadio">Número de Placa: @ite.num_placa</label>
+                                                          </li>
+
+                                                        </ul>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                                    
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-
         </div>
-        <script>
-            function seleccionarFila(event, fk_id_categoria) {
-                console.log('seleccionarFila:', fk_id_categoria);
-                var fila = event.currentTarget;
-                var rowData = Array.from(fila.children).map(cell => cell.textContent);
-
-                var categoriaId = fk_id_categoria;
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/Reserva/FiltrarVehiculosPorCategoria',
-                    data: { categoriaId: categoriaId },
-                    success: function (data) {
-                        console.log('Vehículos filtrados por categoría:', data);
-
-                        // Buscamos el elemento ul por su ID
-                        var lista = document.getElementById("listaDatos");
-                        // Limpiamos la lista antes de agregar nuevos elementos
-                        lista.innerHTML = '';
-
-                        // Iteramos sobre los elementos de 'data' para agregarlos a la lista
-                        data.forEach(function (elemento) {
-                            // Creamos un nuevo elemento de lista li
-                            var listItem = document.createElement("li");
-                            // Agregamos clases de Bootstrap para estilo
-                            listItem.classList.add("list-group-item");
-                            // Asignamos el contenido del elemento 'nombre' del objeto al texto del elemento de lista
-                            listItem.textContent = elemento.num_placa;
-                            // Agregamos el elemento de lista a la lista desordenada
-                            lista.appendChild(listItem);
-                        });
-
-                    },
-                    error: function (error) {
-                        // Manejar errores
-                        console.error('Error al filtrar vehículos por categoría:', error);
-                    }
-                });
-            }
-        </script>
     </body>
+
     </html>
 </div>
