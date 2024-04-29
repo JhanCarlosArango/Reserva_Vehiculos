@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
@@ -10,6 +11,7 @@ using Reserva_Vehiculos.Models.DAO;
 
 namespace Reserva_Vehiculos.Controllers
 {
+    [Authorize]
     public class Reserva : Controller
     {
         Pet_reserva_DAO pet_Reserva_D;

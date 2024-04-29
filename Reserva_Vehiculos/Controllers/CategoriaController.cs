@@ -29,7 +29,7 @@ namespace Reserva_Vehiculos.Controllers
         }
        
         [HttpPost]
-        
+        [Authorize]
         public IActionResult categoria_view(String id_cate)
         {
             Console.WriteLine(" Categoria ID:--------> "+id_cate );
