@@ -18,24 +18,36 @@ BEGIN
 $$;
 
 
+CREATE OR REPLACE PROCEDURE insertar_reserva(
+    fk_id_pet_reserva INT,
+    fk_num_placa VARCHAR(20)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    insert into reserva(acep_fecha,fk_id_pet_reserva, fk_num_placa)
+    VALUES (current_timestamp, fk_id_pet_reserva, fk_num_placa);
+    
+    COMMIT;
+    
+  END;
+$$;
 
 
+CREATE FUNCTION sp_estado_pet_reserva(id_pet_reserva_in INT) RETURNS VOID AS $$
+BEGIN
+  UPDATE pet_reserva SET estado = 'acpt' WHERE id_pet_reserva = id_pet_reserva_in;
+END;
+$$ LANGUAGE plpgsql;
 
+--SELECT sp_estado_pet_reserva(123); 
 
+insert into "Group" (name,createddate) 
+VALUES ('Test', current_timestamp);
+A mostrar ese valor en un formato diferente cambie la configuración de su cliente SQL o formatee el valor al seleccionar los datos:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+select name, to_char(createddate, ''yyyymmdd hh:mi:ss tt') as created_date
+from "Group"
 
 
 

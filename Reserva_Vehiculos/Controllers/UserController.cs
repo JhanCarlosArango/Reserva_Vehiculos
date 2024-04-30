@@ -35,11 +35,12 @@ namespace Reserva_Vehiculos.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Usuarios us)
         {
-            _httpContextAccessor.HttpContext.Session.SetString("name_user", us.usuario); // REcordar registrar el controlador para traer la session
+
             user = UDAO.Search_user(us.usuario, us.contrasenia);
 
             if (user != null)
             {
+                _httpContextAccessor.HttpContext.Session.SetString("name_user", us.usuario); // REcordar registrar el controlador para traer la session
                 // Crear las claims del usuario
                 var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name, user.usuario)

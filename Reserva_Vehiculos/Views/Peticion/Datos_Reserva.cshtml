@@ -1,72 +1,74 @@
 @model Obj_ViewModel
 @{
     ViewData["Title"] = "Datos_Reserva";
-    
+
 }
+@if (@Model._persona != null)
+{
+    <form asp-action="Enviar_Datos_Reserva" asp-controller="Peticion" method="POST">
+        <div class="container text-center">
+            <h1>Datos Personales</h1><br>
 
-<form asp-action="Enviar_Datos_Reserva" asp-controller="Peticion" method="POST">
-    <div class="container text-center">
-        <h1>Datos Personales</h1><br>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="form-group mb-4">
+                        <fieldset style="text-align: left;">
+                            <legend>Nombre Completo </legend>
+                            <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                                value="@Model._persona.f_name @Model._persona.s_name @Model._persona.f_lastname @Model._persona.s_lastname"
+                                readonly>
+                        </fieldset>
+                        <br>
+                        <fieldset style="text-align: left;">
+                            <legend>Correo electrónico</legend>
+                            <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
+                                style="height: 50px;" aria-describedby="emailHelp" value="" readonly>
+                        </fieldset>
 
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <fieldset style="text-align: left;">
-                        <legend>Nombre Completo </legend>
-                        <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
-                            value="@Model._persona.f_name @Model._persona.s_name @Model._persona.f_lastname @Model._persona.s_lastname"
-                            readonly>
-                    </fieldset>
-                    <br>
-                    <fieldset style="text-align: left;">
-                        <legend>Correo electrónico</legend>
-                        <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
-                            style="height: 50px;" aria-describedby="emailHelp" value="" readonly>
-                    </fieldset>
-
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-4">
+                        <fieldset style="text-align: left;">
+                            <legend>Telefono</legend>
+                            <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
+                                value="@Model._persona.num_telefonico" readonly>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <fieldset style="text-align: left;">
-                        <legend>Telefono</legend>
-                        <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
-                            value="@Model._persona.num_telefonico" readonly>
-                    </fieldset>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="form-group mb-4">
+                        <fieldset style="text-align: left;">
+                            <legend>Tipo Documento</legend>
+                            <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                                value="" readonly>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <fieldset style="text-align: left;">
-                        <legend>Tipo Documento</legend>
-                        <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
-                            value="" readonly>
-                    </fieldset>
-                </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <fieldset style="text-align: left;">
-                        <legend> Documento</legend>
-                        <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
-                            value="@Model._persona.num_documento" readonly>
-                    </fieldset>
+                <div class="col-md-4">
+                    <div class="form-group mb-4">
+                        <fieldset style="text-align: left;">
+                            <legend> Documento</legend>
+                            <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
+                                value="@Model._persona.num_documento" readonly>
+                        </fieldset>
+                    </div>
                 </div>
-            </div>
-            <div class="border-bottom my-3">
+                <div class="border-bottom my-3">
 
-                <div class="form-group mb-4">
-                    <input name="id_categoria" id="id_categoria" type="text" value="@Model.categoria.id_categoria">
-                    <input name="fecha_ini" id="fecha_ini" type="text" value="@Model._Pet_Reserva.fecha_ini">
-                    <input name="fecha_fin" id="fecha_fin" type="text" value="@Model._Pet_Reserva.fecha_fin">
-                    <input name="hora_ini" id="hora_ini" type="text" value="@Model._Pet_Reserva.hora_ini">
-                    <input name="hora_fin" id="hora_fin" type="text" value="@Model._Pet_Reserva.hora_fin">
-                    <button type="button" class="btn btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Realizar Peticion</button>
+                    <div class="form-group mb-4">
+                        <input name="id_categoria" id="id_categoria" type="text" value="@Model.categoria.id_categoria">
+                        <input name="fecha_ini" id="fecha_ini" type="text" value="@Model._Pet_Reserva.fecha_ini">
+                        <input name="fecha_fin" id="fecha_fin" type="text" value="@Model._Pet_Reserva.fecha_fin">
+                        <input name="hora_ini" id="hora_ini" type="text" value="@Model._Pet_Reserva.hora_ini">
+                        <input name="hora_fin" id="hora_fin" type="text" value="@Model._Pet_Reserva.hora_fin">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Realizar Peticion</button>
+                    </div>
                 </div>
             </div>
-        </div>
-</form>
+    </form>
+}

@@ -20,3 +20,27 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+--propio
+.custom-footer {
+  background-color: #555555;
+  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+}
+
+#mi-footer {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+}
+
+#mi-navbar {
+  background-color: #D0EAFC;
+  color: #000000;
+  padding: 20px;
+}
+
+#listadoReserva {
+  background-color: #D0EAFC;
+}

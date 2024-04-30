@@ -14,7 +14,7 @@ builder.Services.AddHttpContextAccessor(); // Aquí agregamos el servicio IHttpC
 
 builder.Services.AddSession(
     option=>{
-        option.IdleTimeout = TimeSpan.FromSeconds(60);
+        option.IdleTimeout = TimeSpan.FromMinutes(5);
     }
 );
 
@@ -23,7 +23,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = "/User/Login";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
         options.AccessDeniedPath = "/Usuario/IniciarSesion";
         //options.Cookie.Name = "MyAppAuthCookie";
         

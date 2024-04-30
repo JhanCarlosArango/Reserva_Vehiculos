@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Reserva_Vehiculos.styles.css" asp-append-version="true" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -24,48 +26,57 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reserva" asp-action="Reserva_">Confirmar Reservas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reserva"
+                                asp-action="Reserva_">Confirmar Reservas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Reservas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="RegistroVehiculo"
+                                asp-action="RegistroVehiculo">Registrar Vehiculos</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <form class="form-inline my-2 my-lg-0">
-                                
-                                    @if (@_httpContextAccessor.HttpContext.Session.GetString("name_user") != null)
-                                    {
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                        <span
-                                            class="mr-2 d-none d-lg-inline text-gray-600 small">Bienvenido @_httpContextAccessor.HttpContext.Session.GetString("name_user")</span>
 
-                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                @if (@_httpContextAccessor.HttpContext.Session.GetString("name_user") != null)
+                                {
+                                    <div class="dropdown">
+                                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                                Bienvenido @_httpContextAccessor.HttpContext.Session.GetString("name_user")
+                                            </span>
+                                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                        </a>
                                         <ul class="dropdown-menu">
-                                    <li> <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profile
-                                        </a>
-                                    <li> <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Settings
-                                        </a>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Settings
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal"
+                                                    asp-action="Logout" asp-controller="User">
+                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
 
-                                    <li> <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal"
-                                            asp-action="Logout" asp-controller="User">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                </ul>
-                                 </a>
-                                    }
-                               
-                                
+                                }
+
+
                             </form>
                         </li>
                     </ul>

@@ -3,9 +3,11 @@
     ViewData["Title"] = "Reserva_";
 }
 
-<h1 style="text-align: center;" >Listado de reservas por Confimar</h1>
+<h1 style="text-align: center;">Listado de reservas por Confimar</h1>
+
 
 <div>
+
     <body>
         <style>
             .contenedor {
@@ -22,6 +24,7 @@
                 /* Agrega un borde para visualizar mejor las columnas */
             }
         </style>
+       
         <div class="container">
             <div class="columna">
 
@@ -38,14 +41,14 @@
                         {
                             var _vehiculo =
                             Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
-                            <tr onclick="seleccionarFila(event, '@item.fk_id_categoria')">
+                            <tr>
                                 <td>
                                     Lugar de Retiro: <br>
                                     Fecha de Retiro: @item.fecha_ini <br>
                                     Fecha de Devolución: @item.fecha_fin <br>
                                     Hora de Retiro: @item.hora_ini <br>
                                     Hora de Devolución: @item.hora_fin
-
+                                   
                                 </td>
 
                                 <td>
@@ -55,36 +58,43 @@
                                         Confirmar Reserva
                                     </button>
                                     <!-- Modal con identificador único basado en el tipo de vehículo -->
-
+                                    
                                     <div class="modal fade" id="exampleModal-@(@item.id_pet_reserva)" tabindex="-1"
                                         aria-labelledby="exampleModalLabel-@(@item.id_pet_reserva)" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1  class="modal-title fs-5" id="exampleModalLabel">Vehículos Disponible para Reservar</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Vehículos Disponible
+                                                        para Reservar</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
+                                                        
                                                 </div>
+                                                     <form asp-action="Reserva_AXU" asp-controller="Reserva" method="post">
                                                 <div class="modal-body">
                                                     @foreach (var ite in _vehiculo)
                                                     {
-                                                        <div class="columna">
-                                                            <ul class="list-group">
-                                                          <li class="list-group-item">
-                                                            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" required>
-                                                            <label class="form-check-label" for="firstRadio">Número de Placa: @ite.num_placa</label>
-                                                          </li>
-
+                                                    <div class="columna">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">
+                                                                <input class="form-check-input me-1" type="radio" name="selectedPlaca" value="@ite.num_placa" id="@ite.num_placa" required>
+                                                                <label class="form-check-label" for="@ite.num_placa">Número de Placa: @ite.num_placa</label>
+                                                                <input name="placa" type="text" value="@ite.num_placa">
+                                                                 <input name="id_pet_reserva" type="text" value="@item.id_pet_reserva">  <!-- Envio id_pet_reserva-->
+                                                            </li>
                                                         </ul>
-                                                        </div>
+                                                    </div>
                                                     }
-                                                </div>
-                                                                    
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
-                                                </div>
+
+                                                     </div>
+                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar
+                                                            Cambios</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -97,5 +107,5 @@
         </div>
     </body>
 
-    </html>
+ 
 </div>

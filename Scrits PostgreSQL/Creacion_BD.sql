@@ -65,7 +65,7 @@ fecha_fin date
 );
 
 create table vehiculo(
-num_placa int not null,
+num_placa varchar(20) not null,
 aire_acondicionado varchar(45),
 capacidad_pasajeros int(10),
 capacidad_carga decimal(10,2)
@@ -142,15 +142,15 @@ alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 alter table prestador_vehiculo add prestador_num_documento int;
 alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
-alter table vehiculo_doc_legal add fk_num_placa int;
+alter table vehiculo_doc_legal add fk_num_placa varchar(20);
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario add fk_num_documento int;--
 alter table pet_reserva add fk_id_categoria int;--
 alter table pet_reserva add fk_id_usuario int;--
 alter table reserva add fk_id_pet_reserva int;--
-alter table reserva add fk_num_placa int;--
+alter table reserva add fk_num_placa varchar(20);--
 alter table acuerdo add fk_prestador_num_documento int;
-alter table acuerdo add fk_num_placa int;
+alter table acuerdo add fk_num_placa varchar(20);
 alter table vehiculo add fk_id_marca int;
 alter table vehiculo add fk_id_estado_vehiculo int;
 alter table vehiculo add fk_id_categoria int;
@@ -158,7 +158,7 @@ alter table vehiculo add fk_id_tipo_direccion int;
 alter table vehiculo add fk_id_caja_cambios int;
 alter table vehiculo add fk_id_espec_vehiculo int;
 alter table espec_vehiculo add fk_id_tipo_combustible int;
-alter table vehiculo_doc_legal add fk_num_placa int;
+alter table vehiculo_doc_legal add fk_num_placa varchar(20);
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario_rol add pk_usuario_rol int;
 

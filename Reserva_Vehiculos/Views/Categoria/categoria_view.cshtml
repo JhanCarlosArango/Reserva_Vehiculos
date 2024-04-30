@@ -1,36 +1,52 @@
-@model Obj_ViewModel 
+@model Obj_ViewModel
 
 @{
     ViewData["Title"] = "categoria_view";
 }
 
-<h1 style="text-align: center;">Categorías de vehículos</h1>
+@* --------------------------------------------- paso 3 ------------------------------------------------------*@
 
-@* --------------------------------------------- paso  3 ------------------------------------------------------*@
 
-@foreach (var item in Model.ListaCategorias)
+</style>
+<br><br>
+    <h1 style="text-align: center;">Grupo de vehículos por categoría</h1>
+    <div class="row">
+        @foreach (var item in Model.ListaCategorias)
 {
-    <div class="card" style="width: 20rem; ">
-        <div style="text-align: center;">
-            <h5 class="card-title">@item.tipo_vehiculo</h5>
-        </div>
+        
+            <div class="col-6 bg-light mt-4">
+                <div style="text-align: center;">
+                    <br>
+                    <h5 style="color: #007bff;">@item.tipo_vehiculo</h5>
+
+                </div>
+                <div class="form-group mb-4">
+                    <nav class="navbar bg-body-tertiary d-flex justify-content-center">
+                        
+                        <img src="~/images/vehiculo1.png" alt="Vehiculo" width="500" height="300" />
+                    </nav>
+                    <p style="font-size: xx-small; text-align: center;" >*Su reserva garantiza uno de los modelos de autos a
+                        continuación,
+                        sujeto a disponibilidad de la agencia.</p>
+                        <div style="text-align: center;" class="d-grid gap-2"> 
+                        <label for="input1"  class="d-grid gap-2" 
+                        style="background-color: #EAEAEA;" >
+                                     
+                        <h4 style="font-size: medium; ">Desde </h4>
+                        <h4 > COP @item.costo /Dia.</h4>
+
+                        </label>
+                        </div>
 
 
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
+                </div>
 
-            <p class="card-text" style="font-size: 5px;">*Su reserva garantiza uno de los modelos de autos a
-                continuación,
-                sujeto a disponibilidad de la agencia.</p>
+                    <!-- Button para abrir el modal -->
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-primary" type="button"data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal-@(item.tipo_vehiculo.Replace(" ", "_"))">Elegir Grupo</button>
+                    </div>
 
-            <div style="text-align: center">
-                <h4>Costo : @item.costo</h4>
-
-                <!-- Button para abrir el modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal-@(item.tipo_vehiculo.Replace(" ", "_"))">
-                    Seleccionar Categoria
-                </button>
 
                 <!-- Modal con identificador único basado en el tipo de vehículo -->
                 <div class="modal fade" id="exampleModal-@(item.tipo_vehiculo.Replace(" ", "_"))" tabindex="-1"
@@ -102,22 +118,119 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <form asp-action="Datos_Reserva" asp-controller="Peticion" method="post">
 
-                                    <input type="text" name="fecha_ini" id="fecha_ini" value="@Model._Pet_Reserva.fecha_ini">
-                                    <input type="text" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_ini">
-                                    <input type="text" name="fecha_fin" id="fecha_fin" value="@Model._Pet_Reserva.fecha_fin">
-                                    <input type="text" name="hora_fin" id="hora_fin" value="@Model._Pet_Reserva.hora_fin">
+                                    <input type="hidden" name="fecha_ini" id="fecha_ini"
+                                        value="@Model._Pet_Reserva.fecha_ini">
+                                    <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_ini">
+                                    <input type="hidden" name="fecha_fin" id="fecha_fin"
+                                        value="@Model._Pet_Reserva.fecha_fin">
+                                    <input type="hidden" name="hora_fin" id="hora_fin" value="@Model._Pet_Reserva.hora_fin">
 
 
-                                    
+
                                     <button type="submit" class="btn btn-primary">Reservar</button>
                                     <input type="hidden" name="id_cate" id="id_cate" value="@item.id_categoria">
-                                    
+
                                 </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div style="text-align: center;">
+                    <button  type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Detalles
+                    </button>
+
+                    </div>
+                    <!-- Button trigger modal -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Detalles del vehículo</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container text-center">
+                                        <h3>Grupo A - Intermedio</h3><br><br>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-aire.png" alt="Aire" width="30" height="30"
+                                                        class="me-2">
+                                                    <h5>Aire acondicionado</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-persona.png" alt="Icono" width="30" height="30"
+                                                        class="me-2">
+                                                    <h5>5 personas</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-cambios.png" alt="Caja" width="30" height="30"
+                                                        class="me-2">
+                                                    <h5>Caja automática</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-direccion.png" alt="Dirección" width="30"
+                                                        height="30" class="me-2">
+                                                    <h5>Dirección asistida</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-elevavidios.png" alt="ElevaVidrios" width="30"
+                                                        height="30" class="me-2">
+                                                    <h5>Eleva vidrios</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-airbag.png" alt="Air-bag" width="30"
+                                                        height="30" class="me-2">
+                                                    <h5>Air bag</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-4 d-flex align-items-center">
+                                                    <img src="~/images/icono-peso.png" alt="Peso" width="30" height="30"
+                                                        class="me-2">
+                                                    <h5>Peso</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+
+               
             </div>
-        </div>
+        }
     </div>
-}
+    
+
+

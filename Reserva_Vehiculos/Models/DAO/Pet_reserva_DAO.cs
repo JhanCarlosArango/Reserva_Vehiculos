@@ -33,7 +33,7 @@ namespace Reserva_Vehiculos.Models.DAO
                     using (connection)
                     {
 
-                        var query = "SELECT * FROM public.pet_reserva ORDER BY id_pet_reserva ASC;";  // corregir, llamar un vista 
+                        var query = "SELECT * FROM pet_reserva where estado = 'wait' ORDER BY id_pet_reserva ASC;";  // corregir, llamar un vista 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
                             using (var dr = cmd.ExecuteReader())
@@ -74,7 +74,7 @@ namespace Reserva_Vehiculos.Models.DAO
 
         public void Guardar_Pet_reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int fk_id_categoria, int fk_id_usuario)
         {
-            list_pet = new List<Pet_reserva>();
+           // list_pet = new List<Pet_reserva>();
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
 
             if (connection != null)
@@ -115,6 +115,53 @@ namespace Reserva_Vehiculos.Models.DAO
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error al guardar Pet_Reserva: {ex.Message}");
+                }
+
+            }
+        }
+
+        public void Actualiza_estado(int id_pet_reserva)
+        {
+            int estado = -1;
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = "SELECT sp_estado_pet_reserva(@id_pet_reserva)";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+                                cmd.CommandType = CommandType.Text;
+
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@id_pet_reserva", id_pet_reserva);
+
+
+                                object result = cmd.ExecuteScalar();
+
+                                // Si el resultado no es nulo, conviértelo al tipo de datos correcto
+                                if (result != DBNull.Value && result != null)
+                                {
+                                    estado = Convert.ToInt32(result);
+                                }
+
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Actualiza_estado: {ex.Message}");
                 }
 
             }
