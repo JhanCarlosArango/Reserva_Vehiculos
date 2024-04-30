@@ -1,0 +1,48 @@
+﻿@model Obj_ViewModel 
+@{
+    ViewData["Title"] = "ListadoReserva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container text-center">
+    <h1>Listado de reservas</h1><br><br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Reserva #</th>
+                <th>Lugar de Retiro</th>
+                <th>Lugar de Devolucion</th>
+                <th>Fecha y Hora de Retiro</th>
+                <th>Fecha y Hora de Devolucion</th>
+                <th>Fecha de Confirmacion</th>
+                <th>Placa vehiculo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            
+            @foreach (var l_pet in Model._list_vehiculos)
+            {
+
+
+                <tr>
+                    <td></td>
+                    <td>---</td>
+                    <td>---</td>
+                   <td>@l_pet.num_placa </td> 
+                    <td>---</td>
+                    <td>---</td>
+                    <td> </td>
+                    <td>
+                        <a class="btn btn-danger" href="#">Cancelar reserva</a>
+                        <!--<a class="btn btn-info" href="#">Ver info Vehihculo</a>-->
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-lg">Guardar</button>
+</div>
+

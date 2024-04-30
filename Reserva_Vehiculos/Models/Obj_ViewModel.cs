@@ -16,6 +16,7 @@ namespace Reserva_Vehiculos.Models
         public Usuarios _user_{ get; set; }
         public Vehiculo _vehiculo{ get; set; }
         public List<Vehiculo> _list_vehiculos{ get; set; }
+        public List<Reserva> _list_reserva{ get; set; }
 
         public Obj_ViewModel()
         {
