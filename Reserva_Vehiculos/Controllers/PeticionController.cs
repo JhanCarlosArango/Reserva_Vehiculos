@@ -26,7 +26,7 @@ namespace Reserva_Vehiculos.Controllers
         {
             _IHttpContextAccessor = httpContextAccessor;
         }
-        public IActionResult peticion() // recibo user
+        public IActionResult peticion() 
         {
 
             return View();

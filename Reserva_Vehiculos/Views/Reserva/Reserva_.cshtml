@@ -39,8 +39,7 @@
 
                         @foreach (var item in Model._lis_Pet_Reserva)
                         {
-                            var _vehiculo =
-                            Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
+                            var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
                             <tr>
                                 <td>
                                     Lugar de Retiro: <br>
@@ -75,7 +74,7 @@
                                                     @foreach (var ite in _vehiculo)
                                                     {
                                                     <div class="columna">
-                                                        <ul class="list-group">
+                                                        <ul class="list-group"> 
                                                             <li class="list-group-item">
                                                                 <input class="form-check-input me-1" type="radio" name="selectedPlaca" value="@ite.num_placa" id="@ite.num_placa" required>
                                                                 <label class="form-check-label" for="@ite.num_placa">Número de Placa: @ite.num_placa</label>
