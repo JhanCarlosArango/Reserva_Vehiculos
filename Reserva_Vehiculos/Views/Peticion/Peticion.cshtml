@@ -1,4 +1,4 @@
-@model Usuarios
+
 @{
     ViewData["Title"] = "peticion";
 }
@@ -18,12 +18,8 @@
                             <a class="navbar-brand" asp-action="Login" asp-controller="User">Login</a>
                         </div>
                         <div class="navbar-brand">
-                            <img src="~/images/icono-proveedor.png" alt="icono-proveedor" width="20" height="20" />
-                            <a class="navbar-brand" href="#">Quiero ser proveedor</a>
-                        </div>
-                        <div class="navbar-brand">
                             <img src="~/images/icono-carro.png" alt="icono-carro" width="20" height="20" />
-                            <a class="navbar-brand" href="#">Mis reservas</a>
+                            <a class="navbar-brand" asp-action="MisReservas" asp-controller="ListadoReserva">Mis reservas</a>
                         </div>
                     </div>
 
@@ -77,7 +73,7 @@
                     </div>
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
 
-                        <input name="id_user" id="id_user" type="hidden" value="@Model.id_user">
+
                         <button type="submit" class="btn btn-primary">Seguir</button>
 
                     </div>

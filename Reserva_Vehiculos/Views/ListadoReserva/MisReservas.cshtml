@@ -1,0 +1,39 @@
+@model Obj_ViewModel
+@{
+    ViewData["Title"] = "MisReservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- realizar inner JOIN para mostara la el ligar de la consulta de REservas para admin y para usuarios-->
+<div class="container text-center">
+    <h1>Listado de reservas</h1><br><br>
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Fin</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de Fin</th>
+            <th>Fecha de Aceptación</th>
+            <th>Número de Placa</th>
+            <th>Acciones</th>
+        </tr>
+        @for (int i = 0; i < Model._lis_Pet_Reserva.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model._lis_Pet_Reserva[i].fecha_ini</td>
+                <td>@Model._lis_Pet_Reserva[i].fecha_fin</td>
+                <td>@Model._lis_Pet_Reserva[i].hora_ini</td>
+                <td>@Model._lis_Pet_Reserva[i].hora_fin</td>
+                <td>@Model._list_reserva[i].acep_fecha</td>
+                <td>@Model._list_vehiculos[i].num_placa</td>
+                <td>
+                    <a class="btn btn-danger" href="#">Cancelar reserva</a>
+                    <!--<a class="btn btn-info" href="#">Ver info Vehículo</a>-->
+                </td>
+            </tr>
+        }
+    </table>
+    <button type="button" class="btn btn-primary btn-lg">Guardar</button>
+</div>

@@ -21,9 +21,15 @@ namespace Reserva_Vehiculos.Controllers
         Reserva_DAO reserva_DAO = new Reserva_DAO();
         public IActionResult ListadoReserva()
         {
+            var viewModel = reserva_DAO.Listar_Reservas_para_admin();
+            return View(viewModel);
+        }
+
+
+        public IActionResult MisReservas()
+        {
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
             var viewModel = reserva_DAO.Listar_Reservas(usuario_session);
-
             return View(viewModel);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
