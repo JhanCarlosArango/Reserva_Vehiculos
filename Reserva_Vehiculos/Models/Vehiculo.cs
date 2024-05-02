@@ -21,10 +21,10 @@ namespace Reserva_Vehiculos.Models
         }
 
 // se listan todos los vehiculos
-        public List<Vehiculo> Flitar_veiculos_categoria(List<Vehiculo> lista, int idCategoria) //Filtar vehiculos 
-        {
-            return lista.Where(elemento => elemento.fk_id_categoria == idCategoria).ToList();
-        }
+        //public List<Vehiculo> Flitar_veiculos_categoria(List<Vehiculo> lista, int idCategoria) //Filtar vehiculos 
+        //{
+        //    return lista.Where(elemento => elemento.fk_id_categoria == idCategoria).ToList();
+        //}
 
     }
 }
