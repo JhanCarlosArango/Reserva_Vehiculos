@@ -32,34 +32,35 @@ namespace Reserva_Vehiculos.Controllers
             pet_Reserva_ = pet_Reserva_D.ListarPeticion();
             vehiculos = vehiculo_DAO.ListarVehiculo();
 
-            DateOnly ini = new DateOnly(2024, 04, 10);
-            DateOnly fin = new DateOnly(2024, 05, 03);
-            var lista = vehiculo_DAO.ListarVehiculo_Disponibles(6, ini, fin);
+            //DateOnly ini = new DateOnly(2024, 04, 10);
+            //DateOnly fin = new DateOnly(2024, 05, 03);
+            //var lista = vehiculo_DAO.ListarVehiculo_Disponibles(6, ini, fin);
 
-            foreach (var ite in lista)
-            {
-                Console.WriteLine("placa " + ite.num_placa + "cate" + ite.fk_id_categoria);
-            }
+            //foreach (var ite in lista)
+            //{
+            //    Console.WriteLine("placa " + ite.num_placa + "cate" + ite.fk_id_categoria);
+            //}
 
             Obj_ViewModel _ViewModel = new Obj_ViewModel()
             {
                 _lis_Pet_Reserva = pet_Reserva_,
                 _list_vehiculos = vehiculos,
-                _vehiculo = vehiculo
+                _vehiculo = vehiculo,
+                _vehiculo_DAO = vehiculo_DAO
 
             };
             return View(_ViewModel);
         }
 
 
-        public List<Vehiculo> FiltrarVehiculosPorCategoria(int categoriaId)
-        {
-            vehiculo = new Vehiculo();
-            vehiculo_DAO = new Vehiculo_DAO();
-            vehiculos = vehiculo_DAO.ListarVehiculo();
-
-            return vehiculo.Flitar_veiculos_categoria(vehiculos, categoriaId);
-        }
+        //public List<Vehiculo> FiltrarVehiculosPorCategoria(int categoriaId)
+        //{
+        //    vehiculo = new Vehiculo();
+        //    vehiculo_DAO = new Vehiculo_DAO();
+        //    vehiculos = vehiculo_DAO.ListarVehiculo();
+//
+        //    return vehiculo.Flitar_veiculos_categoria(vehiculos, categoriaId);
+        //}
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

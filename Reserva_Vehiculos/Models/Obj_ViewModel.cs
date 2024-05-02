@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Reserva_Vehiculos.Models.DAO;
 
 namespace Reserva_Vehiculos.Models
 {
@@ -17,6 +18,7 @@ namespace Reserva_Vehiculos.Models
         public Vehiculo _vehiculo{ get; set; }
         public List<Vehiculo> _list_vehiculos{ get; set; }
         public List<Reserva> _list_reserva{ get; set; }
+        public Vehiculo_DAO _vehiculo_DAO{ get; set; }
 
         public Obj_ViewModel()
         {

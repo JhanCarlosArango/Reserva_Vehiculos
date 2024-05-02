@@ -39,7 +39,8 @@
 
                         @foreach (var item in Model._lis_Pet_Reserva)
                         {
-                            var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
+                            //var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
+                            var _vehiculoDIS = Model._vehiculo_DAO.ListarVehiculo_Disponibles(item.fk_id_categoria,item.fecha_ini,item.fecha_fin);
                             <tr>
                                 <td>
                                     Lugar de Retiro: <br>
@@ -71,7 +72,7 @@
                                                 </div>
                                                      <form asp-action="Reserva_AXU" asp-controller="Reserva" method="post">
                                                 <div class="modal-body">
-                                                    @foreach (var ite in _vehiculo)
+                                                    @foreach (var ite in _vehiculoDIS)
                                                     {
                                                     <div class="columna">
                                                         <ul class="list-group"> 
