@@ -24,20 +24,31 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="col-md-6 d-flex align-items-center justify-content-end">
                         <div class="row">
                             <div class="col-md-10 mb-2">
                                 <div class="form-floating">
-                                    <select class="form-select" id="ubicacionDropdown" aria-label="Ubicación" required>
+                                    <select class="form-select" id="ubicacionDropdown" aria-label="Ubicación"
+                                        onchange="enviarSeleccion()">
                                         <option></option>
                                         @foreach (var item in Model)
                                         {
-
                                             <option value="@item.id_ubicacion">@item.ubicacion</option>
                                         }
                                     </select>
+                                    <script>
+                                        function enviarSeleccion() {
+                                            var select = document.getElementById("ubicacionDropdown");
+                                            var idSeleccionado = select.options[select.selectedIndex].value;
+                                            // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                            document.getElementById("id_ubicacion").value = idSeleccionado;
+                                            // Puedes enviar el formulario aquí si es necesario
+                                        }
+                                    </script>
+                                    <input type="hidden" name="id_ubicacion" id="id_ubicacion">
+
                                     <label for="ubicacionDropdown">Lugar de Retirada</label>
                                 </div>
                             </div>
@@ -56,15 +67,24 @@
                         <div class="row">
                             <div class="col-md-10 mb-2">
                                 <div class="form-floating">
-                                    <select class="form-select" id="ubicacionDropdown2" aria-label="Ubicación" required>
+                                    <select class="form-select" id="ubicacionDropdown_fi" aria-label="Ubicación"
+                                        onchange="enviarSeleccion_fi()">
                                         <option></option>
                                         @foreach (var item in Model)
                                         {
-
                                             <option value="@item.id_ubicacion">@item.ubicacion</option>
                                         }
-
                                     </select>
+                                    <script>
+                                        function enviarSeleccion_fi() {
+                                            var select = document.getElementById("ubicacionDropdown_fi");
+                                            var idSeleccionado = select.options[select.selectedIndex].value;
+                                            // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                            document.getElementById("id_ubicacion_fin").value = idSeleccionado;
+                                            // Puedes enviar el formulario aquí si es necesario
+                                        }
+                                    </script>
+                                    <input type="hidden" name="id_ubicacion_fin" id="id_ubicacion_fin">
                                     <label for="ubicacionDropdown2">Lugar de Devolucion</label>
                                 </div>
                             </div>

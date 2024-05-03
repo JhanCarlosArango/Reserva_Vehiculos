@@ -37,13 +37,13 @@ namespace Reserva_Vehiculos.Controllers
         // Paso 1 esta en la vista peticion.cshtml
         [HttpPost]
 
-        public IActionResult peticion(DateOnly fechaini, String hora_ini, DateOnly fechafin, String hora_fin, int Ubi_recojida, int Ubi_devolucion)// Paso 2
+        public IActionResult peticion(DateOnly fechaini, String hora_ini, DateOnly fechafin, String hora_fin, int id_ubicacion, int id_ubicacion_fin)// Paso 2
         {
-            if (!Ubi_recojida.Equals("") && !Ubi_devolucion.Equals(""))
+            if (!id_ubicacion.Equals("") && !id_ubicacion_fin.Equals(""))
             {
 
-                Console.WriteLine("Recojida " + Ubi_recojida);
-                Console.WriteLine("DEvolucion " + Ubi_devolucion);
+                Console.WriteLine("Recojida " + id_ubicacion);
+                Console.WriteLine("DEvolucion " + id_ubicacion_fin);
             }
             else
             {
@@ -70,8 +70,8 @@ namespace Reserva_Vehiculos.Controllers
             _Reserva.hora_ini = hora_ini;
             _Reserva.hora_fin = hora_fin;
 
-            _Reserva.fk_id_ubicacion_inicial = Ubi_recojida;
-            _Reserva.fk_id_ubicacion_final = Ubi_devolucion;
+            _Reserva.fk_id_ubicacion_inicial = id_ubicacion;
+            _Reserva.fk_id_ubicacion_final = id_ubicacion_fin;
             Console.WriteLine("Dias de arquiler :" + _Reserva.temp_costo);
             return RedirectToAction("categoria_view", "Categoria", _Reserva); // Paso 3 esta en la vista categoria_view
         }
