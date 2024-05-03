@@ -28,7 +28,6 @@ namespace Reserva_Vehiculos.Controllers
         }
         public IActionResult Login()
         {
-            //view
             return View();
         }
 
@@ -66,7 +65,7 @@ namespace Reserva_Vehiculos.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("peticion", "Peticion", user); //Envio el usuario
+                return RedirectToAction("peticion", "Peticion"); //Envio el usuario
             }
             else
             {
@@ -74,6 +73,7 @@ namespace Reserva_Vehiculos.Controllers
                 ModelState.AddModelError(string.Empty, "Credenciales inválidas");
                 return View();
             }
+
         }
 
         public async Task<IActionResult> Logout()

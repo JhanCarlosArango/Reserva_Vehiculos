@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Reserva_Vehiculos.Models
 {
-    public class Pet_reserva
+     public class Pet_reserva
     {
         public int id_pet_reserva { set; get; }
         public DateOnly fecha_ini { set; get; }
@@ -26,18 +26,20 @@ namespace Reserva_Vehiculos.Models
         public String fecha1 { set; get; }
         public int fk_id_categoria { set; get; }
         public int fk_id_usuario { set; get; }
-        public String ubicacion_inicial { set; get; }
-        public String ubicacion_final { set; get; }
+        public int fk_id_ubicacion_inicial { set; get; }
+        public int fk_id_ubicacion_final { set; get; }
         public Pet_reserva()
         {
 
         }
-        public Pet_reserva(DateOnly fecha_ini, DateOnly fecha_fin, String hora_ini, String hora_fin)
+        public Pet_reserva(DateOnly fecha_ini, DateOnly fecha_fin, String hora_ini, String hora_fin,int fk_id_ubicacion_inicial, int fk_id_ubicacion_final)
         {
             this.fecha_ini = fecha_ini;
             this.fecha_fin = fecha_fin;
             this.hora_ini = hora_ini;
             this.hora_fin = hora_fin;
+            this.fk_id_ubicacion_inicial = fk_id_ubicacion_inicial;
+            this.fk_id_ubicacion_final = fk_id_ubicacion_final;
         }
 
 

@@ -17,7 +17,8 @@ namespace Reserva_Vehiculos.Controllers
         Persona_DAO persona_DAO;
         Pet_reserva_DAO _Reserva_DAO;
         Usuario_DAO _Usuario_DAO;
-
+        Ubicacion_DAO _ubi_DAO;
+        List<Ubicacion> _ubi;
         Persona per;
         DateTime fecha_i;
         DateTime fecha_f;
@@ -26,16 +27,29 @@ namespace Reserva_Vehiculos.Controllers
         {
             _IHttpContextAccessor = httpContextAccessor;
         }
-        public IActionResult peticion() 
+        public IActionResult peticion()
         {
-
-            return View();
+            _ubi_DAO = new Ubicacion_DAO();
+            _ubi = _ubi_DAO.listar_ubicacion();
+            ////aqui llamo ubicacin
+            return View(_ubi);
         }
         // Paso 1 esta en la vista peticion.cshtml
         [HttpPost]
 
-        public IActionResult peticion(DateOnly fechaini, String hora_ini, DateOnly fechafin, String hora_fin)// Paso 2
+        public IActionResult peticion(DateOnly fechaini, String hora_ini, DateOnly fechafin, String hora_fin, int Ubi_recojida, int Ubi_devolucion)// Paso 2
         {
+            if (!Ubi_recojida.Equals("") && !Ubi_devolucion.Equals(""))
+            {
+
+                Console.WriteLine("Recojida " + Ubi_recojida);
+                Console.WriteLine("DEvolucion " + Ubi_devolucion);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Debe Selecionar la ubiacion");
+                return View();
+            }
             _Reserva = new Pet_reserva();
             string fechainiStr = fechaini.ToString();
 
@@ -56,13 +70,15 @@ namespace Reserva_Vehiculos.Controllers
             _Reserva.hora_ini = hora_ini;
             _Reserva.hora_fin = hora_fin;
 
+            _Reserva.fk_id_ubicacion_inicial = Ubi_recojida;
+            _Reserva.fk_id_ubicacion_final = Ubi_devolucion;
             Console.WriteLine("Dias de arquiler :" + _Reserva.temp_costo);
             return RedirectToAction("categoria_view", "Categoria", _Reserva); // Paso 3 esta en la vista categoria_view
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate)
+        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, int Ubi_recojida, int Ubi_devolucion)
         {
             persona_DAO = new Persona_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
@@ -72,7 +88,7 @@ namespace Reserva_Vehiculos.Controllers
             var viewModel_1 = new Obj_ViewModel
             {
 
-                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin), // este contexto
+                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin, Ubi_recojida, Ubi_devolucion), // este contexto
                 categoria = new Categoria(int.Parse(id_cate)),
                 _persona = per
             };
@@ -80,7 +96,7 @@ namespace Reserva_Vehiculos.Controllers
             return View(viewModel_1);
         }
 
-        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria)
+        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria, int Ubi_recojida, int Ubi_devolucion)
         {
             _Usuario_DAO = new Usuario_DAO();
             _Reserva_DAO = new Pet_reserva_DAO();
@@ -88,7 +104,7 @@ namespace Reserva_Vehiculos.Controllers
 
             int id_usuario = _Usuario_DAO.Obtener_ID_usuario(usuario_session);
 
-            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, id_categoria, id_usuario);
+            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, Ubi_recojida, Ubi_devolucion, id_categoria, id_usuario);
 
             return RedirectToAction("peticion", "Peticion");
         }

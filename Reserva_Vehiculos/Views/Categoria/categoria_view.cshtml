@@ -71,7 +71,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                Lugar de Retiro:
+                                                Lugar de Retiro: @Model._Pet_Reserva.fk_id_ubicacion_inicial
                                                 <br>
                                                 Fecha: @Model._Pet_Reserva.fecha_ini
                                                 <br>
@@ -88,7 +88,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Lugar de Devolucion:
+                                                Lugar de Devolucion: @Model._Pet_Reserva.fk_id_ubicacion_final
                                                 <br>
                                                 Fecha: @Model._Pet_Reserva.fecha_fin
                                                 <br>
@@ -118,12 +118,12 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <form asp-action="Datos_Reserva" asp-controller="Peticion" method="post">
 
-                                    <input type="hidden" name="fecha_ini" id="fecha_ini"
-                                        value="@Model._Pet_Reserva.fecha_ini">
+                                    <input type="hidden" name="fecha_ini" id="fecha_ini" value="@Model._Pet_Reserva.fecha_ini">
                                     <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_ini">
-                                    <input type="hidden" name="fecha_fin" id="fecha_fin"
-                                        value="@Model._Pet_Reserva.fecha_fin">
+                                    <input type="hidden" name="fecha_fin" id="fecha_fin" value="@Model._Pet_Reserva.fecha_fin">
                                     <input type="hidden" name="hora_fin" id="hora_fin" value="@Model._Pet_Reserva.hora_fin">
+                                    <input type="hidden" name="Ubi_recojida" id="Ubi_recojida" value="@Model._Pet_Reserva.fk_id_ubicacion_inicial">
+                                    <input type="hidden" name="Ubi_devolucion" id="Ubi_devolucion" value="@Model._Pet_Reserva.fk_id_ubicacion_final">
 
 
 

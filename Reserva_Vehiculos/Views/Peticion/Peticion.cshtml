@@ -1,8 +1,8 @@
-
+@model List<Ubicacion>
 @{
     ViewData["Title"] = "peticion";
 }
-
+@using Reserva_Vehiculos.Models.DAO;
 <form asp-action="peticion" asp-controller="Peticion" method="post">
     <nav id="mi-navbar" class="navbar navbar-expand-lg navbar-light bg-ligh">
         <fieldset>
@@ -19,19 +19,24 @@
                         </div>
                         <div class="navbar-brand">
                             <img src="~/images/icono-carro.png" alt="icono-carro" width="20" height="20" />
-                            <a class="navbar-brand" asp-action="MisReservas" asp-controller="ListadoReserva">Mis reservas</a>
+                            <a class="navbar-brand" asp-action="MisReservas" asp-controller="ListadoReserva">Mis
+                                reservas</a>
                         </div>
                     </div>
 
+                    
 
                     <div class="col-md-6 d-flex align-items-center justify-content-end">
                         <div class="row">
                             <div class="col-md-10 mb-2">
                                 <div class="form-floating">
-                                    <select class="form-select" id="ubicacionDropdown" aria-label="Ubicación">
-                                        <option value="La Libertad">La Libertad</option>
-                                        <option value="El Mirador">El Mirador</option>
-                                        <option value="Brisas Altas">Brisas Altas</option>
+                                    <select class="form-select" id="ubicacionDropdown" aria-label="Ubicación" required>
+                                        <option></option>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <option value="@item.id_ubicacion">@item.ubicacion</option>
+                                        }
                                     </select>
                                     <label for="ubicacionDropdown">Lugar de Retirada</label>
                                 </div>
@@ -51,10 +56,14 @@
                         <div class="row">
                             <div class="col-md-10 mb-2">
                                 <div class="form-floating">
-                                    <select class="form-select" id="ubicacionDropdown2" aria-label="Ubicación">
-                                        <option value="La Libertad">La Libertad</option>
-                                        <option value="El Mirador">El Mirador</option>
-                                        <option value="Brisas Altas">Brisas Altas</option>
+                                    <select class="form-select" id="ubicacionDropdown2" aria-label="Ubicación" required>
+                                        <option></option>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <option value="@item.id_ubicacion">@item.ubicacion</option>
+                                        }
+
                                     </select>
                                     <label for="ubicacionDropdown2">Lugar de Devolucion</label>
                                 </div>

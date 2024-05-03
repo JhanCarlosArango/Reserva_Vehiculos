@@ -72,7 +72,7 @@ namespace Reserva_Vehiculos.Models.DAO
             return list_pet;
         }
 
-        public void Guardar_Pet_reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int fk_id_categoria, int fk_id_usuario)
+        public void Guardar_Pet_reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin,int fk_id_ubicacion_inicial,int fk_id_ubicacion_final, int fk_id_categoria, int fk_id_usuario)
         {
            // list_pet = new List<Pet_reserva>();
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
@@ -97,9 +97,8 @@ namespace Reserva_Vehiculos.Models.DAO
                                 cmd.Parameters.AddWithValue("hora_fin", hora_fin);
                                 cmd.Parameters.AddWithValue("fk_id_categoria", fk_id_categoria);
                                 cmd.Parameters.AddWithValue("fk_id_usuario", fk_id_usuario);
-                                // falta agregarlos al procedimientio
-                                //cmd.Parameters.AddWithValue("fk_id_ubicacion_inicial", fk_id_usuario);
-                                //cmd.Parameters.AddWithValue("fk_id_ubicacion_final", fk_id_usuario);
+                                cmd.Parameters.AddWithValue("fk_id_ubicacion_inicial", fk_id_ubicacion_inicial);
+                                cmd.Parameters.AddWithValue("fk_id_ubicacion_final", fk_id_ubicacion_final);
                                 // Ejecuta el procedimiento almacenado
                                 cmd.ExecuteNonQuery();
 
