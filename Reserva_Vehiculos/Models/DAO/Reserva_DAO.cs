@@ -80,7 +80,7 @@ namespace Reserva_Vehiculos.Models.DAO
                     using (connection)
                     {
 
-                        var query = "select pr.fk_id_ubicacion_inicial,pr.fk_id_ubicacion_final,pr.hora_ini,pr.hora_fin,r.acep_fecha,r.fk_num_placa from usuario u inner join pet_reserva pr on u.id_usuario = pr.fk_id_usuario inner join reserva r ON r.fk_id_pet_reserva = pr.id_pet_reserva where u.usuario = @usuario;";  // corregir, llamar un vista 
+                        var query = "select pr.fk_id_ubicacion_inicial,pr.fk_id_ubicacion_final,pr.fecha_ini,pr.fecha_fin,pr.hora_ini,pr.hora_fin,r.acep_fecha,r.fk_num_placa from usuario u inner join pet_reserva pr on u.id_usuario = pr.fk_id_usuario inner join reserva r ON r.fk_id_pet_reserva = pr.id_pet_reserva where u.usuario = @usuario;";  // corregir, llamar un vista 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
                             cmd.Parameters.AddWithValue("@usuario", usuario);
@@ -92,8 +92,11 @@ namespace Reserva_Vehiculos.Models.DAO
                                     _vehi = new Vehiculo();
                                     _pet = new Pet_reserva();
 
-                                    //  _pet. = dr["hora_ini"].ToString(); aqui van las ubicaciones
-                                    //  _pet. = dr["hora_ini"].ToString();
+                                    string fecha_IniString = dr["fecha_ini"].ToString();
+                                    string fecha_FinString = dr["fecha_fin"].ToString();
+
+                                    _pet.fecha_ini = DateOnly.Parse(_pet.ObtenerPrimeraParteSeparadaPorEspacio(fecha_IniString));
+                                    _pet.fecha_fin = DateOnly.Parse(_pet.ObtenerPrimeraParteSeparadaPorEspacio(fecha_FinString));
                                     _pet.hora_ini = dr["hora_ini"].ToString();
                                     _pet.hora_fin = dr["hora_fin"].ToString();
 
