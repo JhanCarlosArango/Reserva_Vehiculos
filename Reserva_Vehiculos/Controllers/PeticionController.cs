@@ -78,7 +78,7 @@ namespace Reserva_Vehiculos.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, int Ubi_recojida, int Ubi_devolucion)
+        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final)
         {
             persona_DAO = new Persona_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
@@ -88,7 +88,7 @@ namespace Reserva_Vehiculos.Controllers
             var viewModel_1 = new Obj_ViewModel
             {
 
-                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin, Ubi_recojida, Ubi_devolucion), // este contexto
+                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final), // este contexto
                 categoria = new Categoria(int.Parse(id_cate)),
                 _persona = per
             };
@@ -96,7 +96,7 @@ namespace Reserva_Vehiculos.Controllers
             return View(viewModel_1);
         }
 
-        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria, int Ubi_recojida, int Ubi_devolucion)
+        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final)
         {
             _Usuario_DAO = new Usuario_DAO();
             _Reserva_DAO = new Pet_reserva_DAO();
@@ -104,7 +104,7 @@ namespace Reserva_Vehiculos.Controllers
 
             int id_usuario = _Usuario_DAO.Obtener_ID_usuario(usuario_session);
 
-            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, Ubi_recojida, Ubi_devolucion, id_categoria, id_usuario);
+            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario);
 
             return RedirectToAction("peticion", "Peticion");
         }
