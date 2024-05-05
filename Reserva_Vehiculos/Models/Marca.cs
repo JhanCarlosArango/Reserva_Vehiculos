@@ -7,7 +7,7 @@ namespace Reserva_Vehiculos.Models
 {
     public class Marca
     {
-        int id_marca { get; set; }
-        String nombre_marca { get; set; }
+        public int id_marca { get; set; }
+        public String nombre_marca { get; set; }
     }
 }

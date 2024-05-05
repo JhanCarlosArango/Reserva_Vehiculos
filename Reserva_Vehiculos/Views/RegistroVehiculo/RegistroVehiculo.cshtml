@@ -1,9 +1,10 @@
-﻿@{
+﻿@model Obj_View_Vehiculo
+@{
     ViewData["Title"] = "RegistroVehiculo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form>
+<form method="post">
     <div class="container text-center">
         <h1>Registro de vehículos</h1><br>
         <div class="row justify-content-center">
@@ -12,9 +13,12 @@
                     <div class="form-floating">
                         <select class="form-select" id="floatingSelectCategoria"
                             aria-label="Floating label select example">
-                            <option value="1">Categoría A</option>
-                            <option value="2">Categoría B</option>
-                            <option value="3">Categoría C</option>
+                            <option ></option>
+                            @foreach(var item in Model.ListaCategorias){
+
+                            <option value="@item.id_categoria">@item.tipo_vehiculo</option>
+                            }
+
                         </select>
                         <label for="floatingSelectCategoria">Categoría</label>
                     </div>
@@ -24,10 +28,11 @@
                 <div class="form-group mb-4">
                     <div class="form-floating">
                         <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option selected>Chevrolet</option>
-                            <option value="1">Suzuki</option>
-                            <option value="2">BMW</option>
-                            <option value="3">Ford</option>
+                           <option ></option>
+                            @foreach(var item in Model.ListaMarca){
+
+                            <option value="@item.id_marca">@item.nombre_marca</option>
+                            }
                         </select>
                         <label for="floatingSelect">Marca</label>
                     </div>
