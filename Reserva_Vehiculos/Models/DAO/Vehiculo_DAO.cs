@@ -56,7 +56,7 @@ namespace Reserva_Vehiculos.Models.DAO
         public List<Vehiculo> ListarVehiculo_Disponibles(int fk_id_categoria, DateOnly fecha_ini, DateOnly fecha_fin)
         {
             string consulta = @"
-            SELECT *
+                        SELECT *
             FROM (
                 SELECT v.num_placa, v.fk_id_categoria
                 FROM vehiculo v
@@ -67,10 +67,7 @@ namespace Reserva_Vehiculos.Models.DAO
                     WHERE pr.fecha_ini >= @fecha_ini or pr.fecha_fin <= @fecha_fin
                 )
             ) AS subconsulta
-            WHERE subconsulta.fk_id_categoria = @fk_id_categoria;
-";
-
-
+            WHERE subconsulta.fk_id_categoria = @fk_id_categoria;";
             list_vehiculo = new List<Vehiculo>();
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
             try
@@ -104,3 +101,13 @@ namespace Reserva_Vehiculos.Models.DAO
         }
     }
 }
+
+                  //      SELECT *
+                  //          FROM (
+                  //              SELECT v.num_placa, v.fk_id_categoria
+                  //              FROM vehiculo v
+                  //              WHERE v.num_placa NOT IN (
+                  //                 SELECT * FROM disponible_vehi(@fecha_ini, @fecha_fin)
+                  //              )
+                  //          ) AS subconsulta
+                  //          WHERE subconsulta.fk_id_categoria = @fk_id_categoria;

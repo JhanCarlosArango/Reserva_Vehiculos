@@ -17,7 +17,7 @@ namespace Reserva_Vehiculos.Controllers
         Pet_reserva_DAO pet_Reserva_D;
         Vehiculo_DAO vehiculo_DAO;
         List<Pet_reserva> pet_Reserva_;
-        List<Vehiculo> vehiculos;
+        //List<Vehiculo> vehiculos;
         Reserva_DAO _reserva_DAO;
         Vehiculo vehiculo;
 
@@ -30,7 +30,7 @@ namespace Reserva_Vehiculos.Controllers
 
 
             pet_Reserva_ = pet_Reserva_D.ListarPeticion();
-            vehiculos = vehiculo_DAO.ListarVehiculo();
+            //vehiculos = vehiculo_DAO.ListarVehiculo();
 
             //DateOnly ini = new DateOnly(2024, 04, 10);
             //DateOnly fin = new DateOnly(2024, 05, 03);
@@ -44,7 +44,7 @@ namespace Reserva_Vehiculos.Controllers
             Obj_ViewModel _ViewModel = new Obj_ViewModel()
             {
                 _lis_Pet_Reserva = pet_Reserva_,
-                _list_vehiculos = vehiculos,
+                //_list_vehiculos = vehiculos,
                 _vehiculo = vehiculo,
                 _vehiculo_DAO = vehiculo_DAO
 

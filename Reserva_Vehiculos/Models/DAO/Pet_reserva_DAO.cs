@@ -97,8 +97,8 @@ namespace Reserva_Vehiculos.Models.DAO
                                 cmd.Parameters.AddWithValue("hora_fin", hora_fin);
                                 cmd.Parameters.AddWithValue("fk_id_categoria", fk_id_categoria);
                                 cmd.Parameters.AddWithValue("fk_id_usuario", fk_id_usuario);
-                                cmd.Parameters.AddWithValue("fk_id_ubicacion_inicial", fk_id_ubicacion_inicial);
-                                cmd.Parameters.AddWithValue("fk_id_ubicacion_final", fk_id_ubicacion_final);
+                                cmd.Parameters.AddWithValue("fk_id_ubicacion_ini", fk_id_ubicacion_inicial);
+                                cmd.Parameters.AddWithValue("fk_id_ubicacion_fin", fk_id_ubicacion_final);
                                 // Ejecuta el procedimiento almacenado
                                 cmd.ExecuteNonQuery();
 

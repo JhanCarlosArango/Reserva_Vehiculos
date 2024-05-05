@@ -1,16 +1,17 @@
 CREATE OR REPLACE PROCEDURE insertar_datos_pet(
-    fecha_ini DATE,
-    fecha_fin DATE,
-    hora_ini VARCHAR(20),
-    hora_fin VARCHAR(20),
-    fk_id_categoria INT,
-    fk_id_usuario INT
-)
+	IN fecha_ini date,
+	IN fecha_fin date,
+	IN hora_ini character varying,
+	IN hora_fin character varying,
+	IN fk_id_categoria integer,
+	IN fk_id_usuario integer,
+	IN fk_id_ubicacion_ini integer,
+	IN fk_id_ubicacion_fin integer)
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario)
-    VALUES (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario);
+    INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin)
+    VALUES (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin);
     
     COMMIT;
     
@@ -47,12 +48,49 @@ VALUES ('Test', current_timestamp);
 A mostrar ese valor en un formato diferente cambie la configuración de su cliente SQL o formatee el valor al seleccionar los datos:
 
 select name, to_char(createddate, ''yyyymmdd hh:mi:ss tt') as created_date
-from "Group"
+from "Group";'
+
+--- disponibilidad de vehiculo
+CREATE OR REPLACE FUNCTION disponible_vehi(fecha_inicio_param DATE, fecha_fin_param DATE) RETURNS SETOF VARCHAR(10) AS $$
+DECLARE
+    placa_ini_list VARCHAR(10)[];
+    placa_fin_list VARCHAR(10)[];
+BEGIN
+    -- Encuentra las placas de los vehículos reservados cuyas fechas de inicio están después de la fecha de inicio proporcionada
+    SELECT array_agg(r.fk_num_placa) INTO placa_ini_list
+    FROM reserva r
+    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
+    WHERE pr.fecha_ini >= fecha_inicio_param;
+
+    -- Encuentra las placas de los vehículos reservados cuyas fechas de finalización están antes de la fecha de finalización proporcionada
+    SELECT array_agg(r.fk_num_placa) INTO placa_fin_list
+    FROM reserva r
+    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
+    WHERE pr.fecha_fin <= fecha_fin_param;
+
+    -- Devuelve las placas coincidentes
+    RETURN QUERY SELECT UNNEST(placa_ini_list) INTERSECT SELECT UNNEST(placa_fin_list);
+END;
+$$ LANGUAGE plpgsql;
 
 
+SELECT * FROM disponible_vehi('2024-05-08', '2024-05-26');
 
 
+"
+para demostracion
+    -- placas de los vehículos reservados cuyas fechas de inicio  sean mayores de la peticion actual
+    SELECT r.fk_num_placa 
+    FROM reserva r
+    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
+    WHERE pr.fecha_ini >= '2024-05-14';
 
+    -- placas de los vehículos reservados cuyas fechas de finalización sean menores de la peticion actual
+    SELECT r.fk_num_placa
+    FROM reserva r
+    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
+    WHERE pr.fecha_fin <= '2024-05-24';
+"
 
 
 
