@@ -13,6 +13,8 @@ namespace Reserva_Vehiculos.Models.DAO
         public List<Reserva> l_reserva;
         public List<Vehiculo> l_vehi;
         public List<Pet_reserva> l_pet;
+        public List<Ubicacion> l_ubit;
+        public Ubicacion _ubi;
         public Reserva _reserva;
         public Vehiculo _vehi;
         public Pet_reserva _pet;
@@ -68,6 +70,7 @@ namespace Reserva_Vehiculos.Models.DAO
             l_reserva = new List<Reserva>();
             l_vehi = new List<Vehiculo>();
             l_pet = new List<Pet_reserva>();
+            l_ubit = new List<Ubicacion>();
 
 
 
@@ -82,8 +85,8 @@ namespace Reserva_Vehiculos.Models.DAO
 
                         var query = @"
                                       select 
-                                    ubicacion_ini.nombre_barrio,
-                                    ubicacion_fin.nombre_barrio,
+                                    ubicacion_ini.nombre_barrio as recojida,
+                                    ubicacion_fin.nombre_barrio as devolucion,
                                     pr.fecha_ini,
                                     pr.fecha_fin,
                                     pr.hora_ini,
@@ -106,6 +109,12 @@ namespace Reserva_Vehiculos.Models.DAO
                                     _reserva = new Reserva();
                                     _vehi = new Vehiculo();
                                     _pet = new Pet_reserva();
+                                    _ubi = new Ubicacion();
+
+
+                                    _ubi.Ubicacion_ini = dr["recojida"].ToString();
+                                    _ubi.ubicacion_fin = dr["devolucion"].ToString();
+
 
                                     string fecha_IniString = dr["fecha_ini"].ToString();
                                     string fecha_FinString = dr["fecha_fin"].ToString();
@@ -121,6 +130,7 @@ namespace Reserva_Vehiculos.Models.DAO
                                     l_reserva.Add(_reserva);
                                     l_vehi.Add(_vehi);
                                     l_pet.Add(_pet);
+                                    l_ubit.Add(_ubi);
                                 }
                             }
                         }
@@ -139,9 +149,11 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             var viewModel = new Obj_ViewModel
             {
+
                 _lis_Pet_Reserva = l_pet,
                 _list_vehiculos = l_vehi,
-                _list_reserva = l_reserva
+                _list_reserva = l_reserva,
+                _list_ubicaion = l_ubit
 
             };
             return viewModel;
@@ -152,6 +164,7 @@ namespace Reserva_Vehiculos.Models.DAO
             l_reserva = new List<Reserva>();
             l_vehi = new List<Vehiculo>();
             l_pet = new List<Pet_reserva>();
+            l_ubit = new List<Ubicacion>();
 
 
 
@@ -165,8 +178,8 @@ namespace Reserva_Vehiculos.Models.DAO
                     {
 
                         var query = @"select 
-                                    ubicacion_ini.nombre_barrio,
-                                    ubicacion_fin.nombre_barrio,
+                                    ubicacion_ini.nombre_barrio  as recojida,
+                                    ubicacion_fin.nombre_barrio  as devolucion,
                                     pr.fecha_ini,
                                     pr.fecha_fin,
                                     pr.hora_ini,
@@ -187,9 +200,11 @@ namespace Reserva_Vehiculos.Models.DAO
                                     _reserva = new Reserva();
                                     _vehi = new Vehiculo();
                                     _pet = new Pet_reserva();
+                                    _ubi = new Ubicacion();
 
-                                    //  _pet. = dr["hora_ini"].ToString(); aqui van las ubicaciones
-                                    //  _pet. = dr["hora_ini"].ToString();
+                                    _ubi.Ubicacion_ini = dr["recojida"].ToString();
+                                    _ubi.ubicacion_fin = dr["devolucion"].ToString();
+
                                     string fecha_IniString = dr["fecha_ini"].ToString();
                                     string fecha_FinString = dr["fecha_fin"].ToString();
 
@@ -205,6 +220,7 @@ namespace Reserva_Vehiculos.Models.DAO
                                     l_reserva.Add(_reserva);
                                     l_vehi.Add(_vehi);
                                     l_pet.Add(_pet);
+                                    l_ubit.Add(_ubi);
                                 }
                             }
                         }
@@ -225,7 +241,8 @@ namespace Reserva_Vehiculos.Models.DAO
             {
                 _lis_Pet_Reserva = l_pet,
                 _list_vehiculos = l_vehi,
-                _list_reserva = l_reserva
+                _list_reserva = l_reserva,
+                _list_ubicaion = l_ubit
 
             };
             return viewModel;

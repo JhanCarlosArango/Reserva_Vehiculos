@@ -8,8 +8,10 @@ namespace Reserva_Vehiculos.Models
 {
     public class Ubicacion
     {
-        public String ubicacion { get; set; }
+        public String ubicacion_fin { get; set; }
         public int id_ubicacion { get; set; }
+
+        public String Ubicacion_ini { get; set; }
         public Ubicacion()
         {
         

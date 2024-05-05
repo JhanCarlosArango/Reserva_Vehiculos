@@ -18,6 +18,7 @@ namespace Reserva_Vehiculos.Models
         public Vehiculo _vehiculo{ get; set; }
         public List<Vehiculo> _list_vehiculos{ get; set; }
         public List<Reserva> _list_reserva{ get; set; }
+        public List<Ubicacion> _list_ubicaion{ get; set; }
         public Vehiculo_DAO _vehiculo_DAO{ get; set; }
 
         public Obj_ViewModel()

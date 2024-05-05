@@ -35,7 +35,7 @@ namespace Reserva_Vehiculos.Models.DAO
                             {
                                 _ubicacion = new Ubicacion();
                                 _ubicacion.id_ubicacion = int.Parse(dr["id_ubicacion"].ToString());
-                                _ubicacion.ubicacion = dr["nombre_barrio"].ToString();
+                                _ubicacion.Ubicacion_ini = dr["nombre_barrio"].ToString();
                                 list_ubicacion.Add(_ubicacion);
                             }
                         }

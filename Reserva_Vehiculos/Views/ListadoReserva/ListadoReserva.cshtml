@@ -21,25 +21,22 @@
         </thead>
         <tbody>
             
-            
-            @foreach (var l_pet in Model._list_vehiculos)
-            {
-                
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>---</td>
-                   <td>@l_pet.num_placa </td> 
-                    <td>---</td>
-                    <td>---</td>
-                    <td> </td>
-                    <td>
-                        <a class="btn btn-danger" href="#">Cancelar reserva</a>
-                        <!--<a class="btn btn-info" href="#">Ver info Vehihculo</a>-->
-                    </td>
-                </tr>
-            }
+            @for (int i = 0; i < Model._lis_Pet_Reserva.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model._list_ubicaion[i].Ubicacion_ini</td>
+                <td>@Model._list_ubicaion[i].ubicacion_fin</td>
+                <td>Fecha : @Model._lis_Pet_Reserva[i].fecha_ini - Hora : @Model._lis_Pet_Reserva[i].hora_ini</td>
+                <td>Fecha : @Model._lis_Pet_Reserva[i].fecha_fin - Hora : @Model._lis_Pet_Reserva[i].hora_fin</td>
+                <td>@Model._list_reserva[i].acep_fecha</td>
+                <td>@Model._list_vehiculos[i].num_placa</td>
+                <td>
+                    <a class="btn btn-danger" href="#">Cancelar reserva</a>
+                    <!--<a class="btn btn-info" href="#">Ver info Vehículo</a>-->
+                </td>
+            </tr>
+        }
             
         </tbody>
     </table>
