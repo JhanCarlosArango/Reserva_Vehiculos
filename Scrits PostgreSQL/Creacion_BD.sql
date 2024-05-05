@@ -81,6 +81,11 @@ id_estado_vehiculo int not null,
 estado varchar(45)
 );
 
+CREATE TABLE ubicacion(
+    id_ubicacion integer NOT NULL,
+    nombre_barrio character varying(50)
+);
+
 create table categoria(
 id_categoria serial not null,
 tipo_vehiculo varchar(45),
@@ -137,6 +142,7 @@ alter table marca add constraint pk_id_marca primary key(id_marca);
 alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_espec_vehiculo);
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
+alter table ubicacion add constraint pk_id_ubicacion primary key(id_ubicacion);
 
 
 alter table prestador_vehiculo add prestador_num_documento int;
@@ -147,6 +153,12 @@ alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario add fk_num_documento int;--
 alter table pet_reserva add fk_id_categoria int;--
 alter table pet_reserva add fk_id_usuario int;--
+
+
+alter table pet_reserva add fk_id_ubicacion_ini int;--
+alter table pet_reserva add fk_id_ubicacion_fin int;--
+
+
 alter table reserva add fk_id_pet_reserva int;--
 alter table reserva add fk_num_placa varchar(20);--
 alter table acuerdo add fk_prestador_num_documento int;
