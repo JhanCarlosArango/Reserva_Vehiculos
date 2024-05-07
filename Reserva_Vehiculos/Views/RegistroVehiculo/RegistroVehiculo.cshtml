@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post">
+<form method="post" asp-action="RegistroVehiculo" asp-asp-controller="RegistroVehiculo">
     <div class="container text-center">
         <h1>Registro de vehículos</h1><br>
         <div class="row justify-content-center">
@@ -12,14 +12,24 @@
                 <div class="form-group mb-4">
                     <div class="form-floating">
                         <select class="form-select" id="floatingSelectCategoria"
-                            aria-label="Floating label select example">
-                            <option ></option>
-                            @foreach(var item in Model.ListaCategorias){
+                            aria-label="Floating label select example" onchange="enviarSeleccion_categoria()" required>
+                            <option></option>
+                            @foreach (var item in Model.ListaCategorias)
+                            {
 
-                            <option value="@item.id_categoria">@item.tipo_vehiculo</option>
+                                <option value="@item.id_categoria">@item.tipo_vehiculo</option>
                             }
-
                         </select>
+                        <script>
+                            function enviarSeleccion_categoria() {
+                                var select = document.getElementById("floatingSelectCategoria");
+                                var idSeleccionado = select.options[select.selectedIndex].value;
+                                // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                document.getElementById("id_categoria").value = idSeleccionado;
+                                // Puedes enviar el formulario aquí si es necesario
+                            }
+                        </script>
+                        <input type="hidden" id="id_categoria" name="id_categoria">
                         <label for="floatingSelectCategoria">Categoría</label>
                     </div>
                 </div>
@@ -27,66 +37,93 @@
             <div class="col-md-4">
                 <div class="form-group mb-4">
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                           <option ></option>
-                            @foreach(var item in Model.ListaMarca){
+                        <select class="form-select" id="floatingSelectMarca" aria-label="Floating label select example"
+                            onchange="enviarSeleccion_marca()" required>
+                            <option></option>
+                            @foreach (var item in Model.ListaMarca)
+                            {
 
-                            <option value="@item.id_marca">@item.nombre_marca</option>
+                                <option value="@item.id_marca">@item.nombre_marca</option>
                             }
                         </select>
-                        <label for="floatingSelect">Marca</label>
+                        <script>
+                            function enviarSeleccion_marca() {
+                                var select = document.getElementById("floatingSelectMarca");
+                                var idSeleccionado = select.options[select.selectedIndex].value;
+                                // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                document.getElementById("id_marca").value = idSeleccionado;
+                                // Puedes enviar el formulario aquí si es necesario
+                            }
+                        </script>
+                        <input type="hidden" id="id_marca" name="id_marca">
+                        <label for="floatingSelectMarca">Marca</label>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
-                        placeholder="Modelo">
+                    <input type="text" class="form-control form-control-lg" name="modelo" id="modelo"
+                        style="height: 50px;" placeholder="Modelo">
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="number" class="form-control form-control-lg" id="input2" style="height: 50px;"
-                        placeholder="Número de chasis">
+                    <input type="text" class="form-control form-control-lg" name="chasis" id="chasis"
+                        style="height: 50px;" placeholder="Número de chasis">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="number" class="form-control form-control-lg" id="input3" style="height: 50px;"
-                        placeholder="Modelo de motor">
+                    <input type="text" class="form-control form-control-lg" name="motor" id="motor"
+                        style="height: 50px;" placeholder="Modelo de motor">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="number" class="form-control form-control-lg" id="input4" style="height: 50px;"
-                        placeholder="Cilindraje">
+                    <input type="text" class="form-control form-control-lg" name="cilindraje" id="cilindraje"
+                        style="height: 50px;" placeholder="Cilindraje">
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="number" class="form-control form-control-lg" id="input5" style="height: 50px;"
-                        placeholder="Capacidad de carga">
+                    <input type="text" class="form-control form-control-lg" name="carga" id="carga"
+                        style="height: 50px;" placeholder="Capacidad de carga">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="number" class="form-control form-control-lg" id="input6" style="height: 50px;"
-                        placeholder="Capacidad de pasajeros">
+                    <input type="text" class="form-control form-control-lg" name="pasajero" id="pasajero"
+                        style="height: 50px;" placeholder="Capacidad de pasajeros">
+                </div>
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control form-control-lg" name="placa" id="placa"
+                        style="height: 50px;" placeholder="Placa">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-4">
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option selected>Gasolina</option>
-                            <option value="1">Diésel</option>
-                            <option value="2">Gas natural</option>
+                        <select class="form-select" id="floatingSelectcombus" aria-label="Floating label select example" onchange="enviarSeleccion_combus()" required>
+                            <option ></option>
+                            <option value="1">Gasolina</option>
+                            <option value="2">Diésel</option>
+                            <option value="3">ACPM</option>
                         </select>
-                        <label for="floatingSelect">Tipo de combustible</label>
+                        <script>
+                            function enviarSeleccion_combus() {
+                                var select = document.getElementById("floatingSelectcombus");
+                                var idSeleccionado = select.options[select.selectedIndex].value;
+                                // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                document.getElementById("id_tp_combus").value = idSeleccionado;
+                                // Puedes enviar el formulario aquí si es necesario
+                            }
+                        </script>
+                        <input type="hidden" id="id_tp_combus" name="id_tp_combus">
+                        <label for="floatingSelectcombus">Tipo de combustible</label>
                     </div>
                 </div>
             </div>
@@ -94,129 +131,87 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="form-group mb-4">
-                    <input type="text" class="form-control form-control-lg" id="input7" style="height: 50px;"
-                        placeholder="Tipo de caja">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <input type="text" class="form-control form-control-lg" id="input8" style="height: 50px;"
-                        placeholder="Tipo de direccion">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group mb-4">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option selected>Blanco</option>
-                            <option value="1">Negro</option>
-                            <option value="2">Gris</option>
-                            <option value="3">Plateado</option>
-                            <option value="4">Azul</option>
-                            <option value="5">Rojo</option>
-                            <option value="6">Verde</option>
-                            <option value="7">Amarillo</option>
-                            <option value="8">Naranja</option>
-                            <option value="9">Marrón</option>
-                            <option value="10">Beige</option>
-                            <option value="11">Blanco perlado</option>
-                            <option value="12">Gris grafito</option>
-                            <option value="13">Azul metálico</option>
-                            <option value="14">Rojo cereza</option>
-                            <option value="15">Verde esmeralda</option>
-                            <option value="16">Amarillo limón</option>
-                            <option value="17">Naranja quemado</option>
-                            <option value="18">Marrón chocolate</option>
-                            <option value="19">Rosa pastel</option>
-                        </select>
-                        <label for="floatingSelect">Color</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-3">
-                <div class="form-group mb-5">
-                    <label for="fechaActual1">Fecha inicio de préstamo</label>
-                    <input type="date" id="fechaActual1" class="form-control">
+                    <select class="form-select" id="floatingSelectCaja" aria-label="Floating label select example"
+                        onchange="enviarSeleccion_caja()" required>
+                        <option></option>
+                        @foreach (var item in Model.ListaCaja)
+                        {
 
-
+                            <option value="@item.tipo_caja_cambios">@item.tipo_caja_cambios</option>
+                        }
+                    </select>
                     <script>
-                        var inputFecha1 = document.getElementById('fechaActual1');
-                        var fecha1 = new Date().toISOString().slice(0, 10);
-                        inputFecha1.value = fecha1;
+                        function enviarSeleccion_caja() {
+                            var select = document.getElementById("floatingSelectCaja");
+                            var idSeleccionado = select.options[select.selectedIndex].value;
+                            // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                            document.getElementById("caja").value = idSeleccionado;
+                            // Puedes enviar el formulario aquí si es necesario
+                        }
                     </script>
+                    <input type="hidden" id="caja" name="caja">
+                    <label for="floatingSelectCaja">Caja de Cambio</label>
+
                 </div>
             </div>
-            <div class="col-md-3">
-                <label for="fechaActual2">Fecha fin de préstamo</label>
-                <input type="date" id="fechaActual2" class="form-control">
-
-                <script>
-                    var inputFecha2 = document.getElementById('fechaActual2');
-                    var fecha2 = new Date().toISOString().slice(0, 10);
-                    inputFecha2.value = fecha2;
-                </script>
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <select class="form-select" id="floatingSelectdireccion" aria-label="Floating label select example"
+                        onchange="enviarSeleccion_direccion()" required>
+                        <option></option>
+                        @foreach (var item in Model.ListatipoDerrecion)
+                        {
+                            <option value="@item.tipo_direccion">@item.tipo_direccion</option>
+                        }
+                    </select>
+                    <script>
+                        function enviarSeleccion_direccion() {
+                            var select = document.getElementById("floatingSelectdireccion");
+                            var idSeleccionado = select.options[select.selectedIndex].value;
+                            // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                            document.getElementById("direccion").value = idSeleccionado;
+                            // Puedes enviar el formulario aquí si es necesario
+                        }
+                    </script>
+                    <input type="hidden" id="direccion" name="direccion">
+                    <label for="floatingSelectdireccion">Tipo Direccion</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-4">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelectColor" aria-label="Floating label select example"
+                            onchange="enviarSeleccion_color()" required>
+                            <option ></option>
+                            <option value="Blanco">Blanco</option>
+                            <option value="Negro">Negro</option>
+                            <option value="Gris">Gris</option>
+                            <option value="Plateado">Plateado</option>
+                            <option value="Azul">Azul</option>
+                            <option value="Rojo">Rojo</option>
+                            <option value="Verde">Verde</option>
+                            <option value="Amarillo">Amarillo</option>
+                            <option value="Naranja">Naranja</option>
+                            <option value="Marrón">Marrón</option>
+                            <option value="Beige">Beige</option>
+                        </select>
+                        <script>
+                            function enviarSeleccion_color() {
+                                var select = document.getElementById("floatingSelectColor");
+                                var idSeleccionado = select.options[select.selectedIndex].value;
+                                // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+                                document.getElementById("color").value = idSeleccionado;
+                                // Puedes enviar el formulario aquí si es necesario
+                            }
+                        </script>
+                        <input type="hidden" id="color" name="color">
+                        <label for="floatingSelectColor">Color</label>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <script>
-            // Obtener los elementos del DOM
-            const categoriaSelect = document.getElementById('floatingSelectCategoria');
-            const tipoCajaInput = document.getElementById('input7');
-            const tipoDireccionInput = document.getElementById('input8');
-
-            // Función para llenar y deshabilitar los campos dependiendo de la categoría seleccionada
-            function handleCategoriaChange() {
-                const categoriaSeleccionada = parseInt(categoriaSelect.value);
-
-                // Limpiar y habilitar los campos
-                tipoCajaInput.value = '';
-                tipoDireccionInput.value = '';
-                tipoCajaInput.disabled = false;
-                tipoDireccionInput.disabled = false;
-
-                // Llenar y deshabilitar los campos según la categoría seleccionada
-                switch (categoriaSeleccionada) {
-                    case 1: // Categoría A
-                        tipoCajaInput.value = 'Transmisión manual';
-                        tipoDireccionInput.value = 'Dirección mecánica';
-                        tipoCajaInput.disabled = true;
-                        tipoDireccionInput.disabled = true;
-                        break;
-                    case 2: // Categoría B
-                        tipoCajaInput.value = 'Transmisión automática';
-                        tipoDireccionInput.value = 'Dirección hidráulica';
-                        tipoCajaInput.disabled = true;
-                        tipoDireccionInput.disabled = true;
-                        break;
-                    case 3: // Categoría C
-                        tipoCajaInput.value = 'Transmisión automatizada';
-                        tipoDireccionInput.value = 'Dirección hidráulica';
-                        tipoCajaInput.disabled = true;
-                        tipoDireccionInput.disabled = true;
-                        break;
-                    default:
-                        // Si la categoría no coincide con ninguna de las anteriores, limpiar los campos y habilitarlos
-                        tipoCajaInput.value = '';
-                        tipoDireccionInput.value = '';
-                        tipoCajaInput.disabled = false;
-                        tipoDireccionInput.disabled = false;
-                        break;
-                }
-
-            }
-
-            // Escuchar los cambios en el select de categoría
-            categoriaSelect.addEventListener('change', handleCategoriaChange);
-
-            // Llamar a la función para establecer el estado inicial de los campos al cargar la página
-            handleCategoriaChange();
-        </script>
-
-
-
-
+        ---------------------
 
         <div class="row justify-content-center">
             <h2>Datos legales</h2>

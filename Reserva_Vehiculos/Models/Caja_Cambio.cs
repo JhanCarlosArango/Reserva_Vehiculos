@@ -7,7 +7,7 @@ namespace Reserva_Vehiculos.Models
 {
     public class Caja_Cambio
     {
-        int id_caja_cambios { get; set; }
-        String tipo_caja_cambios { get; set; }
+        public int id_caja_cambios { get; set; }
+        public String tipo_caja_cambios { get; set; }
     }
 }

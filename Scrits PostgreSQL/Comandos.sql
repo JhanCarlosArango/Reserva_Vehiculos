@@ -77,6 +77,51 @@ $$ LANGUAGE plpgsql;
 SELECT * FROM disponible_vehi('2024-05-08', '2024-05-26');
 
 
+CREATE OR REPLACE PROCEDURE insertar_espce_vehiculo(
+    IN p_modelo Integer,
+    IN p_color varchar(45),
+    IN p_num_chasis decimal(10,10),
+    IN p_modelo_motor Integer,
+    IN p_cilindraje Integer,
+    IN p_fk_id_tipo_combustible Integer
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO public.espec_vehiculo(
+        modelo, color, num_chasis, modelo_motor, cilindraje, fk_id_tipo_combustible
+    )
+    VALUES (
+        p_modelo, p_color, p_num_chasis, p_modelo_motor, p_cilindraje, p_fk_id_tipo_combustible
+    );
+END;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE insertar_vehiculo(
+    IN p_num_placa varchar(20),
+    IN p_capacidad_pasajeros INTEGER,
+    IN p_capacidad_carga varchar(25),
+    IN p_fk_id_categoria INTEGER,
+    IN p_fk_id_tipo_direccion INTEGER,
+    IN p_fk_id_caja_cambios INTEGER,
+    IN p_fk_id_marca INTEGER,
+    IN p_fk_id_espec_vehiculo INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO public.vehiculo(
+        num_placa, capacidad_pasajeros, capacidad_carga, fk_id_categoria, fk_id_tipo_direccion, 
+        fk_id_caja_cambios, fk_id_marca, fk_id_espec_vehiculo
+    )
+    VALUES (
+        p_num_placa, p_capacidad_pasajeros, p_capacidad_carga, p_fk_id_categoria, p_fk_id_tipo_direccion, 
+        p_fk_id_caja_cambios,p_fk_id_marca, p_fk_id_espec_vehiculo
+    );
+END;
+$$;
+
 "
 para demostracion
     -- placas de los vehículos reservados cuyas fechas de inicio  sean mayores de la peticion actual
