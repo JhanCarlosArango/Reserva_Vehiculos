@@ -6,8 +6,7 @@ namespace FrontEnd.Controllers
 {
     public class DatosPersonalesController : Controller
     {
-        Persona _per;
-        Usuarios _user;
+
         Usuario_DAO _user_DAO;
         Persona_DAO persona_DAO;
         public IActionResult DatosPersonales()

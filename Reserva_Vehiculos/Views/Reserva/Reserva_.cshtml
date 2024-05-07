@@ -41,6 +41,7 @@
                         {
                             //var _vehiculo = Model._vehiculo.Flitar_veiculos_categoria(Model._list_vehiculos, @item.fk_id_categoria);
                             var _vehiculo = Model._vehiculo_DAO.ListarVehiculo_Disponibles(item.fk_id_categoria,item.fecha_ini,item.fecha_fin);
+             
                             <tr>
                                 <td>
                                     Lugar de Retiro: <br>
@@ -79,8 +80,8 @@
                                                             <li class="list-group-item">
                                                                 <input class="form-check-input me-1" type="radio" name="selectedPlaca" value="@ite.num_placa" id="@ite.num_placa" required>
                                                                 <label class="form-check-label" for="@ite.num_placa">Número de Placa: @ite.num_placa</label>
-                                                                <input name="placa" type="text" value="@ite.num_placa">
-                                                                 <input name="id_pet_reserva" type="text" value="@item.id_pet_reserva">  <!-- Envio id_pet_reserva-->
+                                                                <input name="placa" type="hidden" value="@ite.num_placa">
+                                                                <input name="id_pet_reserva" type="hidden" value="@item.id_pet_reserva">  <!-- Envio id_pet_reserva-->
                                                             </li>
                                                         </ul>
                                                     </div>

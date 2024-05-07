@@ -1,0 +1,173 @@
+﻿@{
+    ViewData["Title"] = "EntregaVehiculo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="entregaVehiculo">
+    <h1 id="titulo">Información de entrega del vehículo</h1><br><br>
+    <div class="row row-divider">
+        <div class="col-md-4">
+            @* <div class="border-bottom my-3"> *@
+            <div class="form-group mb-5">
+                <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                    placeholder="Placa del vehículo">
+            </div>
+            @* </div> *@
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-lg btn-primary" type="submit">Buscar</button>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row justify-content-center align-items-center">
+        @* <div class="border-bottom my-3"> *@
+        <h4 id="titulo2" style="text-align: center;">Datos del vehículo</h4>
+        <div id="fecha" class="col-md-4">
+            <input type="date" id="fechaActual2" class="form-control">
+            <script>
+                var inputFecha2 = document.getElementById('fechaActual2');
+                var fecha2 = new Date().toISOString().slice(0, 10);
+                inputFecha2.value = fecha2;
+            </script>
+        </div>
+
+        <div id="hora" class="col-md-4">
+            <input type="time" id="horaActual2" class="form-control">
+            <script>
+                var inputHora2 = document.getElementById('horaActual2');
+                var hora2 = ("0" + new Date().getHours()).slice(-2) + ":" + ("0" + new Date().getMinutes()).slice(-2);
+                inputHora2.value = hora2;
+            </script>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group mb-5">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelectEstado" aria-label="Floating label select example">
+                        <option value="1">La Libertad</option>
+                        <option value="2">El Mirador</option>
+                        <option value="3">Brisas altas</option>
+                    </select>
+                    <label for="floatingSelectCategoria">Ubicación</label>
+                </div>
+            </div>
+        </div>
+        @* </div> *@
+    </div>
+
+    <div id="costos" class="row justify-content-center align-items-center">
+        <h4 id="titulo3" style="text-align: center;">Costo adicional</h4>
+        <div class="col-md-4">
+            <div class="form-floating">
+                <select class="form-select" id="floatingSelectEstado" aria-label="Floating label select example"
+                    onchange="calcularCostoAdicional(this.value)">
+                    <option value="1">Buen estado</option>
+                    <option value="2">Daños en la carrocería</option>
+                    <option value="3">Daños en los interiores</option>
+                    <option value="4">Daños mecánicos</option>
+                    <option value="5">Daños en los neumáticos y ruedas</option>
+                    <option value="6">Daños en el parabrisas y ventanas</option>
+                    <option value="7">Daños eléctricos</option>
+                </select>
+                <label for="floatingSelectEstado">Estado</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group mb-5">
+                <div id="contenedorLista" class="container">
+                    <ul id="listaCostos" class="list-group" style="text-align: center;">
+                        <li id="precioAlquiler" class="list-group-item">Precio de alquiler: $100000</li>
+                        <li id="costoAdicional" class="list-group-item">Costo adicional: $0</li>
+                        <li id="montoTotal" class="list-group-item">Monto total: $100000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para calcular el costo adicional y actualizar la lista
+        function calcularCostoAdicional(estado) {
+            var costoAdicional = 0;
+
+            // Calcula el costo adicional según el estado seleccionado
+            switch (estado) {
+                case "1": // Buen estado
+                    costoAdicional = 0;
+                    break;
+                case "2": // Daños en la carrocería
+                    costoAdicional = 50000;
+                    break;
+                case "3": // Daños en los interiores
+                    costoAdicional = 30000;
+                    break;
+                case "4": // Daños mecánicos
+                    costoAdicional = 60000;
+                    break;
+                case "5": // Daños en los neumáticos y ruedas
+                    costoAdicional = 20000;
+                    break;
+                case "6": // Daños en el parabrisas y ventanas
+                    costoAdicional = 200000;
+                    break;
+                case "7": // Daños eléctricos
+                    costoAdicional = 70000;
+                    break;
+            }
+
+            document.getElementById("costoAdicional").innerText = "Costo adicional: $" + costoAdicional;
+            document.getElementById("montoTotal").innerText = "Monto total: $" + (100000 + parseInt(costoAdicional));
+        }
+    </script>
+
+    @* <div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+    <h4 id="titulo4">Costo adicional:</h4>
+    </div>
+    <div class="col-md-4">
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+    <label class="form-check-label" for="inlineRadio1">Si</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+    <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
+    </div>
+    <div class="col-md-4">
+    <input type="number" class="form-control form-control-lg" id="input1" style="height: 50px;" placeholder="Especifique
+    el valor">
+    </div>
+    </div> *@
+
+    <div id="boton-entrega" class="d-flex justify-content-center">
+        <button class="btn btn-lg btn-primary" type="submit">Guardar</button>
+    </div>
+</div>
