@@ -198,6 +198,41 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             return list_vehiculo;
         }
+        public Vehiculo BUscarVehiculo(String placa)
+        {
+   
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+            try
+            {
+                using (connection)
+                {
+                    var query = "select * from vehiculo v where v.num_placa = @placa;";  // corregir, llamar un vista 
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+
+                                _vehiculo = new Vehiculo();
+                                _vehiculo.num_placa = dr["num_placa"].ToString();
+                                _vehiculo.capacidad_pasajeros = dr["capacidad_pasajeros"].ToString();
+                                _vehiculo.capacidad_carga = dr["capacidad_carga"].ToString();
+                                _vehiculo.fk_id_categoria = int.Parse(dr["fk_id_categoria"].ToString());
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al listar vehiculos: {ex.Message}");
+            }
+            return _vehiculo;
+        }
+
     }
 }
 

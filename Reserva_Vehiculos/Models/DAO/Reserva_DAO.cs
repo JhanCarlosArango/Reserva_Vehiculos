@@ -97,7 +97,7 @@ namespace Reserva_Vehiculos.Models.DAO
                                     inner join ubicacion ubicacion_ini ON ubicacion_ini.id_ubicacion = pr.fk_id_ubicacion_ini
                                     inner join ubicacion ubicacion_fin ON ubicacion_fin.id_ubicacion = pr.fk_id_ubicacion_fin 
                                     inner join reserva r ON r.fk_id_pet_reserva = pr.id_pet_reserva 
-                                    where u.usuario = @usuario;";  // corregir, llamar un vista 
+                                    where u.usuario = @usuario and r.estado_reserva = 'activa';";  // corregir, llamar un vista 
 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
@@ -189,7 +189,7 @@ namespace Reserva_Vehiculos.Models.DAO
                                     from usuario u inner join pet_reserva pr on u.id_usuario = pr.fk_id_usuario
                                     inner join ubicacion ubicacion_ini ON ubicacion_ini.id_ubicacion = pr.fk_id_ubicacion_ini
                                     inner join ubicacion ubicacion_fin ON ubicacion_fin.id_ubicacion = pr.fk_id_ubicacion_fin 
-                                    inner join reserva r ON r.fk_id_pet_reserva = pr.id_pet_reserva;";  // corregir, llamar un vista 
+                                    inner join reserva r ON r.fk_id_pet_reserva = pr.id_pet_reserva where r.estado_reserva = 'activa';";  // corregir, llamar un vista 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
 
@@ -246,6 +246,49 @@ namespace Reserva_Vehiculos.Models.DAO
 
             };
             return viewModel;
+        }
+        public void CANCELAR_RESERVA(String fk_num_placa)
+        {
+
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = @"update reserva  set estado_reserva =  'desca' where fk_num_placa = @fk_num_placa;";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+
+
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@fk_num_placa", fk_num_placa);
+
+
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
+
+                                cmd.ExecuteNonQuery();
+
+
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Guardar_Vehiculos: {ex.Message}");
+                }
+
+            }
         }
     }
 }

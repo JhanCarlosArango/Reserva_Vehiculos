@@ -33,6 +33,13 @@ namespace Reserva_Vehiculos.Controllers
             var viewModel = reserva_DAO.Listar_Reservas(usuario_session);
             return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult Cancelar(String cancela)
+        {
+            reserva_DAO.CANCELAR_RESERVA(cancela);
+            return RedirectToAction("ListadoReserva", "ListadoReserva");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
