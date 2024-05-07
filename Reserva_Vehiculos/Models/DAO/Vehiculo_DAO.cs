@@ -65,7 +65,7 @@ namespace Reserva_Vehiculos.Models.DAO
 
             }
         }
-        public void Guardar_Vehiculos(String num_placa, int capacidad_pasajeros, String capacidad_carga, int fk_id_categoria, int fk_id_tipo_direccion, int fk_id_caja_cambios, int fk_id_marca, int fk_id_espec_vehiculo)
+        public void Guardar_Vehiculos(String num_placa, int capacidad_pasajeros, String capacidad_carga, int fk_id_categoria, int fk_id_tipo_direccion, int fk_id_caja_cambios, int fk_id_marca, String fk_num_chasis)
         {
 
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
@@ -78,23 +78,27 @@ namespace Reserva_Vehiculos.Models.DAO
                     {
                         if (connection != null)
                         {
-                            var query = "insertar_espce_vehiculo";
+                            var query = @"INSERT INTO public.vehiculo(
+	                                    num_placa, capacidad_pasajeros, capacidad_carga, fk_id_categoria, fk_id_tipo_direccion, fk_id_caja_cambios, fk_id_marca, fk_num_chasis)
+	                                    VALUES (@num_placa, @capacidad_pasajeros, @capacidad_carga, @fk_id_categoria, @fk_id_tipo_direccion, @fk_id_caja_cambios, @fk_id_marca, @fk_num_chasis);";
                             using (var cmd = new NpgsqlCommand(query, connection))
                             {
-                                cmd.CommandType = CommandType.StoredProcedure;
+
 
                                 // Define los parámetros
-                                cmd.Parameters.AddWithValue("num_placa", num_placa);
-                                cmd.Parameters.AddWithValue("capacidad_pasajeros", capacidad_pasajeros);
-                                cmd.Parameters.AddWithValue("capacidad_carga", capacidad_carga);
-                                cmd.Parameters.AddWithValue("fk_id_categoria", fk_id_categoria);
-                                cmd.Parameters.AddWithValue("fk_id_tipo_direccion", fk_id_tipo_direccion);
-                                cmd.Parameters.AddWithValue("fk_id_caja_cambios", fk_id_caja_cambios);
-                                cmd.Parameters.AddWithValue("fk_id_marca", fk_id_espec_vehiculo);
-                                cmd.Parameters.AddWithValue("fk_id_espec_vehiculo", fk_id_marca);
+                                cmd.Parameters.AddWithValue("@num_placa", num_placa);
+                                cmd.Parameters.AddWithValue("@capacidad_pasajeros", capacidad_pasajeros);
+                                cmd.Parameters.AddWithValue("@capacidad_carga", capacidad_carga);
+                                cmd.Parameters.AddWithValue("@fk_id_categoria", fk_id_categoria);
+                                cmd.Parameters.AddWithValue("@fk_id_tipo_direccion", fk_id_tipo_direccion);
+                                cmd.Parameters.AddWithValue("@fk_id_caja_cambios", fk_id_caja_cambios);
+                                cmd.Parameters.AddWithValue("@fk_id_marca", fk_id_marca);
+                                cmd.Parameters.AddWithValue("@fk_num_chasis", fk_num_chasis);
 
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
 
                                 cmd.ExecuteNonQuery();
+
 
                                 Console.WriteLine("Datos insertados correctamente.");
                             }

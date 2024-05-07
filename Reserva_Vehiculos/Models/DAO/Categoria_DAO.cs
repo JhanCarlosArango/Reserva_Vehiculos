@@ -10,6 +10,7 @@ namespace Reserva_Vehiculos.Models.DAO
     {
         private readonly Conexion conn;
         List<Categoria> l_cate;
+        Categoria _Categoria;
         public Categoria_DAO()
         {
             conn = new Conexion();
@@ -55,5 +56,46 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             return l_cate;
         }
+
+        public Categoria ListarCategoria(String nomre)
+        {
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+
+                        var query = "select ca.id_marca from marca ca where nombre_marca = @nomre;";  // corregir, llamar un vista 
+                        using (var cmd = new NpgsqlCommand(query, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@nomre", nomre);
+                            using (var dr = cmd.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    _Categoria = new Categoria();
+                                    _Categoria.id_categoria = int.Parse(dr["id_categoria"].ToString());
+                                    _Categoria.tipo_vehiculo = dr["tipo_vehiculo"].ToString();
+
+
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al listar ListarListarCategoria: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Conn Null");
+            }
+            return _Categoria;
+        }
     }
-}
+    }

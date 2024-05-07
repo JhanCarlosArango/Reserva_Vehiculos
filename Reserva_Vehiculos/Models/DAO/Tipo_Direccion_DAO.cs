@@ -18,7 +18,7 @@ namespace Reserva_Vehiculos.Models.DAO
             conn = new Conexion();
         }
 
-        public Tipo_Direccion Listartipodireccion(String nom_tipo)
+        public Tipo_Direccion Listartipodireccion(String tipo_direccion)
         {
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
 
@@ -29,10 +29,11 @@ namespace Reserva_Vehiculos.Models.DAO
                     using (connection)
                     {
 
-                        var query = "select tp.id_tipo_direccion from tipo_direccion tp where tp.tipo_direccion = nom_tipo;";  // corregir, llamar un vista 
+                        var query = "SELECT tp.id_tipo_direccion, tp.tipo_direccion FROM tipo_direccion tp WHERE tp.tipo_direccion = @tipo_direccion;";
+
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
-                            cmd.Parameters.AddWithValue("@nom_tipo", nom_tipo);
+                            cmd.Parameters.AddWithValue("@tipo_direccion", tipo_direccion);
                             using (var dr = cmd.ExecuteReader())
                             {
                                 while (dr.Read())

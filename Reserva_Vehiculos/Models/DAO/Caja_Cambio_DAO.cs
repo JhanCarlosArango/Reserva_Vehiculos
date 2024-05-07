@@ -29,7 +29,7 @@ namespace Reserva_Vehiculos.Models.DAO
                     using (connection)
                     {
 
-                        var query = "select ca.tipo_caja_cambios from caja_cambios ca where id_caja_cambios = nomre;";  // corregir, llamar un vista 
+                        var query = "select ca.tipo_caja_cambios, ca.id_caja_cambios from caja_cambios ca where  tipo_caja_cambios = @nomre;";  // corregir, llamar un vista 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
                             cmd.Parameters.AddWithValue("@nomre", nomre);

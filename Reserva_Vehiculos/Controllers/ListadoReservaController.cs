@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models.DAO;
 
 namespace Reserva_Vehiculos.Controllers
 {
-
+    [Authorize]
     public class ListadoReservaController : Controller
     {
         private readonly IHttpContextAccessor _IHttpContextAccessor;
