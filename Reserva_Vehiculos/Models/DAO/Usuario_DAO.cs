@@ -122,6 +122,51 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             return user.id_user;
         }
+        public void Guardar_usuario(int fk_num_documento, String usuario, String contrasenia)
+        {
+
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = @"INSERT INTO usuario(usuario, contrasenia, fk_num_documento) VALUES (@usuario, @contrasenia, @fk_num_documento);";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+
+
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@usuario", usuario);
+                                cmd.Parameters.AddWithValue("@contrasenia", contrasenia);
+                                cmd.Parameters.AddWithValue("@fk_num_documento", fk_num_documento);
+
+
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
+
+                                cmd.ExecuteNonQuery();
+
+
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Guardar_usuario: {ex.Message}");
+                }
+
+            }
+        }
     }
 
 }
