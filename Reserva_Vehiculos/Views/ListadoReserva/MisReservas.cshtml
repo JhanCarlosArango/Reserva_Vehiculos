@@ -29,8 +29,8 @@
                 <td>@Model._list_reserva[i].acep_fecha</td>
                 <td>@Model._list_vehiculos[i].num_placa</td>
                 <td>
-                    <form asp-action="Cancelar" asp-controller="ListadoReserva" method="post">
 
+                    <form asp-action="Cancelar" asp-controller="ListadoReserva" method="post">
                         <button class="btn btn-danger" type="submit">Cancelar reserva</button>
                         <input type="hidden" value="@Model._list_vehiculos[i].num_placa" name="cancela" id="cancela">
                     </form>
@@ -38,5 +38,7 @@
             </tr>
         }
     </table>
-    <button type="button" class="btn btn-primary btn-lg">Guardar</button>
+    <form asp-action="Pdf_Listado_Reservas" asp-controller="ListadoReserva" method="post">
+        <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+    </form>
 </div>

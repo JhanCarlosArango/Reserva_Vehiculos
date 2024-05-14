@@ -165,5 +165,48 @@ namespace Reserva_Vehiculos.Models.DAO
 
             }
         }
+         public void CANCELAR_PET_RESERVA(String fk_num_placa)
+        {
+
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = @"update pet_reserva  set estado =  'desca' where fk_num_placa = @fk_num_placa;";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+
+
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@fk_num_placa", fk_num_placa);
+
+
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
+
+                                cmd.ExecuteNonQuery();
+
+
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Guardar_Vehiculos: {ex.Message}");
+                }
+
+            }
+        }
     }
 }
