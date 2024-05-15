@@ -162,8 +162,8 @@ namespace Reserva_Vehiculos.Models.DAO
                     SELECT r.fk_num_placa
                     FROM reserva r
                     INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
-                    WHERE (pr.fecha_ini >= @fecha_ini or pr.fecha_fin <= @fecha_fin)
-					and (pr.fecha_ini <= @fecha_ini or pr.fecha_fin >= @fecha_fin)
+                    WHERE r.estado_reserva = 'activa' and ((pr.fecha_ini >= @fecha_ini and pr.fecha_fin <= @fecha_fin)
+					or (pr.fecha_ini <= @fecha_ini and pr.fecha_fin >= @fecha_fin))
                 )
             ) AS subconsulta
             WHERE subconsulta.fk_id_categoria = @fk_id_categoria;";
