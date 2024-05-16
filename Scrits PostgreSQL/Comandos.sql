@@ -50,7 +50,7 @@ A mostrar ese valor en un formato diferente cambie la configuración de su clien
 select name, to_char(createddate, ''yyyymmdd hh:mi:ss tt') as created_date
 from "Group";'
 
---- disponibilidad de vehiculo
+--- disponibilidad de vehiculo --no se usas
 CREATE OR REPLACE FUNCTION disponible_vehi(fecha_inicio_param DATE, fecha_fin_param DATE) RETURNS SETOF VARCHAR(10) AS $$
 DECLARE
     placa_ini_list VARCHAR(10)[];
@@ -74,7 +74,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-SELECT * FROM disponible_vehi('2024-05-08', '2024-05-26');
+
 
 
 CREATE OR REPLACE PROCEDURE insertar_espce_vehiculo(
@@ -122,20 +122,6 @@ BEGIN
 END;
 $$;
 
-"
-para demostracion
-    -- placas de los vehículos reservados cuyas fechas de inicio  sean mayores de la peticion actual
-    SELECT r.fk_num_placa 
-    FROM reserva r
-    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
-    WHERE pr.fecha_ini >= '2024-05-14';
-
-    -- placas de los vehículos reservados cuyas fechas de finalización sean menores de la peticion actual
-    SELECT r.fk_num_placa
-    FROM reserva r
-    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
-    WHERE pr.fecha_fin <= '2024-05-24';
-"
 
 
 

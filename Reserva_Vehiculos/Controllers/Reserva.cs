@@ -52,15 +52,6 @@ namespace Reserva_Vehiculos.Controllers
             return View(_ViewModel);
         }
 
-
-        //public List<Vehiculo> FiltrarVehiculosPorCategoria(int categoriaId)
-        //{
-        //    vehiculo = new Vehiculo();
-        //    vehiculo_DAO = new Vehiculo_DAO();
-        //    vehiculos = vehiculo_DAO.ListarVehiculo();
-
-        //    return vehiculo.Flitar_veiculos_categoria(vehiculos, categoriaId);
-        //}
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -69,6 +60,8 @@ namespace Reserva_Vehiculos.Controllers
 
         public IActionResult Reserva_AXU(String selectedPlaca, int id_pet_reserva)
         {
+
+            //aqui ponemos envair correo para notificar a ususario 
             if (selectedPlaca != null && id_pet_reserva != 0)
             {
                 pet_Reserva_D = new Pet_reserva_DAO();

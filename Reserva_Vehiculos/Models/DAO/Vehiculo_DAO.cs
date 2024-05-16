@@ -155,18 +155,22 @@ namespace Reserva_Vehiculos.Models.DAO
         {
             string consulta = @"
                         SELECT *
-            FROM (
-                SELECT v.num_placa, v.fk_id_categoria
-                FROM vehiculo v
-                WHERE v.num_placa NOT IN (
-                    SELECT r.fk_num_placa
-                    FROM reserva r
-                    INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
-                    WHERE r.estado_reserva = 'activa' and ((pr.fecha_ini >= @fecha_ini and pr.fecha_fin <= @fecha_fin)
-					or (pr.fecha_ini <= @fecha_ini and pr.fecha_fin >= @fecha_fin))
-                )
-            ) AS subconsulta
-            WHERE subconsulta.fk_id_categoria = @fk_id_categoria;";
+                        FROM (
+                            SELECT v.num_placa, v.fk_id_categoria
+                            FROM vehiculo v
+                            WHERE v.num_placa NOT IN (
+                                SELECT r.fk_num_placa
+                                FROM reserva r
+                                INNER JOIN pet_reserva pr ON pr.id_pet_reserva = r.fk_id_pet_reserva
+                                WHERE r.estado_reserva = 'activa' AND (
+                                    (pr.fecha_ini >= @fecha_ini AND pr.fecha_fin <= @fecha_fin) OR
+                                    (pr.fecha_ini <= @fecha_ini AND pr.fecha_fin >= @fecha_fin) OR
+                                    (pr.fecha_ini BETWEEN @fecha_ini AND @fecha_fin) OR
+                                    (pr.fecha_fin BETWEEN @fecha_ini AND @fecha_fin)
+                                )
+                            )
+                        ) AS subconsulta
+                        WHERE subconsulta.fk_id_categoria = @fk_id_categoria;";
             list_vehiculo = new List<Vehiculo>();
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
             try

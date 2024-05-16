@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,7 @@ namespace Reserva_Vehiculos.Controllers
         Persona per;
         DateTime fecha_i;
         DateTime fecha_f;
+        String[] columnas = { "Nombre", "Fecha Recojida", "Fecha Devolucion", "Hora Recojida", "Hora Devolucion", "Barrio Recojida", "Barrio Devolucion", "Categoria", "Total" };
         private readonly IHttpContextAccessor _IHttpContextAccessor;
         public Peticion(IHttpContextAccessor httpContextAccessor)
         {
@@ -101,12 +104,65 @@ namespace Reserva_Vehiculos.Controllers
             _Usuario_DAO = new Usuario_DAO();
             _Reserva_DAO = new Pet_reserva_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
-
             int id_usuario = _Usuario_DAO.Obtener_ID_usuario(usuario_session);
-
             _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario);
 
-            return RedirectToAction("peticion", "Peticion");
+            //aqui debo poner la descarga del pdf 
+
+            var model_PDF_pet = _Reserva_DAO.Listar_PDF_Pet_Reservas(usuario_session);
+            Document document = new Document(PageSize.A4, 50, 50, 25, 25);
+            var output = new MemoryStream();
+            PdfWriter writer = PdfWriter.GetInstance(document, output);
+            writer.CloseStream = false;
+
+            document.Open();
+
+            // Agregar un título
+            var fontTitle = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            var title = new Paragraph("Reporte de Reservas", fontTitle);
+            title.Alignment = Element.ALIGN_CENTER;
+            document.Add(title);
+            document.Add(new Chunk("\n")); // Agregar espacio
+
+            // Crear la tabla con los datos de las reservas
+            PdfPTable table = new PdfPTable(columnas.Length); // El número de columnas
+            table.WidthPercentage = 100; // Ancho relativo a la página
+
+            // Agregar los nombres de las columnas
+            foreach (var item in columnas)
+            {
+                table.AddCell(item);
+            }
+
+
+            // Llenar la tabla con los datos de las reservas
+
+            table.AddCell(model_PDF_pet._persona.f_name);
+            table.AddCell(model_PDF_pet._Pet_Reserva.fecha_ini.ToString());
+            table.AddCell(model_PDF_pet._Pet_Reserva.fecha_fin.ToString());
+            table.AddCell(model_PDF_pet._Pet_Reserva.hora_ini.ToString());
+            table.AddCell(model_PDF_pet._Pet_Reserva.hora_fin.ToString());
+            table.AddCell(model_PDF_pet._ubi_.Ubicacion_ini.ToString());
+            table.AddCell(model_PDF_pet._ubi_.Ubicacion_ini.ToString());
+            table.AddCell(model_PDF_pet.categoria.tipo_vehiculo.ToString());
+            table.AddCell("120");
+
+
+            document.Add(table);
+
+            // Agregar un pie de página
+            var fontFooter = FontFactory.GetFont(FontFactory.HELVETICA_OBLIQUE, 12);
+            var footer = new iTextSharp.text.Paragraph("Reporte generado el: " + System.DateTime.Now.ToString(), fontFooter);
+            footer.Alignment = Element.ALIGN_CENTER;
+            document.Add(footer);
+
+            document.Close();
+
+            byte[] bytes = output.ToArray();
+            output.Close();
+
+            return File(bytes, "application/pdf", "ReporteDeReservas.pdf", true);
+            //return RedirectToAction("peticion", "Peticion");
         }
 
 

@@ -15,6 +15,7 @@ namespace Reserva_Vehiculos.Models
         public Categoria categoria{ get; set; }
         public Persona _persona{ get; set; }
         public Usuarios _user_{ get; set; }
+        public Ubicacion _ubi_{ get; set; }
         public Vehiculo _vehiculo{ get; set; }
         public List<Vehiculo> _list_vehiculos{ get; set; }
         public List<Reserva> _list_reserva{ get; set; }

@@ -88,6 +88,14 @@ id_caja_cambios serial not null,
 tipo_caja_cambios varchar(45)
 );
 
+create table empresa(
+nit int not null,
+nombre_empresa varchar(45),
+email varchar(45),
+telefono varchar(45),
+logo varchar(150)
+);
+
 create table marca(
 id_marca  serial not null,
 nombre_marca varchar(45)
@@ -128,6 +136,7 @@ alter table caja_cambios add constraint pk_id_caja_cambios primary key(id_caja_c
 alter table marca add constraint pk_id_marca primary key(id_marca);--
 alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_espec_vehiculo);--
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);--
+alter table empresa add constraint pk_nit primary key(nit);--
 
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 alter table ubicacion add constraint pk_id_ubicacion primary key(id_ubicacion);
