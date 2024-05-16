@@ -70,23 +70,28 @@
                         <input name="fk_id_ubicacion_final" id="fk_id_ubicacion_final" type="hidden"
                             value="@Model._Pet_Reserva.fk_id_ubicacion_final">
                         <button type="button" class="btn btn-secondary">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Realizar Peticion</button>
+                        <button type="submit" class="btn btn-primary">Realizar Petición</button>
                     </div>
                 </div>
             </div>
+
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script>
                 $(document).ready(function () {
-                    // Esperar a que la descarga del archivo esté completa
-                    $(window).on('load', function () {
-                        // Redireccionar a una URL específica después de 3 segundos (3000 milisegundos)
+                    // Función para redireccionar después de 3 segundos
+                    function redireccionar() {
                         setTimeout(function () {
                             window.location.href = '/Peticion/peticion';
                         }, 3000); // Cambia el valor 3000 según sea necesario
+                    }
+
+                    // Esperar a que se haga clic en el botón
+                    $(".btn-primary").click(function () {
+                        // Llamar a la función para redireccionar
+                        redireccionar();
                     });
                 });
             </script>
-
     </form>
 
 }

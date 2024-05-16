@@ -4,6 +4,6 @@ namespace Reserva_Vehiculos.Models
     {
         Administrador = 1,
         Proveedor = 2,
-        cliente = 3
+        Cliente = 3
     }
 } 

@@ -25,7 +25,7 @@ namespace Reserva_Vehiculos.Controllers
         DateTime fecha_i;
         DateTime fecha_f;
         String[] columnas = { "Nombre", "Fecha Recojida", "Fecha Devolucion", "Hora Recojida", "Hora Devolucion", "Barrio Recojida", "Barrio Devolucion", "Categoria", "Total" };
-        private readonly IHttpContextAccessor _IHttpContextAccessor;
+        private readonly IHttpContextAccessor _IHttpContextAccessor; 
         public Peticion(IHttpContextAccessor httpContextAccessor)
         {
             _IHttpContextAccessor = httpContextAccessor;
@@ -118,7 +118,7 @@ namespace Reserva_Vehiculos.Controllers
             document.Open();
 
             // Agregar un título
-            var fontTitle = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            var fontTitle = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
             var title = new Paragraph("Reporte de Reservas", fontTitle);
             title.Alignment = Element.ALIGN_CENTER;
             document.Add(title);

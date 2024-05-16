@@ -1,4 +1,5 @@
 @model List<Ubicacion>
+@using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "peticion";
 }
@@ -11,18 +12,21 @@
                 <div class="row w-100">
                     <div class="col-md-4">
 
-                        <div >
+                        <div>
                             <h1> Nueva Reserva</h1>
                         </div>
                         <div class="navbar-brand">
                             <img src="~/images/login.png" alt="Login" width="20" height="20" />
                             <a class="navbar-brand" asp-action="Login" asp-controller="User">Login</a>
                         </div>
-                        <div class="navbar-brand">
-                            <img src="~/images/icono-carro.png" alt="icono-carro" width="20" height="20" />
-                            <a class="navbar-brand" asp-action="MisReservas" asp-controller="ListadoReserva">Mis
-                                reservas</a>
-                        </div>
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <div class="navbar-brand">
+                                <img src="~/images/icono-carro.png" alt="icono-carro" width="20" height="20" />
+                                <a class="navbar-brand" asp-action="MisReservas" asp-controller="ListadoReserva">Mis
+                                    reservas</a>
+                            </div>
+                        }
                     </div>
 
 

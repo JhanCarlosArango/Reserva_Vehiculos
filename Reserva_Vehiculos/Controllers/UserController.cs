@@ -43,9 +43,14 @@ namespace Reserva_Vehiculos.Controllers
                 // Crear las claims del usuario
                 var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name, user.usuario)
-
-
-            };
+                };
+                
+                foreach (var rol in user.rols)
+                {
+                    String _rol =  rol.ToString();
+                    claims.Add(new Claim(ClaimTypes.Role,  _rol));
+                    Console.WriteLine(_rol);
+                }
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -56,8 +61,6 @@ namespace Reserva_Vehiculos.Controllers
                     IsPersistent = false,
                     ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
                 };
-
-
 
                 // Iniciar sesión del usuario
                 await HttpContext.SignInAsync(

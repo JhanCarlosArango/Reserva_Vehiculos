@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/User/Login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-        options.AccessDeniedPath = "/Usuario/IniciarSesion";
+        options.AccessDeniedPath = "/Home/Privacy";
         //options.Cookie.Name = "MyAppAuthCookie";
         
     });

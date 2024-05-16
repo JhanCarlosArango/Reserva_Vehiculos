@@ -138,19 +138,13 @@ namespace Reserva_Vehiculos.Models.DAO
                             var query = @"INSERT INTO usuario(usuario, contrasenia, fk_num_documento) VALUES (@usuario, @contrasenia, @fk_num_documento);";
                             using (var cmd = new NpgsqlCommand(query, connection))
                             {
-
-
                                 // Define los parámetros
                                 cmd.Parameters.AddWithValue("@usuario", usuario);
                                 cmd.Parameters.AddWithValue("@contrasenia", contrasenia);
                                 cmd.Parameters.AddWithValue("@fk_num_documento", fk_num_documento);
 
-
                                 cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
-
                                 cmd.ExecuteNonQuery();
-
-
                                 Console.WriteLine("Datos insertados correctamente.");
                             }
                         }

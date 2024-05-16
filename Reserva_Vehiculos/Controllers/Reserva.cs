@@ -11,7 +11,7 @@ using Reserva_Vehiculos.Models.DAO;
 
 namespace Reserva_Vehiculos.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class Reserva : Controller
     {
         Pet_reserva_DAO pet_Reserva_D;
