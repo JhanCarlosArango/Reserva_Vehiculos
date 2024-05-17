@@ -8,10 +8,6 @@ create table usuario (
     CONTRASENIA VARCHAR(40)
 );
 
-create table persona (
-    id_persona INT NOT NULL
-);
-
 -------------------------------------------- Importante en la vista para acpetar reserva incluir capos para el vehiculo
 create table persona(
 num_documento int not null,
@@ -26,11 +22,23 @@ create table tipo_doc(
 id_tipo_doc serial not null,
 tipo_documento varchar(45)
 );
-
-create table (
-correo varchar(45)
+--- fk_placa,fk_ubicacion,fk_daños
+create table reporte_entrega(---
+id_reporte serial not null,
+fecha_entrega date,
+hora_entrega varchar(25)
 );
 
+--- fk_id_danio, fk_id_reporte
+create table reporte_danio(
+
+);
+
+create table Danios_vehiculo(
+id_danio serial not null,
+danio varchar(50),
+valor_danio int
+);
 
 create table usuario_rol(
 );
@@ -105,7 +113,7 @@ create table espec_vehiculo(
 id_espec_vehiculo serial not null,
 modelo int,
 color varchar(45),
-num_chasis decimal(10,10),
+num_chasis varchar(30),
 modelo_motor int,
 cilindraje int
 );
@@ -137,11 +145,12 @@ alter table marca add constraint pk_id_marca primary key(id_marca);--
 alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_espec_vehiculo);--
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);--
 alter table empresa add constraint pk_nit primary key(nit);--
-
+alter table reporte_entrega add constraint pk_id_reporte primary key(id_reporte);--
+---
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 alter table ubicacion add constraint pk_id_ubicacion primary key(id_ubicacion);
 
-
+-----fk--
 alter table prestador_vehiculo add prestador_num_documento int;
 alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
@@ -150,6 +159,8 @@ alter table vehiculo_doc_legal add fk_id_doc_legal int;
 alter table usuario add fk_num_documento int;--
 alter table pet_reserva add fk_id_categoria int;--
 alter table pet_reserva add fk_id_usuario int;--
+
+alter table reporte_entrega add fk_num_placa varchar(20);--
 
 
 alter table pet_reserva add fk_id_ubicacion_ini int;--
@@ -164,7 +175,7 @@ alter table vehiculo add fk_id_marca int;--
 alter table vehiculo add fk_id_categoria int;
 alter table vehiculo add fk_id_tipo_direccion int;--
 alter table vehiculo add fk_id_caja_cambios int;--
-alter table vehiculo add fk_id_espec_vehiculo int;--
+alter table vehiculo add fk_num_chasis int;--
 alter table espec_vehiculo add fk_id_tipo_combustible int;--
 alter table vehiculo_doc_legal add fk_num_placa varchar(20);
 alter table vehiculo_doc_legal add fk_id_doc_legal int;
@@ -186,10 +197,13 @@ alter table reserva add constraint fk_id_pet_reserva foreign key (fk_id_pet_rese
 alter table reserva add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table acuerdo add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo add constraint fk_id_marca foreign key (fk_id_marca) references marca (id_marca);--
+
+alter table reporte_entrega add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);--
+
 alter table vehiculo add constraint fk_id_categoria foreign key (fk_id_categoria) references categoria (id_categoria);
 alter table vehiculo add constraint fk_id_tipo_direccion foreign key (fk_id_tipo_direccion) references tipo_direccion (id_tipo_direccion);--
 alter table vehiculo add constraint fk_id_caja_cambios foreign key (fk_id_caja_cambios) references caja_cambios (id_caja_cambios);--
-alter table vehiculo add constraint fk_id_espec_vehiculo foreign key (fk_id_espec_vehiculo) references espec_vehiculo (id_espec_vehiculo);--
+alter table vehiculo add constraint fk_num_chasis foreign key (fk_num_chasis) references espec_vehiculo (num_chasis);--
 alter table espec_vehiculo add constraint fk_id_tipo_combustible foreign key (fk_id_tipo_combustible) references tipo_combustible (id_tipo_combustible);--
 alter table vehiculo_doc_legal add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);
 alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id_doc_legal) references doc_legal (id_doc_legal);

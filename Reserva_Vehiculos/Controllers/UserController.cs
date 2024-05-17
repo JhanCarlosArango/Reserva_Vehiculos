@@ -59,7 +59,7 @@ namespace Reserva_Vehiculos.Controllers
                 {
                     AllowRefresh = true,
                     IsPersistent = false,
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
                 };
 
                 // Iniciar sesión del usuario
