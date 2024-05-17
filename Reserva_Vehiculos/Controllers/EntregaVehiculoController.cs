@@ -28,12 +28,17 @@ namespace FrontEnd.Controllers
             return View(view_model);
         }
         [HttpPost]
-        public IActionResult EntregaVehiculo(String ubicacion ,String horaActual2,string fechaActual2) // horaActual2 no es String
+        public IActionResult EntregaVehiculo(decimal valorTotal,String ubicacion, String horaActual2, string fechaActual2, List<string> hiddenSelectedDanios) // horaActual2 no es String
         {
 
-            Console.WriteLine(" ubicacion"+ubicacion);
-            Console.WriteLine("hora " +horaActual2);
-            Console.WriteLine("fecha " +fechaActual2);
+            foreach (var item in hiddenSelectedDanios)
+            {
+                Console.WriteLine("id_danio "+item.ToString());
+            }
+            Console.WriteLine(" ubicacion id " + ubicacion);
+            Console.WriteLine("hora " + horaActual2);
+            Console.WriteLine("fecha " + fechaActual2);
+            Console.WriteLine("valor " + valorTotal);
             return RedirectToAction("EntregaVehiculo", "EntregaVehiculo");
         }
 

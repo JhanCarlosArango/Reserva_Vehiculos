@@ -6,12 +6,14 @@ CREATE OR REPLACE PROCEDURE insertar_datos_pet(
 	IN fk_id_categoria integer,
 	IN fk_id_usuario integer,
 	IN fk_id_ubicacion_ini integer,
-	IN fk_id_ubicacion_fin integer)
+	IN fk_id_ubicacion_fin integer,
+    IN costo decimal(15,2)
+    )
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin)
-    VALUES (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin);
+    INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin,costo)
+    VALUES (fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_categoria, fk_id_usuario, fk_id_ubicacion_ini, fk_id_ubicacion_fin,costo);
     
     COMMIT;
     

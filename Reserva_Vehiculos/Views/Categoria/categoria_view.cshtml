@@ -118,6 +118,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <form asp-action="Datos_Reserva" asp-controller="Peticion" method="post">
 
+                                    <input type="hidden" name="costo" id="costo" value="@(Model._Pet_Reserva.temp_costo * item.costo)">
                                     <input type="hidden" name="fecha_ini" id="fecha_ini" value="@Model._Pet_Reserva.fecha_ini">
                                     <input type="hidden" name="hora_ini" id="hora_ini" value="@Model._Pet_Reserva.hora_ini">
                                     <input type="hidden" name="fecha_fin" id="fecha_fin" value="@Model._Pet_Reserva.fecha_fin">

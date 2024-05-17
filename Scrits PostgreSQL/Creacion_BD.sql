@@ -52,8 +52,7 @@ create table reserva(
 id_reserva serial not null,
 acep_fecha date,
 estado_reserva varchar(20) default 'activa',
-valor_reserva decimal(10,2),
-costo decimal(10,2)
+valor_reserva decimal(10,2)
 );
 
 create table pet_reserva(
@@ -62,7 +61,8 @@ fecha_ini DATE,
 fecha_fin DATE,
 hora_ini varchar(20),
 hora_fin varchar(20),
-estado varchar(15) not null default 'wait'
+estado varchar(15) not null default 'wait',
+costo decimal (15,2)
 );
 
 

@@ -28,11 +28,12 @@ namespace Reserva_Vehiculos.Models
         public int fk_id_usuario { set; get; }
         public int fk_id_ubicacion_inicial { set; get; }
         public int fk_id_ubicacion_final { set; get; }
+        public decimal costo { set; get; }
         public Pet_reserva()
         {
 
         }
-        public Pet_reserva(DateOnly fecha_ini, DateOnly fecha_fin, String hora_ini, String hora_fin,int fk_id_ubicacion_inicial, int fk_id_ubicacion_final)
+        public Pet_reserva(DateOnly fecha_ini, DateOnly fecha_fin, String hora_ini, String hora_fin,int fk_id_ubicacion_inicial, int fk_id_ubicacion_final,decimal costo)
         {
             this.fecha_ini = fecha_ini;
             this.fecha_fin = fecha_fin;
@@ -40,6 +41,7 @@ namespace Reserva_Vehiculos.Models
             this.hora_fin = hora_fin;
             this.fk_id_ubicacion_inicial = fk_id_ubicacion_inicial;
             this.fk_id_ubicacion_final = fk_id_ubicacion_final;
+            this.costo = costo;
         }
 
 

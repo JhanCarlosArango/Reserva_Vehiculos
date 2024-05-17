@@ -225,7 +225,14 @@ namespace Reserva_Vehiculos.Models.DAO
                     cate.tipo_vehiculo,
                     cc.tipo_caja_cambios,
                     td.tipo_direccion,
-                    tc.tipo_combustible
+                    tc.tipo_combustible,
+                    pet.costo as costo_reserva,
+                    pet.fecha_ini,
+                    pet.fecha_fin,
+                    pet.hora_ini,
+                    pet.hora_fin,
+                    pers.primer_apellido || ' ' || pers.segundo_apellido AS nombre_completo,
+                    pers.num_documento
                     from vehiculo v 
                     inner join espec_vehiculo es ON es.num_chasis = v.fk_num_chasis
                     inner join marca mr on mr.id_marca = v.fk_id_marca
@@ -233,7 +240,11 @@ namespace Reserva_Vehiculos.Models.DAO
                     inner join caja_cambios cc ON cc.id_caja_cambios = v.fk_id_caja_cambios
                     inner join tipo_direccion td on td.id_tipo_direccion = v.fk_id_tipo_direccion
                     inner join tipo_combustible  tc ON tc.id_tipo_combustible = es.fk_id_tipo_combustible
-                    where v.num_placa  = @placa;";  // corregir, llamar un vista 
+                    inner join reserva re on re.fk_num_placa = v.num_placa
+                    inner join pet_reserva pet on pet.id_pet_reserva = re.fk_id_pet_reserva
+                    inner join usuario u on u.id_usuario = pet.fk_id_usuario
+                    inner join persona pers on pers.num_documento = u.fk_num_documento
+                    where re.fk_num_placa = @placa;";  // corregir, llamar un vista 
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@placa", placa);
