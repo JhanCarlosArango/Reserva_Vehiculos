@@ -65,7 +65,7 @@
     <div class="row justify-content-center align-items-center">
         <h4 id="titulo2" style="text-align: center;">Datos del vehículo</h4>
         <div id="fecha" class="col-md-4">
-            <input type="date" id="fechaActual2" class="form-control">
+            <input type="date" id="fechaActual2" class="form-control" required>
             <script>
                 var inputFecha2 = document.getElementById('fechaActual2');
                 var fecha2 = new Date().toISOString().slice(0, 10);
@@ -74,7 +74,7 @@
         </div>
 
         <div id="hora" class="col-md-4">
-            <input type="time" id="horaActual2" class="form-control">
+            <input type="time" id="horaActual2" class="form-control" required>
             <script>
                 var inputHora2 = document.getElementById('horaActual2');
                 var hora2 = ("0" + new Date().getHours()).slice(-2) + ":" + ("0" + new Date().getMinutes()).slice(-2);
@@ -89,7 +89,7 @@
                         <option></option>
                         @foreach (var item in Model.ListatipoUbicacion)
                         {
-                            <option value="@item.id_ubicacion">@item.Ubicacion_ini</option>
+                            <option value="@item.id_ubicacion" required>@item.Ubicacion_ini</option>
                         }
                     </select>
                     <label for="floatingSelectCategoria">Ubicación</label>
@@ -106,7 +106,7 @@
                 <ul id="listaDaños" class="list-group">
                     @foreach (var item in Model.Lista_danio_Vehiculos)
                     {
-                        <li class="list-group-item"><input type="checkbox" value="@item.valor_danio"> @item.danio</li>
+                        <li class="list-group-item"><input type="checkbox" value="@item.valor_danio" required> @item.danio</li>
                     }
                 </ul>
                 <!-- Mostrar el valor total aquí -->
