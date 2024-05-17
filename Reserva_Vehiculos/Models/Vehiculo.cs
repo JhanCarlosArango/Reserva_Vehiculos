@@ -20,20 +20,12 @@ namespace Reserva_Vehiculos.Models
         public String num_chasis { get; set; }
         public String modelo_motor { get; set; }
         public String cilindraje { get; set; }
+        public String tipo_vehiculo { get; set; }
         public int fk_id_tipo_combustible { get; set; }
 
-
-    //
         public Vehiculo()
         {
 
         }
-
-// se listan todos los vehiculos
-        //public List<Vehiculo> Flitar_veiculos_categoria(List<Vehiculo> lista, int idCategoria) //Filtar vehiculos 
-        //{
-        //    return lista.Where(elemento => elemento.fk_id_categoria == idCategoria).ToList();
-        //}
-
     }
 }

@@ -204,16 +204,39 @@ namespace Reserva_Vehiculos.Models.DAO
         }
         public Vehiculo BUscarVehiculo(String placa)
         {
-   
+
             var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
             try
             {
                 using (connection)
                 {
-                    var query = "select * from vehiculo v where v.num_placa = @placa;";  // corregir, llamar un vista 
+                    var query = @"
+                    select 
+                    v.num_placa,
+                    v.capacidad_pasajeros,
+                    v.capacidad_carga,
+                    v.estado,
+                    es.modelo,
+                    es.color,
+                    es.num_chasis,
+                    es.modelo_motor,
+                    es.cilindraje,
+                    mr.nombre_marca,
+                    cate.tipo_vehiculo,
+                    cc.tipo_caja_cambios,
+                    td.tipo_direccion,
+                    tc.tipo_combustible
+                    from vehiculo v 
+                    inner join espec_vehiculo es ON es.num_chasis = v.fk_num_chasis
+                    inner join marca mr on mr.id_marca = v.fk_id_marca
+                    inner join categoria cate on cate.id_categoria = v.fk_id_categoria
+                    inner join caja_cambios cc ON cc.id_caja_cambios = v.fk_id_caja_cambios
+                    inner join tipo_direccion td on td.id_tipo_direccion = v.fk_id_tipo_direccion
+                    inner join tipo_combustible  tc ON tc.id_tipo_combustible = es.fk_id_tipo_combustible
+                    where v.num_placa  = @placa;";  // corregir, llamar un vista 
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
-
+                        cmd.Parameters.AddWithValue("@placa", placa);
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
@@ -221,10 +244,13 @@ namespace Reserva_Vehiculos.Models.DAO
 
                                 _vehiculo = new Vehiculo();
                                 _vehiculo.num_placa = dr["num_placa"].ToString();
-                                _vehiculo.capacidad_pasajeros = dr["capacidad_pasajeros"].ToString();
-                                _vehiculo.capacidad_carga = dr["capacidad_carga"].ToString();
-                                _vehiculo.fk_id_categoria = int.Parse(dr["fk_id_categoria"].ToString());
-                                
+                                _vehiculo.modelo = dr["modelo"].ToString();
+                                _vehiculo.num_chasis = dr["num_chasis"].ToString();
+                                _vehiculo.modelo_motor = dr["modelo_motor"].ToString();
+                                _vehiculo.cilindraje = dr["cilindraje"].ToString();
+                                _vehiculo.tipo_vehiculo = dr["tipo_vehiculo"].ToString();
+                                //_vehiculo.fk_id_categoria = int.Parse(dr["fk_id_categoria"].ToString());
+
                             }
                         }
                     }
@@ -232,20 +258,9 @@ namespace Reserva_Vehiculos.Models.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al listar vehiculos: {ex.Message}");
+                Console.WriteLine($"Error al BUscarVehiculo: {ex.Message}");
             }
             return _vehiculo;
         }
-
     }
 }
-
-//      SELECT *
-//          FROM (
-//              SELECT v.num_placa, v.fk_id_categoria
-//              FROM vehiculo v
-//              WHERE v.num_placa NOT IN (
-//                 SELECT * FROM disponible_vehi(@fecha_ini, @fecha_fin)
-//              )
-//          ) AS subconsulta
-//          WHERE subconsulta.fk_id_categoria = @fk_id_categoria;

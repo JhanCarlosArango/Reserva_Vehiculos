@@ -22,7 +22,7 @@ create table tipo_doc(
 id_tipo_doc serial not null,
 tipo_documento varchar(45)
 );
---- fk_placa,fk_ubicacion,fk_daños
+--- fk_placa,fk_ubicacion
 create table reporte_entrega(---
 id_reporte serial not null,
 fecha_entrega date,
@@ -31,13 +31,13 @@ hora_entrega varchar(25)
 
 --- fk_id_danio, fk_id_reporte
 create table reporte_danio(
-
+id_reporte_danio serial not null
 );
 
 create table Danios_vehiculo(
 id_danio serial not null,
 danio varchar(50),
-valor_danio int
+valor_danio decimal(10,2)
 );
 
 create table usuario_rol(
@@ -72,7 +72,7 @@ num_placa varchar(20) not null,
 aire_acondicionado varchar(45),
 capacidad_pasajeros int(10),
 capacidad_carga decimal(10,2),
-estado varchar(15)
+estado varchar(15) not null default 'Bueno'
 );
 
 create table tipo_direccion(
@@ -146,11 +146,14 @@ alter table espec_vehiculo add constraint pk_id_espec_vehiculo primary key(id_es
 alter table tipo_combustible add constraint pk_id_tipo_combustible primary key(id_tipo_combustible);--
 alter table empresa add constraint pk_nit primary key(nit);--
 alter table reporte_entrega add constraint pk_id_reporte primary key(id_reporte);--
+alter table Danios_vehiculo add constraint pk_id_danio primary key(id_danio);--
+
+
 ---
 alter table doc_legal add constraint pk_id_doc_legal primary key(id_doc_legal);
 alter table ubicacion add constraint pk_id_ubicacion primary key(id_ubicacion);
 
------fk--
+-----fk column--
 alter table prestador_vehiculo add prestador_num_documento int;
 alter table usuario_rol add fk_id_usuario int;
 alter table usuario_rol add fk_id_rol int;
@@ -161,6 +164,12 @@ alter table pet_reserva add fk_id_categoria int;--
 alter table pet_reserva add fk_id_usuario int;--
 
 alter table reporte_entrega add fk_num_placa varchar(20);--
+alter table reporte_entrega add fk_id_ubicacion int;--
+
+alter table reporte_danio add fk_id_danio int;--
+
+alter table reporte_danio add  fk_id_reporte int;--
+
 
 
 alter table pet_reserva add fk_id_ubicacion_ini int;--
@@ -183,7 +192,7 @@ alter table usuario_rol add pk_usuario_rol int;
 
 alter table persona add fk_id_tipo_doc int;
 
-
+--fk_constraint
 
 alter table usuario_rol add constraint fk_id_usuario foreign key (fk_id_usuario) references usuario (id_usuario);
 alter table usuario_rol add constraint fk_id_rol foreign key (fk_id_rol) references rol (id_rol);
@@ -199,6 +208,10 @@ alter table acuerdo add constraint fk_num_placa foreign key (fk_num_placa) refer
 alter table vehiculo add constraint fk_id_marca foreign key (fk_id_marca) references marca (id_marca);--
 
 alter table reporte_entrega add constraint fk_num_placa foreign key (fk_num_placa) references vehiculo (num_placa);--
+alter table reporte_entrega add constraint fk_id_ubicacion foreign key (fk_id_ubicacion) references ubicacion (id_ubicacion);--
+
+alter table reporte_danio add constraint fk_id_danio foreign key (fk_id_danio) references Danios_vehiculo (id_danio);--
+alter table reporte_danio add constraint fk_id_reporte foreign key (fk_id_reporte) references reporte_entrega (id_reporte);--
 
 alter table vehiculo add constraint fk_id_categoria foreign key (fk_id_categoria) references categoria (id_categoria);
 alter table vehiculo add constraint fk_id_tipo_direccion foreign key (fk_id_tipo_direccion) references tipo_direccion (id_tipo_direccion);--
@@ -210,6 +223,7 @@ alter table vehiculo_doc_legal add constraint fk_id_doc_legal foreign key (fk_id
 
 ---- primaria compuesta
 alter table usuario_rol add constraint pk_usuario_rol primary key(fk_id_usuario, fk_id_rol);
+alter table reporte_danio add constraint id_reporte_danio primary key(id_reporte_danio, fk_id_reporte);--
 
 
 
@@ -244,3 +258,9 @@ VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',1);
 
 insert into usuario(usuario,contrasenia) values('arango','root',117987265);
 insert into usuario(usuario,contrasenia) values('manuel','root',117987269);
+
+
+INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Carroceria', 50000);
+INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Electrico', 70000);
+INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Parabrisas-Retrovisor', 200000);
+INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Interior', 150000);

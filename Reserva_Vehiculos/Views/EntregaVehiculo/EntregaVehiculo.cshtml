@@ -1,60 +1,68 @@
-﻿@{
+﻿@model Obj_View_Vehiculo
+@{
     ViewData["Title"] = "EntregaVehiculo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <div id="entregaVehiculo">
     <h1 id="titulo">Información de entrega del vehículo</h1><br><br>
     <div class="row row-divider">
         <div class="col-md-4">
-            @* <div class="border-bottom my-3"> *@
             <div class="form-group mb-5">
-                <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
+                <input type="text" class="form-control form-control-lg" id="placa" style="height: 50px;"
                     placeholder="Placa del vehículo">
             </div>
-            @* </div> *@
         </div>
         <div class="col-md-2">
-            <button class="btn btn-lg btn-primary" type="submit">Buscar</button>
+            <button class="btn btn-lg btn-primary" type="button" id="buscarBtn">Buscar</button>
         </div>
-
-
     </div>
-            @{
-            
-       
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-     }
+    <table class="table table-hover" id="resultados">
+        <thead>
+            <tr>
+                <th scope="col">Placa</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Numero Chasis</th>
+                <th scope="col">Modelo Motor</th>
+                <th scope="col">Cilindraje</th>
+                <th scope="col">Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $('#buscarBtn').click(function (e) {
+                e.preventDefault(); // Previene la acción predeterminada del botón
+                var placa = $('#placa').val();
+                console.log("Placa buscada:", placa); // Depuración
+                $.ajax({
+                    url: '@Url.Action("BuscarVehiculo", "EntregaVehiculo")',
+                    type: 'GET',
+                    data: { placa: placa },
+                    success: function (response) {
+                        console.log("Respuesta del servidor:", response); // Depuración
+                        var tbody = $('#resultados tbody');
+                        tbody.empty();
+                        if (response.success) {
+                            var vehiculo = response.data;
+                            tbody.append('<tr><td>' + vehiculo.num_placa + '</td><td>' + vehiculo.modelo + '</td><td>' + vehiculo.num_chasis + '</td><td>' + vehiculo.modelo_motor + '</td><td>' + vehiculo.cilindraje + '</td><td>' + vehiculo.tipo_vehiculo + '</td></tr>');
+                        } else {
+                            tbody.append('<tr><td colspan="6">' + response.message + '</td></tr>');
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error en la solicitud AJAX:", error); // Depuración
+                    }
+                });
+            });
+        });
+    </script>
+
     <div class="row justify-content-center align-items-center">
-        @* <div class="border-bottom my-3"> *@
         <h4 id="titulo2" style="text-align: center;">Datos del vehículo</h4>
         <div id="fecha" class="col-md-4">
             <input type="date" id="fechaActual2" class="form-control">
@@ -73,107 +81,117 @@
                 inputHora2.value = hora2;
             </script>
         </div>
+
         <div class="col-md-4">
             <div class="form-group mb-5">
                 <div class="form-floating">
                     <select class="form-select" id="floatingSelectEstado" aria-label="Floating label select example">
-                        <option value="1">La Libertad</option>
-                        <option value="2">El Mirador</option>
-                        <option value="3">Brisas altas</option>
+                        <option></option>
+                        @foreach (var item in Model.ListatipoUbicacion)
+                        {
+                            <option value="@item.id_ubicacion">@item.Ubicacion_ini</option>
+                        }
                     </select>
                     <label for="floatingSelectCategoria">Ubicación</label>
                 </div>
             </div>
         </div>
-        @* </div> *@
     </div>
 
     <div id="costos" class="row justify-content-center align-items-center">
         <h4 id="titulo3" style="text-align: center;">Costo adicional</h4>
         <div class="col-md-4">
-            <div class="form-floating">
-                <select class="form-select" id="floatingSelectEstado" aria-label="Floating label select example"
-                    onchange="calcularCostoAdicional(this.value)">
-                    <option value="1">Buen estado</option>
-                    <option value="2">Daños en la carrocería</option>
-                    <option value="3">Daños en los interiores</option>
-                    <option value="4">Daños mecánicos</option>
-                    <option value="5">Daños en los neumáticos y ruedas</option>
-                    <option value="6">Daños en el parabrisas y ventanas</option>
-                    <option value="7">Daños eléctricos</option>
-                </select>
-                <label for="floatingSelectEstado">Estado</label>
-            </div>
-        </div>
-        <div class="col-md-4">
             <div class="form-group mb-5">
-                <div id="contenedorLista" class="container">
-                    <ul id="listaCostos" class="list-group" style="text-align: center;">
-                        <li id="precioAlquiler" class="list-group-item">Precio de alquiler: $100000</li>
-                        <li id="costoAdicional" class="list-group-item">Costo adicional: $0</li>
-                        <li id="montoTotal" class="list-group-item">Monto total: $100000</li>
-                    </ul>
-                </div>
+                <label for="listaDaños">Selecciona los daños:</label>
+                <ul id="listaDaños" class="list-group">
+                    @foreach (var item in Model.Lista_danio_Vehiculos)
+                    {
+                        <li class="list-group-item"><input type="checkbox" value="@item.valor_danio"> @item.danio</li>
+                    }
+                </ul>
+                <!-- Mostrar el valor total aquí -->
+                <div id="contenedorValorTotal" class="container"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Función para calcular el costo adicional y actualizar la lista
-        function calcularCostoAdicional(estado) {
+        // Función para calcular el costo adicional y mostrar el valor total
+        function calcularCostoAdicional() {
+            var checkboxes = document.querySelectorAll("#listaDaños input[type='checkbox']");
             var costoAdicional = 0;
 
-            // Calcula el costo adicional según el estado seleccionado
-            switch (estado) {
-                case "1": // Buen estado
-                    costoAdicional = 0;
-                    break;
-                case "2": // Daños en la carrocería
-                    costoAdicional = 50000;
-                    break;
-                case "3": // Daños en los interiores
-                    costoAdicional = 30000;
-                    break;
-                case "4": // Daños mecánicos
-                    costoAdicional = 60000;
-                    break;
-                case "5": // Daños en los neumáticos y ruedas
-                    costoAdicional = 20000;
-                    break;
-                case "6": // Daños en el parabrisas y ventanas
-                    costoAdicional = 200000;
-                    break;
-                case "7": // Daños eléctricos
-                    costoAdicional = 70000;
-                    break;
-            }
+            // Calcula el costo adicional según los daños seleccionados
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    costoAdicional += parseInt(checkbox.value);
+                }
+            });
 
-            document.getElementById("costoAdicional").innerText = "Costo adicional: $" + costoAdicional;
-            document.getElementById("montoTotal").innerText = "Monto total: $" + (100000 + parseInt(costoAdicional));
+            // Muestra el valor total debajo de la lista de daños
+            document.getElementById("contenedorValorTotal").innerHTML = "<p>Valor total: $" + (100000 + costoAdicional) + "</p>";
         }
+
+        // Agrega evento change a los checkboxes para llamar a calcularCostoAdicional cuando cambien
+        var checkboxes = document.querySelectorAll("#listaDaños input[type='checkbox']");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", calcularCostoAdicional);
+        });
     </script>
 
-    @* <div class="row justify-content-center align-items-center">
-    <div class="col-md-4">
-    <h4 id="titulo4">Costo adicional:</h4>
-    </div>
-    <div class="col-md-4">
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-    <label class="form-check-label" for="inlineRadio1">Si</label>
-    </div>
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-    <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-    </div>
-    <div class="col-md-4">
-    <input type="number" class="form-control form-control-lg" id="input1" style="height: 50px;" placeholder="Especifique
-    el valor">
-    </div>
-    </div> *@
 
     <div id="boton-entrega" class="d-flex justify-content-center">
         <button class="btn btn-lg btn-primary" type="submit">Guardar</button>
     </div>
 </div>
+
+@*
+@{
+ViewData["Title"] = "Buscar Vehículo";
+}
+
+<h2>Buscar Vehículo</h2>
+
+<input type="text" id="placa" placeholder="Ingrese la placa del vehículo" />
+<button id="buscarBtn">Buscar</button>
+
+<table id="resultados" border="1">
+<thead>
+<tr>
+<th>Placa</th>
+<th>Modelo</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+<script>
+$(document).ready(function () {
+$('#buscarBtn').click(function () {
+var placa = $('#placa').val();
+$.ajax({
+url: '@Url.Action("BuscarVehiculo", "Vehiculos")',
+type: 'GET',
+data: { placa: placa },
+success: function (data) {
+var tbody = $('#resultados tbody');
+tbody.empty();
+if (data.length > 0) {
+data.forEach(function (vehiculo) {
+tbody.append('<tr><td>' + vehiculo.placa + '</td><td>' + vehiculo.modelo + '</td><td>' + vehiculo.color + '</td></tr>');
+});
+} else {
+tbody.append('<tr><td colspan="3">No se encontraron resultados</td></tr>');
+}
+},
+error: function (error) {
+console.log(error);
+}
+});
+});
+});
+</script>
+
+*@
