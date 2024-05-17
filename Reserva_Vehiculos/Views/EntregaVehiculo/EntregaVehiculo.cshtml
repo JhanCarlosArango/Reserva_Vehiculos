@@ -5,6 +5,9 @@
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<form asp-action="EntregaVehiculo" asp-controller="EntregaVehiculo" method="post">
+
 <div id="entregaVehiculo">
     <h1 id="titulo">Información de entrega del vehículo</h1><br><br>
     <div class="row row-divider">
@@ -65,34 +68,43 @@
     <div class="row justify-content-center align-items-center">
         <h4 id="titulo2" style="text-align: center;">Datos del vehículo</h4>
         <div id="fecha" class="col-md-4">
-            <input type="date" id="fechaActual2" class="form-control" required>
-            <script>
-                var inputFecha2 = document.getElementById('fechaActual2');
-                var fecha2 = new Date().toISOString().slice(0, 10);
-                inputFecha2.value = fecha2;
-            </script>
+            <input type="date" id="fechaActual2" name ="fechaActual2" class="form-control" required>
+    
         </div>
 
         <div id="hora" class="col-md-4">
-            <input type="time" id="horaActual2" class="form-control" required>
+            <input type="time" id="horaActual2" name ="horaActual2" class="form-control" required>
             <script>
-                var inputHora2 = document.getElementById('horaActual2');
-                var hora2 = ("0" + new Date().getHours()).slice(-2) + ":" + ("0" + new Date().getMinutes()).slice(-2);
-                inputHora2.value = hora2;
+                document.addEventListener('DOMContentLoaded', function () {
+                    var timeInput = document.getElementById('horaActual2');
+
+                    timeInput.addEventListener('input', function () {
+                        var value = this.value;
+                        var hour = value.split(':')[0];
+
+                        // Si el valor tiene minutos, resetear a la hora sin minutos
+                        if (value.includes(':')) {
+                            this.value = hour + ':00';
+                        }
+                    });
+
+                });
+
             </script>
         </div>
 
         <div class="col-md-4">
             <div class="form-group mb-5">
                 <div class="form-floating">
-                    <select class="form-select" id="floatingSelectEstado" aria-label="Floating label select example">
+                    <select class="form-select" id="floatingUbicacion" aria-label="Floating label select example" onchange="enviarSeleccion_Ubicacion()" required>
                         <option></option>
                         @foreach (var item in Model.ListatipoUbicacion)
                         {
                             <option value="@item.id_ubicacion" required>@item.Ubicacion_ini</option>
                         }
                     </select>
-                    <label for="floatingSelectCategoria">Ubicación</label>
+                    <label for="floatingUbicacion">Ubicación</label>
+                    <input type="hidden" name="ubicacion" id="ubicacion">
                 </div>
             </div>
         </div>
@@ -106,7 +118,8 @@
                 <ul id="listaDaños" class="list-group">
                     @foreach (var item in Model.Lista_danio_Vehiculos)
                     {
-                        <li class="list-group-item"><input type="checkbox" value="@item.valor_danio" required> @item.danio</li>
+                        <li class="list-group-item"><input type="checkbox" value="@item.valor_danio"> @item.danio
+                        </li>
                     }
                 </ul>
                 <!-- Mostrar el valor total aquí -->
@@ -129,7 +142,7 @@
             });
 
             // Muestra el valor total debajo de la lista de daños
-            document.getElementById("contenedorValorTotal").innerHTML = "<p>Valor total: $" + (100000 + costoAdicional) + "</p>";
+            document.getElementById("contenedorValorTotal").innerHTML = "<p>Valor total: $" + (costoAdicional) + "</p>";
         }
 
         // Agrega evento change a los checkboxes para llamar a calcularCostoAdicional cuando cambien
@@ -143,55 +156,16 @@
     <div id="boton-entrega" class="d-flex justify-content-center">
         <button class="btn btn-lg btn-primary" type="submit">Guardar</button>
     </div>
+
+    <script>
+        function enviarSeleccion_Ubicacion() {
+            var select = document.getElementById("floatingUbicacion");
+            var idSeleccionado = select.options[select.selectedIndex].value;
+            // Envía el idSeleccionado a través de una solicitud AJAX o actualiza un campo oculto en el formulario
+            document.getElementById("ubicacion").value = idSeleccionado;
+            
+            // Puedes enviar el formulario aquí si es necesario
+        }
+    </script>
 </div>
-
-@*
-@{
-ViewData["Title"] = "Buscar Vehículo";
-}
-
-<h2>Buscar Vehículo</h2>
-
-<input type="text" id="placa" placeholder="Ingrese la placa del vehículo" />
-<button id="buscarBtn">Buscar</button>
-
-<table id="resultados" border="1">
-<thead>
-<tr>
-<th>Placa</th>
-<th>Modelo</th>
-<th>Color</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-
-<script>
-$(document).ready(function () {
-$('#buscarBtn').click(function () {
-var placa = $('#placa').val();
-$.ajax({
-url: '@Url.Action("BuscarVehiculo", "Vehiculos")',
-type: 'GET',
-data: { placa: placa },
-success: function (data) {
-var tbody = $('#resultados tbody');
-tbody.empty();
-if (data.length > 0) {
-data.forEach(function (vehiculo) {
-tbody.append('<tr><td>' + vehiculo.placa + '</td><td>' + vehiculo.modelo + '</td><td>' + vehiculo.color + '</td></tr>');
-});
-} else {
-tbody.append('<tr><td colspan="3">No se encontraron resultados</td></tr>');
-}
-},
-error: function (error) {
-console.log(error);
-}
-});
-});
-});
-</script>
-
-*@
+</form>

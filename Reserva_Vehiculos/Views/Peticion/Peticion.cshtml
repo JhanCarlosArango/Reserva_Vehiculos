@@ -66,6 +66,25 @@
                                 <input type="time" name="hora_ini" id="hora_ini" class="form-control"
                                     style="width: 80%;" required>
                             </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var timeInput = document.getElementById('hora_ini');
+
+                                    timeInput.addEventListener('input', function () {
+                                        var value = this.value;
+                                        var hour = value.split(':')[0];
+
+                                        // Si el valor tiene minutos, resetear a la hora sin minutos
+                                        if (value.includes(':')) {
+                                            this.value = hour + ':00';
+                                        }
+                                    });
+
+                                    // Establecer un valor inicial si es necesario
+                                    
+                                });
+
+                            </script>
                         </div>
 
                         <!-- Segundo bloque -->
@@ -103,6 +122,25 @@
                                 <input type="time" name="hora_fin" id="hora_fin" class="form-control"
                                     style="width: 80%;" required>
                             </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var timeInput = document.getElementById('hora_fin');
+
+                                    timeInput.addEventListener('input', function () {
+                                        var value = this.value;
+                                        var hour = value.split(':')[0];
+
+                                        // Si el valor tiene minutos, resetear a la hora sin minutos
+                                        if (value.includes(':')) {
+                                            this.value = hour + ':00';
+                                        }
+                                    });
+
+                                    // Establecer un valor inicial si es necesario
+                                    
+                                });
+
+                            </script>
                         </div>
                     </div>
                     <div class="col-md-2 d-flex align-items-center justify-content-end">

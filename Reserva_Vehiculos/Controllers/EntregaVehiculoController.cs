@@ -27,6 +27,15 @@ namespace FrontEnd.Controllers
 
             return View(view_model);
         }
+        [HttpPost]
+        public IActionResult EntregaVehiculo(String ubicacion ,String horaActual2,string fechaActual2) // horaActual2 no es String
+        {
+
+            Console.WriteLine(" ubicacion"+ubicacion);
+            Console.WriteLine("hora " +horaActual2);
+            Console.WriteLine("fecha " +fechaActual2);
+            return RedirectToAction("EntregaVehiculo", "EntregaVehiculo");
+        }
 
         [HttpGet]
         public JsonResult BuscarVehiculo(string placa)
