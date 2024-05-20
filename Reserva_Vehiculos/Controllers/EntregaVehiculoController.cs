@@ -11,6 +11,8 @@ namespace FrontEnd.Controllers
         Danio_vehiculos_DAO _danio_DAO;
         List<Ubicacion> _list_ubi;
         List<Danios_vehiculos> _list_danio;
+
+        Reporte_entrega_DAO _repo;
         public IActionResult EntregaVehiculo()
         {
             _ubi_dao = new Ubicacion_DAO();
@@ -28,17 +30,18 @@ namespace FrontEnd.Controllers
             return View(view_model);
         }
         [HttpPost]
-        public IActionResult EntregaVehiculo(decimal valorTotal,String ubicacion, String horaActual2, string fechaActual2, List<string> hiddenSelectedDanios) // horaActual2 no es String
+        public IActionResult EntregaVehiculo(String fk_num_placa, decimal valorTotal, String ubicacion, String horaActual2, DateOnly fechaActual2, List<string> hiddenSelectedDanios) // horaActual2 no es String
         {
+            _repo = new Reporte_entrega_DAO();
+            _repo.Guardar_Reporte_entrega(fechaActual2, horaActual2, int.Parse(ubicacion), fk_num_placa);
+
+            int fk_id_reporte = _repo.Get_id_reporte_entrega();
 
             foreach (var item in hiddenSelectedDanios)
             {
-                Console.WriteLine("id_danio "+item.ToString());
+                int fk_id_danio = int.Parse(item);
+                _repo.Guardar_Itermedia_reporte_danio(fk_id_danio, fk_id_reporte);
             }
-            Console.WriteLine(" ubicacion id " + ubicacion);
-            Console.WriteLine("hora " + horaActual2);
-            Console.WriteLine("fecha " + fechaActual2);
-            Console.WriteLine("valor " + valorTotal);
             return RedirectToAction("EntregaVehiculo", "EntregaVehiculo");
         }
 

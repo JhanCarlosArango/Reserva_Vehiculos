@@ -189,17 +189,10 @@ namespace Reserva_Vehiculos.Models.DAO
                             var query = @"update pet_reserva  set estado =  'desca' where fk_num_placa = @fk_num_placa;";
                             using (var cmd = new NpgsqlCommand(query, connection))
                             {
-
-
                                 // Define los parámetros
                                 cmd.Parameters.AddWithValue("@fk_num_placa", fk_num_placa);
-
-
                                 cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
-
                                 cmd.ExecuteNonQuery();
-
-
                                 Console.WriteLine("Datos insertados correctamente.");
                             }
                         }
@@ -213,7 +206,6 @@ namespace Reserva_Vehiculos.Models.DAO
                 {
                     Console.WriteLine($"Error al Guardar_Vehiculos: {ex.Message}");
                 }
-
             }
         }
 

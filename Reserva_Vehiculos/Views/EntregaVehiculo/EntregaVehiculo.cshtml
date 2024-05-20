@@ -13,12 +13,39 @@
         <div class="row row-divider">
             <div class="col-md-4">
                 <div class="form-group mb-5">
-                    <input type="text" class="form-control form-control-lg" id="placa" style="height: 50px;"
-                        placeholder="Placa del vehículo">
+                    <input type="text" class="form-control form-control-lg" name="fk_num_placa"  id="placa" style="height: 50px;"
+                        placeholder="Placa del vehículo Reservado" required>
                 </div>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-lg btn-primary" type="button" id="buscarBtn">Buscar</button>
+            </div>
+            <div class="col-md-3" style="justify-content: right; text-align: right;">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-lg btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Datos adicionles reserva
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Informacion de Reseva</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Guardar Datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <table class="table table-hover" id="resultados">
