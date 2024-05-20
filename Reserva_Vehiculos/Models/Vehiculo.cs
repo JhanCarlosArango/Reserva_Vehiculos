@@ -15,6 +15,7 @@ namespace Reserva_Vehiculos.Models
         public int fk_id_espec_vehiculo { get; set; }
         public int fk_id_categoria { get; set; }
         public int fk_id_marca { get; set; }
+        public int id_reserva_temp { get; set; }
         public String color { get; set; }
         public String modelo { get; set; }
         public String num_chasis { get; set; }

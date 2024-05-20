@@ -212,6 +212,7 @@ namespace Reserva_Vehiculos.Models.DAO
                 {
                     var query = @"
                     select 
+                    re.id_reserva,
                     v.num_placa,
                     v.capacidad_pasajeros,
                     v.capacidad_carga,
@@ -254,6 +255,7 @@ namespace Reserva_Vehiculos.Models.DAO
                             {
 
                                 _vehiculo = new Vehiculo();
+                                _vehiculo.id_reserva_temp = int.Parse(dr["id_reserva"].ToString());
                                 _vehiculo.num_placa = dr["num_placa"].ToString();
                                 _vehiculo.modelo = dr["modelo"].ToString();
                                 _vehiculo.num_chasis = dr["num_chasis"].ToString();

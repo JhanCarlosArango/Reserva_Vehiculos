@@ -7,6 +7,7 @@ namespace FrontEnd.Controllers
     public class EntregaVehiculoController : Controller
     {
         Vehiculo_DAO vehiculo_DAO;
+        Reserva_DAO _reserva_DAO;
         Ubicacion_DAO _ubi_dao;
         Danio_vehiculos_DAO _danio_DAO;
         List<Ubicacion> _list_ubi;
@@ -30,18 +31,21 @@ namespace FrontEnd.Controllers
             return View(view_model);
         }
         [HttpPost]
-        public IActionResult EntregaVehiculo(String fk_num_placa, decimal valorTotal, String ubicacion, String horaActual2, DateOnly fechaActual2, List<string> hiddenSelectedDanios) // horaActual2 no es String
+        public IActionResult EntregaVehiculo(String fk_num_placa, decimal valorTotal, String ubicacion, String horaActual2, DateOnly fechaActual2, List<string> hiddenSelectedDanios, int id_reserva_temp) // horaActual2 no es String
         {
             _repo = new Reporte_entrega_DAO();
             _repo.Guardar_Reporte_entrega(fechaActual2, horaActual2, int.Parse(ubicacion), fk_num_placa);
 
-            int fk_id_reporte = _repo.Get_id_reporte_entrega();
+            _reserva_DAO = new Reserva_DAO();
 
+            int fk_id_reporte = _repo.Get_id_reporte_entrega();
+            Console.WriteLine("id_reserva_temp" + id_reserva_temp);
             foreach (var item in hiddenSelectedDanios)
             {
                 int fk_id_danio = int.Parse(item);
                 _repo.Guardar_Itermedia_reporte_danio(fk_id_danio, fk_id_reporte);
             }
+            _reserva_DAO.FINALIZAR_RESERVA(id_reserva_temp);
             return RedirectToAction("EntregaVehiculo", "EntregaVehiculo");
         }
 

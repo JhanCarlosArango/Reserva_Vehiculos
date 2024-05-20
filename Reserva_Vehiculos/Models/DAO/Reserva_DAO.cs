@@ -290,5 +290,48 @@ namespace Reserva_Vehiculos.Models.DAO
 
             }
         }
+        public void FINALIZAR_RESERVA(int id_reserva)
+        {
+
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = @"update reserva set estado_reserva = 'fin' where reserva.id_reserva = @id_reserva;";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+
+
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@id_reserva", id_reserva);
+
+
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
+
+                                cmd.ExecuteNonQuery();
+
+
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al FINALIZAR_RESERVA: {ex.Message}");
+                }
+
+            }
+        }
     }
 }
