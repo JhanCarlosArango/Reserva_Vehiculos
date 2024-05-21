@@ -304,25 +304,25 @@ CREATE INDEX IF NOT EXISTS fki_fk_num_chasis
 END;
 
 insert into ubicacion(id_ubicacion, nombre_barrio)
-values (1, "La Libertad"),
-(2, "Jesus Angel Gozales"),
-(3, "Buenos Aires Bajos"),
-(4, "El Mirador"),
-(5, "Andes Bajo"),
-(6, "La Normal"),
-(7, "Incoder"),
-(8, "San Judas"),
-(9, "Seminario Menor"),
-(10, "Brisas Altas"),
-(11, "Vivienda Militar"),
-(12, "El Raicero"),
-(13, "Ana Clarisa"),
-(14, "Portal de Nazareth"),
-(15, "Juan XXIII"),
-(16, "Acolsure"),
-(17, "Palmeras Altas"),
-(18, "La Gloria")
-(19, "Puente Lopez");
+values (1, 'La Libertad'),
+(2, 'Jesus Angel Gozales'),
+(3, 'Buenos Aires Bajos'),
+(4, 'El Mirador'),
+(5, 'Andes Bajo'),
+(6, 'La Normal'),
+(7, 'Incoder'),
+(8, 'San Judas'),
+(9, 'Seminario Menor'),
+(10, 'Brisas Altas'),
+(11, 'Vivienda Militar'),
+(12, 'El Raicero'),
+(13, 'Ana Clarisa'),
+(14, 'Portal de Nazareth'),
+(15, 'Juan XXIII'),
+(16, 'Acolsure'),
+(17, 'Palmeras Altas'),
+(18, 'La Gloria'),
+(19, 'Puente Lopez');
 
 INSERT INTO tipo_doc (tipo_documento) VALUES ('Cedula');
 INSERT INTO tipo_doc (tipo_documento) VALUES ('CC Extranjera');
@@ -347,10 +347,10 @@ insert into rol(tipo_rol)values('Cliente');
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
 VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699',1);
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
-VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',3);
+VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',2);
 
-insert into usuario(usuario,contrasenia) values('arango','root',117987265);
-insert into usuario(usuario,contrasenia) values('manuel','root',117987269);
+insert into usuario(usuario,contrasenia, fk_num_documento) values('arango','root',117987265);
+insert into usuario(usuario,contrasenia, fk_num_documento) values('manuel','root',117987269);
 
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
 insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
