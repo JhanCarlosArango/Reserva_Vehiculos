@@ -247,18 +247,19 @@ insert into rol(tipo_rol)values('Administrador');
 insert into rol(tipo_rol)values('Proveerdor');
 insert into rol(tipo_rol)values('Cliente');
 
-insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
-insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
-insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
+
 
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
 VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699',1);
 INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
-VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',1);
+VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',3);
 
 insert into usuario(usuario,contrasenia) values('arango','root',117987265);
 insert into usuario(usuario,contrasenia) values('manuel','root',117987269);
 
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(1,1);
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,2);
+insert into usuario_rol (fk_id_usuario,fk_id_rol) values(2,3);
 
 INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Carroceria', 50000);
 INSERT INTO public.danios_vehiculo(danio, valor_danio) VALUES ('Daño Electrico', 70000);
