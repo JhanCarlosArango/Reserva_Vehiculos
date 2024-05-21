@@ -40,7 +40,21 @@ namespace Reserva_Vehiculos.Models.DAO
                     using (connection)
                     {
 
-                        var query = "SELECT * FROM pet_reserva where estado = 'wait' ORDER BY id_pet_reserva ASC;";  // corregir, llamar un vista 
+                        var query = @"
+                        SELECT 
+                        pe.id_pet_reserva,
+                        pe.fecha_ini,
+                        pe.fecha_fin,
+                        pe.hora_ini,
+                        pe.hora_fin,
+                        pe.fk_id_categoria,
+                        pe.fk_id_usuario,
+                        ub.nombre_barrio as barrio_ini,
+                        ub_f.nombre_barrio as barrio_fin
+                        FROM pet_reserva  pe
+                        inner join ubicacion ub on ub.id_ubicacion = pe.fk_id_ubicacion_ini
+                        inner join ubicacion ub_f on ub_f.id_ubicacion = pe.fk_id_ubicacion_fin
+                        where pe.estado = 'wait' ORDER BY pe.id_pet_reserva ASC;";  // corregir, llamar un vista 
                         using (var cmd = new NpgsqlCommand(query, connection))
                         {
                             using (var dr = cmd.ExecuteReader())
@@ -59,8 +73,8 @@ namespace Reserva_Vehiculos.Models.DAO
                                     _pet.hora_fin = dr["hora_fin"].ToString();
                                     _pet.fk_id_categoria = int.Parse(dr["fk_id_categoria"].ToString());
                                     _pet.fk_id_usuario = int.Parse(dr["fk_id_usuario"].ToString());
-                                    //_pet.ubicacion_inicial = int.Parse(dr["fk_id_ubicacion_inicial"].ToString()); //Ubicacion
-                                    //_pet.ubicacion_final = int.Parse(dr["fk_id_ubicacion_final"].ToString());
+                                    _pet.ubicacion_inicial = dr["barrio_ini"].ToString(); //Ubicacion
+                                    _pet.ubicacion_final = dr["barrio_fin"].ToString();
                                     list_pet.Add(_pet);
                                 }
                             }

@@ -28,6 +28,8 @@ namespace Reserva_Vehiculos.Models
         public int fk_id_usuario { set; get; }
         public int fk_id_ubicacion_inicial { set; get; }
         public int fk_id_ubicacion_final { set; get; }
+        public String ubicacion_inicial { set; get; }
+        public String ubicacion_final { set; get; }
         public decimal costo { set; get; }
         public Pet_reserva()
         {

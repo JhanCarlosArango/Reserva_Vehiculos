@@ -22,7 +22,7 @@ namespace Reserva_Vehiculos.Controllers
         Tipo_Direccion _tipo;
         Marca _marca;
         Caja_Cambio _caja;
-        Categoria _cate;
+        //Categoria _cate;
 
         
         public IActionResult RegistroVehiculo()
