@@ -24,7 +24,7 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-lg btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
-                    Datos adicionles reserva
+                    Datos adicionales reserva
                 </button>
 
                 <!-- Modal -->
@@ -33,12 +33,19 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Informacion de Reseva</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Información de Reserva</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                ...
+                            <div class="modal-body" style="text-align: left;">
+
+                                <p><strong>Nombre Completo</strong> <span id="temp_nombre_completo"></span></p>
+                                <p><strong>Documento del Cliente: </strong> <span id="temp_num_documento"></span></p>
+                                <p><strong>Fecha Recojida: </strong> <span id="temp_fecha_ini"></span></p>
+                                <p><strong>Fecha Devolucion: </strong> <span id="temp_fecha_fin"></span></p>
+                                <p><strong>Hora Entrega: </strong> <span id="temp_hora_fin"></span></p>
+                                <p><strong>Valor de Reserva: </strong> <span id="temp_costo_reserva"></span></p>
+                                <p><strong>Categoria Vehiculo: </strong> <span id="temp_tipo_vehiculo"></span></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -48,6 +55,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <table class="table table-hover" id="resultados">
             <thead>
@@ -63,13 +71,13 @@
             <tbody>
             </tbody>
         </table>
- <div id="entregaVehiculo">
-        <!-- Otros campos del formulario -->
-        
-        <input type="hidden" name="id_reserva_temp" id="id_reserva_temp" value="">
-        
-        <!-- Más campos y scripts del formulario -->
-    </div>
+        <div id="entregaVehiculo">
+            <!-- Otros campos del formulario -->
+
+            <input type="hidden" name="id_reserva_temp" id="id_reserva_temp" value="">
+
+            <!-- Más campos y scripts del formulario -->
+        </div>
         <script>
             $(document).ready(function () {
                 $('#buscarBtn').click(function (e) {
@@ -90,6 +98,16 @@
 
                                 // Actualizar el valor del campo oculto con id_reserva_temp
                                 $('#id_reserva_temp').val(vehiculo.id_reserva_temp);
+
+                                // Actualizar el contenido del modal
+                                $('#temp_nombre_completo').text(vehiculo.temp_nombre_completo);
+                                $('#temp_num_documento').text(vehiculo.temp_num_documento);
+                                $('#temp_fecha_ini').text(vehiculo.temp_fecha_ini);
+                                $('#temp_fecha_fin').text(vehiculo.temp_fecha_fin);
+                                $('#temp_hora_fin').text(vehiculo.temp_hora_fin);
+                                $('#temp_costo_reserva').text(vehiculo.temp_costo_reserva);
+                                $('#temp_tipo_vehiculo').text(vehiculo.temp_tipo_vehiculo);
+
                             } else {
                                 tbody.append('<tr><td colspan="6">' + response.message + '</td></tr>');
                             }
@@ -101,6 +119,7 @@
                 });
             });
         </script>
+
 
         <div class="row justify-content-center align-items-center">
             <h4 id="titulo2" style="text-align: center;">Datos del vehículo</h4>

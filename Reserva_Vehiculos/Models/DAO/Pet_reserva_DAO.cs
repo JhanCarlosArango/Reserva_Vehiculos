@@ -10,7 +10,7 @@ namespace Reserva_Vehiculos.Models.DAO
     public class Pet_reserva_DAO
     {
         List<Pet_reserva> list_pet;
-        Reserva _reserva;
+        //Reserva _reserva;
         Pet_reserva _pet;
         Ubicacion _ubi;
         Categoria _cate;

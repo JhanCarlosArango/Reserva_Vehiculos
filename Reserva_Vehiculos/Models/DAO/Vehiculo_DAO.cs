@@ -253,7 +253,7 @@ namespace Reserva_Vehiculos.Models.DAO
                         {
                             while (dr.Read())
                             {
-
+                                Pet_reserva _pet = new Pet_reserva();
                                 _vehiculo = new Vehiculo();
                                 _vehiculo.id_reserva_temp = int.Parse(dr["id_reserva"].ToString());
                                 _vehiculo.num_placa = dr["num_placa"].ToString();
@@ -262,8 +262,19 @@ namespace Reserva_Vehiculos.Models.DAO
                                 _vehiculo.modelo_motor = dr["modelo_motor"].ToString();
                                 _vehiculo.cilindraje = dr["cilindraje"].ToString();
                                 _vehiculo.tipo_vehiculo = dr["tipo_vehiculo"].ToString();
-                                //_vehiculo.fk_id_categoria = int.Parse(dr["fk_id_categoria"].ToString());
+                                // datos adicionaes
+                                string fecha_IniString = dr["fecha_ini"].ToString();
+                                string fecha_FinString = dr["fecha_fin"].ToString();
 
+                                _vehiculo.temp_fecha_ini = DateOnly.Parse(_pet.ObtenerPrimeraParteSeparadaPorEspacio(fecha_IniString));
+                                _vehiculo.temp_fecha_fin = DateOnly.Parse(_pet.ObtenerPrimeraParteSeparadaPorEspacio(fecha_FinString));
+
+                                _vehiculo.temp_hora_ini = dr["hora_ini"].ToString();
+                                _vehiculo.temp_hora_fin = dr["hora_fin"].ToString();
+                                _vehiculo.temp_nombre_completo = dr["nombre_completo"].ToString();
+                                _vehiculo.temp_num_documento = dr["num_documento"].ToString();
+                                _vehiculo.temp_costo_reserva = dr["costo_reserva"].ToString();
+                                _vehiculo.temp_tipo_vehiculo = dr["tipo_vehiculo"].ToString();
                             }
                         }
                     }

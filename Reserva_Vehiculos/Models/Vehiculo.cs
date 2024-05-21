@@ -24,6 +24,15 @@ namespace Reserva_Vehiculos.Models
         public String tipo_vehiculo { get; set; }
         public int fk_id_tipo_combustible { get; set; }
 
+        //TEmporales
+        public DateOnly temp_fecha_ini { get; set; }
+        public DateOnly temp_fecha_fin { get; set; }
+        public String temp_hora_ini { get; set; }
+        public String temp_hora_fin { get; set; }
+        public String temp_nombre_completo { get; set; }
+        public String temp_num_documento { get; set; }
+        public String temp_costo_reserva { get; set; }
+        public String temp_tipo_vehiculo { get; set; }
         public Vehiculo()
         {
 

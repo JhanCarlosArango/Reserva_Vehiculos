@@ -57,6 +57,7 @@ namespace FrontEnd.Controllers
             if (placa != null)
             {
                 vehiculo = vehiculo_DAO.BUscarVehiculo(placa);
+                
             }
 
             if (vehiculo != null)
