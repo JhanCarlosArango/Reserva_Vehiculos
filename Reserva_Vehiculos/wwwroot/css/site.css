@@ -30,17 +30,76 @@ body {
 }
 
 #mi-footer {
+  background-color: #D6D6D6;
   margin: 0;
   width: 100%;
   padding: 0;
 }
 
 #mi-navbar {
-  background-color: #D0EAFC;
+  background-color: #D6D6D6;
   color: #000000;
   padding: 20px;
 }
 
 #listadoReserva {
-  background-color: #D0EAFC;
+  background-color: #D0EAFC;
+}
+
+#login-body {
+  background-image: url('../images/fondo.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#login-container {
+  background-color: #D6D6D6;
+  border-radius: 15px;
+  opacity: 0.9;
+  max-width: 500px;
+  height: 500px;
+}
+
+#categoria, #datos-personales, #listado-reserva, #registro-vehiculo {
+  background-color: #F1EFEF;
+}
+
+#titulo, #titulo2, #titulo3, #titulo4 {
+  color: #336699;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#costos {
+  background-color: #FFFFFF;
+}
+
+.row-divider {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+#boton-entrega {
+  padding: 50px;
+}
+
+#contenedorLista {
+  margin-top: 5px;
+  padding: 5px;
+  background-color: #D6D6D6;
+  /*color: white;*/
+  border-radius: 10px;
+}
+
+/* Estilo para las l�neas divisorias entre las columnas */
+#tablaVehiculo th,
+#tablaVehiculo td {
+  border-right: 1px solid #dddddd;
+}
+
+#tablaVehiculo th:last-child,
+#tablaVehiculo td:last-child {
+   border-right: none; /* No hay l�nea divisoria en la �ltima columna */
 }
