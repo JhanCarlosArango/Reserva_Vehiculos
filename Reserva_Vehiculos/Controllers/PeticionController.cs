@@ -149,7 +149,8 @@ namespace Reserva_Vehiculos.Controllers
             }
             else
             {
-                return View();
+                TempData["Message"] = "No se encontro el correo";
+                return RedirectToAction("peticion", "Peticion");
             }
         }
 

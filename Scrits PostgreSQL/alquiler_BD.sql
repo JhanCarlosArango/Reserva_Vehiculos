@@ -350,10 +350,10 @@ insert into rol(tipo_rol)values('Cliente');
 
 
 
-INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
-VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699',1);
-INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc) 
-VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',2);
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc, correo) 
+VALUES (117987265, 'Jhan', 'Carlos', 'Arango', 'Usuga', '3214905699',1,'jh.arango@udla.edu.co');
+INSERT INTO persona (num_documento, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefonico,fk_id_tipo_doc, correo) 
+VALUES (117987269, 'Manuel', 'David', 'Rivera', 'Gomez', '112',2,'manuelrigo2024@gmail.com');
 
 insert into usuario(usuario,contrasenia, fk_num_documento) values('arango','root',117987265);
 insert into usuario(usuario,contrasenia, fk_num_documento) values('manuel','root',117987269);
