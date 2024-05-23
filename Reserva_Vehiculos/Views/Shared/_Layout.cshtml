@@ -11,10 +11,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Reserva_Vehiculos.styles.css" asp-append-version="true" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +27,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        @if (User.IsInRole("Administrador")) // o 
+                        @if (User.IsInRole("Administrador")) // o
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Reserva"
@@ -84,11 +81,14 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li>
+
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal"
                                                     asp-action="Logout" asp-controller="User">
                                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                                     Logout
                                                 </a>
+
+
                                             </li>
                                         </ul>
                                     </div>

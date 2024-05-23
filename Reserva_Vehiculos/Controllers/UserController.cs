@@ -44,11 +44,11 @@ namespace Reserva_Vehiculos.Controllers
                 var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name, user.usuario)
                 };
-                
+
                 foreach (var rol in user.rols)
                 {
-                    String _rol =  rol.ToString();
-                    claims.Add(new Claim(ClaimTypes.Role,  _rol));
+                    String _rol = rol.ToString();
+                    claims.Add(new Claim(ClaimTypes.Role, _rol));
                     Console.WriteLine(_rol);
                 }
 
