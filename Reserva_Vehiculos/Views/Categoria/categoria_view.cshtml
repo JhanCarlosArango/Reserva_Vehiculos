@@ -6,8 +6,6 @@
 
 @* --------------------------------------------- paso 3 ------------------------------------------------------*@
 
-
-</style>
 <br><br>
     <h1 style="text-align: center;">Grupo de vehículos por categoría</h1>
     <div class="row">
@@ -23,7 +21,14 @@
                 <div class="form-group mb-4">
                     <nav class="navbar bg-body-tertiary d-flex justify-content-center">
                         
-                        <img src="~/images/vehiculo1.png" alt="Vehiculo" width="500" height="300" />
+                    @if (item.RutaImagen != null)
+                    {
+                        <img src="@item.RutaImagen" alt="Vehiculo" width="500" height="300" />
+                    }
+                    else
+                    {
+                        <img src="~/images/default.png" alt="No Image Available" width="500" height="300" />
+                    }
                     </nav>
                     <p style="font-size: xx-small; text-align: center;" >*Su reserva garantiza uno de los modelos de autos a
                         continuación,

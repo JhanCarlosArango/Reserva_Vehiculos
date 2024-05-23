@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Mail;
 using iText.Html2pdf;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Org.BouncyCastle.Asn1.Cmp;
 namespace Reserva_Vehiculos.Controllers
 {
     public class Peticion : Controller
@@ -21,6 +22,7 @@ namespace Reserva_Vehiculos.Controllers
         Usuario_DAO _Usuario_DAO;
         Ubicacion_DAO _ubi_DAO;
         List<Ubicacion> _ubi;
+        Categoria_DAO categoria_;
         Persona per;
         DateTime fecha_i;
         DateTime fecha_f;
@@ -32,7 +34,6 @@ namespace Reserva_Vehiculos.Controllers
         private readonly ITempDataProvider _tempDataProvider;
         private readonly IServiceProvider _serviceProvider;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
         private readonly IActionContextAccessor _actionContextAccessor;
         public Peticion(IActionContextAccessor actionContextAccessor, IHttpContextAccessor httpContextAccessor, ICompositeViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider, IWebHostEnvironment hostingEnvironment)
         {
@@ -46,10 +47,19 @@ namespace Reserva_Vehiculos.Controllers
         }
         public IActionResult peticion()
         {
+            categoria_ = new Categoria_DAO();
             _ubi_DAO = new Ubicacion_DAO();
             _ubi = _ubi_DAO.listar_ubicacion();
+
+            var l_cate = categoria_.ListarCategoria();
+            var viewModel = new Obj_ViewModel
+            {
+                ListaCategorias = l_cate,
+                _list_ubicaion = _ubi,   // _ViewModel_pet_Reserva pasa info a _Pet_Reserva
+
+            };
             ////aqui llamo ubicacin
-            return View(_ubi);
+            return View(viewModel);
         }
         // Paso 1 esta en la vista peticion.cshtml
         [HttpPost]

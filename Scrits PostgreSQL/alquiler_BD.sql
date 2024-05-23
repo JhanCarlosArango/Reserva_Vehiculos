@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS public.categoria
     id_categoria serial NOT NULL,
     tipo_vehiculo character varying(45) COLLATE pg_catalog."default",
     costo numeric(10, 2),
+    ruta_imagen character varying(50) COLLATE pg_catalog."default",
     CONSTRAINT pk_id_categoria PRIMARY KEY (id_categoria)
 );
 
@@ -37,6 +38,7 @@ CREATE TABLE IF NOT EXISTS public.empresa
     email character varying(45) COLLATE pg_catalog."default",
     telefono character varying(45) COLLATE pg_catalog."default",
     logo character varying(150) COLLATE pg_catalog."default",
+    direccion character varying(45) COLLATE pg_catalog."default",
     CONSTRAINT pk_nit PRIMARY KEY (nit)
 );
 
@@ -332,12 +334,12 @@ INSERT INTO tipo_doc (tipo_documento) VALUES ('Cedula');
 INSERT INTO tipo_doc (tipo_documento) VALUES ('CC Extranjera');
 
 
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Automóvil', 93000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Camióneta', 123000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Baja CC', 45000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Media CC', 70000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Motocicleta Alta CC', 100000);
-INSERT INTO categoria (tipo_vehiculo, costo) VALUES ('Depotivo', 320000);
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Automóvil', 93000,'/images/vehiculo1.png');
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Camióneta', 123000,'/images/vehiculo2.png');
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Motocicleta Baja CC', 45000,'/images/moto1.png');
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Motocicleta Media CC', 70000,'/images/moto2.png');
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Motocicleta Alta CC', 100000,'/images/moto3.png');
+INSERT INTO categoria (tipo_vehiculo, costo, ruta_imagen) VALUES ('Depotivo', 320000,'/images/vehiculo3.png');
 
 INSERT INTO pet_reserva (fecha_ini, fecha_fin, hora_ini, hora_fin)
 VALUES ('2024-05-01', '2024-05-01', '10:00:00', '12:00:00');

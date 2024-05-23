@@ -11,8 +11,7 @@ using Reserva_Vehiculos.Models.DAO;
 
 namespace Reserva_Vehiculos.Controllers
 {
-
-    
+ 
     public class CategoriaController : Controller
     {
         Categoria_DAO categoria_ = new Categoria_DAO();

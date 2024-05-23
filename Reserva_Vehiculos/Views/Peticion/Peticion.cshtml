@@ -1,4 +1,4 @@
-@model List<Ubicacion>
+@model Obj_ViewModel
 @using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "peticion";
@@ -38,7 +38,7 @@
                                     <select class="form-select" id="ubicacionDropdown" aria-label="Ubicación"
                                         onchange="enviarSeleccion()" required>
                                         <option></option>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in @Model._list_ubicaion)
                                         {
                                             <option value="@item.id_ubicacion">@item.Ubicacion_ini</option>
                                         }
@@ -91,7 +91,7 @@
                                     <select class="form-select" id="ubicacionDropdown_fi" aria-label="Ubicación"
                                         onchange="enviarSeleccion_fi()" required>
                                         <option></option>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in @Model._list_ubicaion)
                                         {
                                             <option value="@item.id_ubicacion">@item.Ubicacion_ini</option>
                                         }
@@ -180,34 +180,32 @@
             <!-- Cambia el tamaño del contenedor del carrusel -->
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner bg-secondary">
-                    @for (int i = 0; i < 5; i++)
+                    @for (int i = 0; i < @Model.ListaCategorias.Count - 1 ; i++)
                     {
                         if (i == 0)
                         {
                             <div class="carousel-item active">
-                                <img src="~/images/vehiculo1.png" alt="Vehiculo" class="d-block mx-auto" width="700"
+                                <img src="@Model.ListaCategorias[i].RutaImagen" alt="Vehiculo" class="d-block mx-auto" width="700"
                                     height="400" /> <!-- Ajusta el tamaño de la imagen -->
                                 <div class="carousel-caption d-none d-md-block text-center mt-3">
-                                    <h5>Grupo A - Económico</h5>
-                                    <p>Kía Picanto 2024</p>
+                                    <h5>@Model.ListaCategorias[i].tipo_vehiculo</h5>
                                 </div>
                             </div>
                         }
                         else
                         {
                             <div class="carousel-item">
-                                <img src="~/images/vehiculo@(i + 1).png" alt="Vehiculo" class="d-block mx-auto" width="700"
+                                <img src="@Model.ListaCategorias[i+1].RutaImagen" alt="Vehiculo" class="d-block mx-auto" width="700"
                                     height="400" /> <!-- Ajusta el tamaño de la imagen -->
                                 <div class="carousel-caption d-none d-md-block text-center mt-3">
-                                    <h5>Grupo A - Económico</h5>
-                                    <p>Kía Picanto 2024</p>
+                                    <h5>@Model.ListaCategorias[i+1].tipo_vehiculo</h5>
                                 </div>
                             </div>
                         }
                     }
 
                     <ol class="carousel-indicators">
-                        @for (int i = 0; i < 5; i++)
+                        @for (int i = 0; i < @Model.ListaCategorias.Count-1; i++)
                         {
                             <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i"
                                 class="@((i == 0) ? "active" : "")"></li>
