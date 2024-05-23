@@ -161,6 +161,78 @@ namespace Reserva_Vehiculos.Models.DAO
 
             }
         }
+
+
+        public void Guardar_rol_USuario(int fk_id_usuario)
+        {
+
+            var connection = conn.Conectar(); //  es posible mejorar esta linea de codigo
+
+            if (connection != null)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        if (connection != null)
+                        {
+                            var query = @"INSERT INTO public.usuario_rol
+                            (fk_id_usuario, fk_id_rol) VALUES (@fk_id_usuario, 2);";
+                            using (var cmd = new NpgsqlCommand(query, connection))
+                            {
+                                // Define los parámetros
+                                cmd.Parameters.AddWithValue("@fk_id_usuario", fk_id_usuario);
+
+                                cmd.CommandType = CommandType.Text; // Establece el tipo de comando como texto
+                                cmd.ExecuteNonQuery();
+                                Console.WriteLine("Datos insertados correctamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La conexión es nula.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Guardar_rol_USuario: {ex.Message}");
+                }
+
+            }
+        }
+        public int Get_id_USUARIO()
+        {
+            int id = 0;
+            using (var connection = conn.Conectar())
+            {
+                try
+                {
+                    // Consulta para obtener los roles del usuario
+                    string query = @"
+                    SELECT u.id_usuario FROM public.usuario u
+                    ORDER BY id_usuario DESC limit 1;
+                    ";
+
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                id = int.Parse(dr["id_usuario"].ToString());
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al Get_id_USUARIO: {ex.Message}");
+                }
+            }
+
+            return id;
+        }
     }
 
 }
