@@ -1,4 +1,4 @@
-
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reserva_Vehiculos.Models;
@@ -141,7 +141,7 @@ namespace Reserva_Vehiculos.Controllers
 
             // Enviar el PDF por correo y obtener el resultado
             int envioExitoso = EnviarCorreoConPDF(destinatarioEmail, _pdfBytes);
-
+            
             if (envioExitoso == 1)
             {
                 TempData["Message"] = "Recibo Generado Correctamente, Revisa tu Correo Electronico";
@@ -303,6 +303,74 @@ namespace Reserva_Vehiculos.Controllers
         public IActionResult Error()
         {
             return View("Error!");
+        }
+
+        public IActionResult reporte2()
+        {
+            // Obtener datos de la base de datos (simulación)
+            var reserva = new
+            {
+                NombreDeLaEmpresa = "Nombre de la Empresa Dinámico",
+                FechaDeInicio = DateTime.Now.ToString("dd/MM/yyyy"),
+                FechaDeFin = DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"),
+                FechaDeRecogida = "15/05/2024",
+                HoraDeRecogida = "10:00 AM",
+                BarrioDeRecogida = "Centro",
+                Categoria = "A",
+                FechaDeDevolucion = "22/05/2024",
+                HoraDeDevolucion = "10:00 AM",
+                BarrioDeDevolucion = "Norte"
+            };
+
+            // Crear el archivo Excel
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Reporte");
+
+                // Agregar los datos a la hoja de cálculo
+                worksheet.Cell(1, 1).Value = "Nombre de la Empresa";
+                worksheet.Cell(1, 2).Value = reserva.NombreDeLaEmpresa;
+
+                worksheet.Cell(2, 1).Value = "Fecha de Inicio";
+                worksheet.Cell(2, 2).Value = reserva.FechaDeInicio;
+
+                worksheet.Cell(3, 1).Value = "Fecha de Fin";
+                worksheet.Cell(3, 2).Value = reserva.FechaDeFin;
+
+                worksheet.Cell(4, 1).Value = "Fecha de Recogida";
+                worksheet.Cell(4, 2).Value = reserva.FechaDeRecogida;
+
+                worksheet.Cell(5, 1).Value = "Hora de Recogida";
+                worksheet.Cell(5, 2).Value = reserva.HoraDeRecogida;
+
+                worksheet.Cell(6, 1).Value = "Barrio de Recogida";
+                worksheet.Cell(6, 2).Value = reserva.BarrioDeRecogida;
+
+                worksheet.Cell(7, 1).Value = "Categoría";
+                worksheet.Cell(7, 2).Value = reserva.Categoria;
+
+                worksheet.Cell(8, 1).Value = "Fecha de Devolución";
+                worksheet.Cell(8, 2).Value = reserva.FechaDeDevolucion;
+
+                worksheet.Cell(9, 1).Value = "Hora de Devolución";
+                worksheet.Cell(9, 2).Value = reserva.HoraDeDevolucion;
+
+                worksheet.Cell(10, 1).Value = "Barrio de Devolución";
+                worksheet.Cell(10, 2).Value = reserva.BarrioDeDevolucion;
+
+                // Ajustar las columnas al contenido
+                worksheet.Columns().AdjustToContents();
+
+                // Guardar el archivo en un MemoryStream
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    stream.Position = 0;
+
+                    // Retornar el archivo Excel como descarga
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteDeReservas.xlsx");
+                }
+            }
         }
     }
 }
