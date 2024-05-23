@@ -1,0 +1,161 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Reserva_Vehiculos.Models
+
+@{
+    ViewData["Title"] = "Plantilla";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            margin: 40px auto;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header img {
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-transform: uppercase;
+            color: #007bff; /* Color azul para el título */
+        }
+
+        .header p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .content {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Centra las columnas horizontalmente */
+            gap: 20px; /* Espacio entre columnas */
+        }
+
+        .column {
+            width: 45%; /* Ajusta el ancho según sea necesario */
+            text-align: left;
+        }
+
+        .item {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row; /* Asegura que los elementos estén en la misma línea */
+        }
+
+            .item .title {
+                font-size: 18px;
+                font-weight: bold;
+                color: #007bff; /* Color azul para los títulos */
+                margin-right: 10px; /* Espacio entre el título y el contenido */
+            }
+
+            .item p {
+                margin: 0; /* Elimina márgenes adicionales */
+                font-size: 16px;
+            }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .btn-generar-pdf {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-generar-pdf:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="~/images/logo.png" alt="Logo de la empresa">
+            <h1>{Nombre de la Empresa}</h1>
+            <p>Fecha de Inicio: {Fecha de Inicio}</p>
+            <p>Fecha de Fin: {Fecha de Fin}</p>
+        </div><br><br><br>
+        <div class="content">
+            <div class="column">
+                <div class="item">
+                    <p class="title">Fecha de Recogida:</p>
+                    <p>{1}</p>
+                </div>
+                <div class="item">
+                    <p class="title">Hora de Recogida:</p>
+                    <p>{2}</p>
+                </div>
+                <div class="item">
+                    <p class="title">Barrio de Recogida:</p>
+                    <p>{3}</p>
+                </div>
+                <div class="item">
+                    <p class="title">Categoría:</p>
+                    <p>{4}</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="item">
+                    <p class="title">Fecha de Devolución:</p>
+                    <p>{5}</p>
+                </div>
+                <div class="item">
+                    <p class="title">Hora de Devolución:</p>
+                    <p>{6}</p>
+                </div>
+                <div class="item">
+                    <p class="title">Barrio de Devolución:</p>
+                    <p>{7}</p>
+                </div>
+            </div>
+        </div>
+        <a href="@Url.Action("reporte", "Plantilla")" class="btn-generar-pdf">Generar PDF</a>
+        <a href="@Url.Action("EnviarReportePorCorreo", "Plantilla")" class="btn-generar-pdf">Enviar PDF por Correo</a>
+        <div class="footer">
+            <p>{Dirección}</p>
+            <p>Teléfono: {Teléfono}</p>
+            <p>Correo Electrónico: {Correo Electrónico}</p>
+            <p>Reporte generado el: {Fecha y Hora Actual}</p>
+        </div>
+    </div>
+</body>
+</html>

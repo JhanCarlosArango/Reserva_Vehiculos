@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Reserva_Vehiculos.Models;
 using Reserva_Vehiculos.Models.DAO;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Net;
+using System.Net.Mail;
+using iText.Html2pdf;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 namespace Reserva_Vehiculos.Controllers
 {
     public class Peticion : Controller
@@ -25,10 +25,23 @@ namespace Reserva_Vehiculos.Controllers
         DateTime fecha_i;
         DateTime fecha_f;
         String[] columnas = { "Nombre", "Fecha Recojida", "Fecha Devolucion", "Hora Recojida", "Hora Devolucion", "Barrio Recojida", "Barrio Devolucion", "Categoria", "Total" };
-        private readonly IHttpContextAccessor _IHttpContextAccessor; 
-        public Peticion(IHttpContextAccessor httpContextAccessor)
+        private readonly IHttpContextAccessor _IHttpContextAccessor;
+        private byte[] _pdfBytes;
+        private readonly ICompositeViewEngine _viewEngine;
+        private readonly ITempDataProvider _tempDataProvider;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        private readonly IActionContextAccessor _actionContextAccessor;
+        public Peticion(IActionContextAccessor actionContextAccessor, IHttpContextAccessor httpContextAccessor, ICompositeViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider, IWebHostEnvironment hostingEnvironment)
         {
             _IHttpContextAccessor = httpContextAccessor;
+            _actionContextAccessor = actionContextAccessor;
+            _viewEngine = viewEngine;
+            _tempDataProvider = tempDataProvider;
+            _serviceProvider = serviceProvider;
+            _hostingEnvironment = hostingEnvironment;
+            _pdfBytes = Array.Empty<byte>(); // Inicializar _pdfBytes con un arreglo vacío
         }
         public IActionResult peticion()
         {
@@ -81,7 +94,7 @@ namespace Reserva_Vehiculos.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final,decimal costo)
+        public IActionResult Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, String id_cate, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final, decimal costo)
         {
             persona_DAO = new Persona_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
@@ -91,7 +104,7 @@ namespace Reserva_Vehiculos.Controllers
             var viewModel_1 = new Obj_ViewModel
             {
 
-                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final,costo), // este contexto
+                _Pet_Reserva = new Pet_reserva(fecha_ini, fecha_fin, hora_ini, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, costo), // este contexto
                 categoria = new Categoria(int.Parse(id_cate)),
                 _persona = per
             };
@@ -99,73 +112,199 @@ namespace Reserva_Vehiculos.Controllers
             return View(viewModel_1);
         }
 
-        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final,decimal costo)
+        public IActionResult Enviar_Datos_Reserva(DateOnly fecha_ini, String hora_ini, DateOnly fecha_fin, String hora_fin, int id_categoria, int fk_id_ubicacion_inicial, int fk_id_ubicacion_final, decimal costo, String corre)
         {
             _Usuario_DAO = new Usuario_DAO();
             _Reserva_DAO = new Pet_reserva_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
             int id_usuario = _Usuario_DAO.Obtener_ID_usuario(usuario_session);
-            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario,costo);
 
             //aqui debo poner la descarga del pdf 
-
             var model_PDF_pet = _Reserva_DAO.Listar_PDF_Pet_Reservas(usuario_session);
-            Document document = new Document(PageSize.A4, 50, 50, 25, 25);
-            var output = new MemoryStream();
-            PdfWriter writer = PdfWriter.GetInstance(document, output);
-            writer.CloseStream = false;
 
-            document.Open();
+            string destinatarioEmail = corre; // Dirección de correo predefinida 
 
-            // Agregar un título
-            var fontTitle = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
-            var title = new Paragraph("Reporte de Reservas", fontTitle);
-            title.Alignment = Element.ALIGN_CENTER;
-            document.Add(title);
-            document.Add(new Chunk("\n")); // Agregar espacio
+            // Generar el PDF si aún no se ha generado
+            _pdfBytes = GenerarPDF();
+            //GenerarPDFp();
 
-            // Crear la tabla con los datos de las reservas
-            PdfPTable table = new PdfPTable(columnas.Length); // El número de columnas
-            table.WidthPercentage = 100; // Ancho relativo a la página
+            // Enviar el PDF por correo y obtener el resultado
+            int envioExitoso = EnviarCorreoConPDF(destinatarioEmail, _pdfBytes);
 
-            // Agregar los nombres de las columnas
-            foreach (var item in columnas)
+            if (envioExitoso == 1)
             {
-                table.AddCell(item);
+                //_Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario, costo);
+
+                return RedirectToAction("peticion", "Peticion");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "No se logro enviar el correo");
+                return View();
             }
 
-
-            // Llenar la tabla con los datos de las reservas
-
-            table.AddCell(model_PDF_pet._persona.f_name);
-            table.AddCell(model_PDF_pet._Pet_Reserva.fecha_ini.ToString());
-            table.AddCell(model_PDF_pet._Pet_Reserva.fecha_fin.ToString());
-            table.AddCell(model_PDF_pet._Pet_Reserva.hora_ini.ToString());
-            table.AddCell(model_PDF_pet._Pet_Reserva.hora_fin.ToString());
-            table.AddCell(model_PDF_pet._ubi_.Ubicacion_ini.ToString());
-            table.AddCell(model_PDF_pet._ubi_.Ubicacion_ini.ToString());
-            table.AddCell(model_PDF_pet.categoria.tipo_vehiculo.ToString());
-            table.AddCell("120");
-
-
-            document.Add(table);
-
-            // Agregar un pie de página
-            var fontFooter = FontFactory.GetFont(FontFactory.HELVETICA_OBLIQUE, 12);
-            var footer = new iTextSharp.text.Paragraph("Reporte generado el: " + System.DateTime.Now.ToString(), fontFooter);
-            footer.Alignment = Element.ALIGN_CENTER;
-            document.Add(footer);
-
-            document.Close();
-
-            byte[] bytes = output.ToArray();
-            output.Close();
-
-            return File(bytes, "application/pdf", "ReporteDeReservas.pdf", true);
-            //return RedirectToAction("peticion", "Peticion");
+            //return File(bytes, "application/pdf", "ReporteDeReservas.pdf", true); 
         }
 
+        private byte[] GenerarPDF()
+        {
+            // Obtener la ruta completa de la imagen
+            string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "logo.png");
 
+            // Renderizar la vista Plantilla a una cadena HTML
+            string html = RenderViewToString("Plantilla", new { ImageSrc = imagePath });
+
+            // Reemplazar los marcadores de posición con los valores obtenidos desde el modelo
+            html = html
+                .Replace("{Nombre de la Empresa}", "Nombre de la Empresa Dinámico")
+                .Replace("{Fecha de Inicio}", DateTime.Now.ToString("dd/MM/yyyy"))
+                .Replace("{Fecha de Fin}", DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"))
+                .Replace("{1}", "Hola")
+                .Replace("{2}", "Hola2");
+
+            // Crear un MemoryStream para el PDF
+            MemoryStream output = new MemoryStream();
+
+            // Convertir HTML a PDF
+            HtmlConverter.ConvertToPdf(html, output);
+
+            return output.ToArray();
+        }
+
+        // Método para renderizar una vista a una cadena HTML
+        private string RenderViewToString(string viewName, object model)
+        {
+            // Obtener el contexto de acción actual
+            var actionContext = _actionContextAccessor.ActionContext;
+            if (actionContext == null)
+            {
+                throw new InvalidOperationException("No se pudo obtener el contexto de la acción actual.");
+            }
+
+            // Definir la ruta completa de la vista
+            string viewPath = Path.Combine("Views", "Plantilla", $"{viewName}.cshtml");
+
+            // Obtener la vista usando la ruta completa
+            var viewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewPath, isMainPage: false);
+
+            // Verificar si la vista existe
+            if (!viewResult.Success)
+            {
+                Console.WriteLine($"No se encontró la vista en la ruta: {viewPath}");
+                // Lanzar una excepción si la vista no existe
+                throw new ArgumentNullException($"{viewName} does not match any available view");
+            }
+
+            // Crear un diccionario de datos para la vista
+            var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            {
+                // Asignar el modelo a la vista
+                Model = model
+            };
+
+            // Crear un diccionario temporal de datos
+            var tempData = new TempDataDictionary(actionContext.HttpContext, _tempDataProvider);
+
+            // Crear un escritor para escribir el resultado de la vista
+            using (var writer = new StringWriter())
+            {
+                // Crear un contexto de vista
+                var viewContext = new ViewContext(
+                    actionContext,
+                    viewResult.View,
+                    viewData,
+                    tempData,
+                    writer,
+                    new HtmlHelperOptions()
+                );
+
+                // Renderizar la vista en el escritor
+                viewResult.View.RenderAsync(viewContext).GetAwaiter().GetResult();
+
+                // Retornar el resultado como una cadena
+                return writer.ToString();
+            }
+        }
+
+        // Método para enviar correo electrónico con el PDF adjunto
+        private int EnviarCorreoConPDF(string destinatarioEmail, byte[] pdfBytes)
+        {
+            try
+            {
+                // Configurar el cliente SMTP para enviar el correo
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("arangousugajhancarlos@gmail.com", "kvdp laho ilev refz"),
+                    EnableSsl = true
+                };
+
+                // Crear el correo electrónico
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress("arangousugajhancarlos@gmail.com"),
+                    Subject = "Reporte de Reservas",
+                    Body = "Adjunto encontrarás el reporte de reservas en formato PDF."
+                };
+
+                // Adjuntar el PDF al correo electrónico
+                MemoryStream pdfStream = new MemoryStream(pdfBytes);
+                mailMessage.Attachments.Add(new Attachment(pdfStream, "ReporteDeReservas.pdf", "application/pdf"));
+
+                // Agregar el destinatario del correo
+                mailMessage.To.Add(new MailAddress(destinatarioEmail));
+
+                try
+                {
+                    // Enviar el correo electrónico
+                    client.Send(mailMessage);
+                }
+                catch (Exception ex)
+                {
+                    // Manejar cualquier excepción que ocurra durante el envío del correo
+                    Console.WriteLine("Error al enviar el correo electrónico: " + ex.Message);
+                    return 0; // Error al enviar el correo
+                }
+
+                // Cerrar y eliminar el MemoryStream después de enviar el correo
+                pdfStream.Close();
+                pdfStream.Dispose();
+
+                return 1; // Éxito al enviar el correo
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción que ocurra durante la configuración del correo
+                Console.WriteLine("Error al configurar el correo electrónico: " + ex.Message);
+                return 0; // Error al configurar el correo
+            }
+        }
+
+        /// pruena 
+        public IActionResult GenerarPDFp()
+        {
+            // Obtener la ruta completa de la imagen
+            string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "logo.png");
+
+            // Renderizar la vista Plantilla a una cadena HTML
+            string html = RenderViewToString("Plantilla", new { ImageSrc = imagePath });
+
+            // Reemplazar los marcadores de posición con los valores obtenidos desde el modelo
+            html = html
+                .Replace("{Nombre de la Empresa}", "Nombre de la Empresa Dinámico")
+                .Replace("{Fecha de Inicio}", DateTime.Now.ToString("dd/MM/yyyy"))
+                .Replace("{Fecha de Fin}", DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"))
+                .Replace("{1}", "Hola")
+                .Replace("{2}", "Hola2");
+
+            // Crear un MemoryStream para el PDF
+            MemoryStream output = new MemoryStream();
+
+            // Convertir HTML a PDF
+            HtmlConverter.ConvertToPdf(html, output);
+
+            return File(output.ToArray(), "application/pdf", "ReporteDeReservas.pdf");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

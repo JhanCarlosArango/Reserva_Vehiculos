@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Reserva_Vehiculos.Controllers;
 using Microsoft.AspNetCore.Http;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddScoped<UserController>(); // es de vital importancia registar el controlador 
-builder.Services.AddHttpContextAccessor(); // Aquí agregamos el servicio IHttpContextAccessor correctamente
+builder.Services.AddScoped<UserController>(); // Registrar el controlador
+builder.Services.AddHttpContextAccessor(); // Registrar IHttpContextAccessor
+
+// Aquí agregamos el servicio IActionContextAccessor correctamente
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 builder.Services.AddSession(
-    option=>{
-        option.IdleTimeout = TimeSpan.FromMinutes(5);
+    options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(5);
     }
 );
 
@@ -26,9 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
         options.AccessDeniedPath = "/Home/Privacy";
         //options.Cookie.Name = "MyAppAuthCookie";
-        
     });
-
 
 var app = builder.Build();
 

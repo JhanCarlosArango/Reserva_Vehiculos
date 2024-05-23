@@ -22,7 +22,7 @@
                         <fieldset style="text-align: left;">
                             <legend>Correo electrónico</legend>
                             <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
-                                style="height: 50px;" aria-describedby="emailHelp" value="" readonly>
+                                style="height: 50px;" aria-describedby="emailHelp" value="@Model._persona.corre" readonly>
                         </fieldset>
 
                     </div>
@@ -43,7 +43,7 @@
                         <fieldset style="text-align: left;">
                             <legend>Tipo Documento</legend>
                             <input type="text" class="form-control form-control-lg" id="input1" style="height: 50px;"
-                                value="" readonly>
+                                value="CC" readonly>
                         </fieldset>
                     </div>
                 </div>
@@ -66,6 +66,7 @@
                         <input name="hora_ini" id="hora_ini" type="hidden" value="@Model._Pet_Reserva.hora_ini">
                         <input name="hora_fin" id="hora_fin" type="hidden" value="@Model._Pet_Reserva.hora_fin">
                         <input name="costo" id="costo" type="hidden" value="@Model._Pet_Reserva.costo">
+                        <input name="corre" id="corre" type="hidden" value="@Model._persona.corre">
                         <input name="fk_id_ubicacion_inicial" id="fk_id_ubicacion_inicial" type="hidden"
                             value="@Model._Pet_Reserva.fk_id_ubicacion_inicial">
                         <input name="fk_id_ubicacion_final" id="fk_id_ubicacion_final" type="hidden"
@@ -75,24 +76,28 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-                $(document).ready(function () {
-                    // Función para redireccionar después de 3 segundos
-                    function redireccionar() {
-                        setTimeout(function () {
-                            window.location.href = '/Peticion/peticion';
-                        }, 3000); // Cambia el valor 3000 según sea necesario
-                    }
 
-                    // Esperar a que se haga clic en el botón
-                    $(".btn-primary").click(function () {
-                        // Llamar a la función para redireccionar
-                        redireccionar();
-                    });
-                });
-            </script>
     </form>
 
 }
+@**
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+// Función para redireccionar después de 3 segundos
+function redireccionar() {
+setTimeout(function () {
+window.location.href = '/Peticion/peticion';
+}, 3000); // Cambia el valor 3000 según sea necesario
+}
+
+// Esperar a que se haga clic en el botón
+$(".btn-primary").click(function () {
+// Llamar a la función para redireccionar
+redireccionar();
+});
+});
+</script>
+*@

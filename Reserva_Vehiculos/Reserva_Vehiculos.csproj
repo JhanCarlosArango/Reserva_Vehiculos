@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="itext7" Version="8.0.4" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.4" />
+    <PackageReference Include="itext7.pdfhtml" Version="5.0.4" />
     <PackageReference Include="iTextSharp" Version="5.5.13" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.3" />

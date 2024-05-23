@@ -25,7 +25,7 @@ namespace Reserva_Vehiculos.Models.DAO
             {
                 using (connection)
                 {
-                    var query = "select  pe.num_documento,pe.primer_nombre,pe.segundo_nombre,pe.primer_apellido,pe.segundo_apellido,pe.num_telefonico from Persona pe inner join usuario u ON u.fk_num_documento = pe.num_documento where  u.usuario = @usuario;";  // corregir, llamar un vista 
+                    var query = "select  pe.num_documento,pe.primer_nombre,pe.segundo_nombre,pe.primer_apellido,pe.segundo_apellido,pe.num_telefonico,pe.correo from Persona pe inner join usuario u ON u.fk_num_documento = pe.num_documento where  u.usuario = @usuario;";  // corregir, llamar un vista 
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@usuario", usuario);
@@ -41,6 +41,7 @@ namespace Reserva_Vehiculos.Models.DAO
                                 person.f_lastname = dr["primer_apellido"].ToString();
                                 person.s_lastname = dr["segundo_apellido"].ToString();
                                 person.num_telefonico = dr["num_telefonico"].ToString();
+                                person.corre = dr["correo"].ToString();
 
                                 // }
                             }

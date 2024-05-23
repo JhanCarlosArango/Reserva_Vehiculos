@@ -13,6 +13,7 @@ namespace Reserva_Vehiculos.Models
         public string f_lastname { get; set; }
         public string s_lastname { get; set; }
         public string num_telefonico { get; set; }
+        public string corre { get; set; }
 
         public Persona()
         {
