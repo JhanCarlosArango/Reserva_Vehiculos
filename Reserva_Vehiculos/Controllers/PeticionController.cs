@@ -24,6 +24,7 @@ namespace Reserva_Vehiculos.Controllers
         Persona per;
         DateTime fecha_i;
         DateTime fecha_f;
+        Empresa_DAO empresa_DAO;
         String[] columnas = { "Nombre", "Fecha Recojida", "Fecha Devolucion", "Hora Recojida", "Hora Devolucion", "Barrio Recojida", "Barrio Devolucion", "Categoria", "Total" };
         private readonly IHttpContextAccessor _IHttpContextAccessor;
         private byte[] _pdfBytes;
@@ -118,6 +119,7 @@ namespace Reserva_Vehiculos.Controllers
             _Reserva_DAO = new Pet_reserva_DAO();
             String usuario_session = _IHttpContextAccessor.HttpContext.Session.GetString("name_user");
             int id_usuario = _Usuario_DAO.Obtener_ID_usuario(usuario_session);
+            _Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario, costo);
 
             //aqui debo poner la descarga del pdf 
             var model_PDF_pet = _Reserva_DAO.Listar_PDF_Pet_Reservas(usuario_session);
@@ -132,21 +134,19 @@ namespace Reserva_Vehiculos.Controllers
 
             if (envioExitoso == 1)
             {
-                //_Reserva_DAO.Guardar_Pet_reserva(fecha_ini, hora_ini, fecha_fin, hora_fin, fk_id_ubicacion_inicial, fk_id_ubicacion_final, id_categoria, id_usuario, costo);
-
+                TempData["Message"] = "Recibo Generado Correctamente, Revisa tu Correo Electronico";
                 return RedirectToAction("peticion", "Peticion");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "No se logro enviar el correo");
                 return View();
             }
-
-            //return File(bytes, "application/pdf", "ReporteDeReservas.pdf", true); 
         }
 
         private byte[] GenerarPDF(Obj_ViewModel PDF_pet)
         {
+            empresa_DAO = new Empresa_DAO(); ///datos de la empresa
+            var empresa = empresa_DAO.traer_empresa();
             // Obtener la ruta completa de la imagen
             string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "logo.png");
 
@@ -155,8 +155,8 @@ namespace Reserva_Vehiculos.Controllers
 
             // Reemplazar los marcadores de posición con los valores obtenidos desde el modelo
             html = html
-                .Replace("{Nombre de la Empresa}", "Nombre de la Empresa Dinámico")
-                .Replace("{nit}", "")
+                .Replace("{Nombre de la Empresa}", empresa.name_empresa)
+                .Replace("{nit}", empresa.nit.ToString())
                 .Replace("{1}", PDF_pet._Pet_Reserva.fecha_ini.ToString("dd/MM/yyyy"))
                 .Replace("{2}", PDF_pet._Pet_Reserva.hora_ini)
                 .Replace("{3}", PDF_pet._ubi_.Ubicacion_ini)
@@ -165,9 +165,9 @@ namespace Reserva_Vehiculos.Controllers
                 .Replace("{6}", PDF_pet._Pet_Reserva.hora_fin)
                 .Replace("{7}", PDF_pet._ubi_.ubicacion_fin)
                 .Replace("{8}", PDF_pet._Pet_Reserva.costo.ToString())
-                .Replace("{Dirección}", "")
-                .Replace("{Teléfono}", "")
-                .Replace("{Correo Electrónico}", "")
+                .Replace("{Dirección}", empresa.direccion)
+                .Replace("{Teléfono}", empresa.telefono)
+                .Replace("{Correo Electrónico}", empresa.correo_em)
                 .Replace("{Fecha}", DateTime.Now.ToString("dd/MM/yyyy"));
 
             // Crear un MemoryStream para el PDF

@@ -79,9 +79,6 @@
                                             this.value = hour + ':00';
                                         }
                                     });
-
-                                    // Establecer un valor inicial si es necesario
-                                    
                                 });
 
                             </script>
@@ -137,7 +134,7 @@
                                     });
 
                                     // Establecer un valor inicial si es necesario
-                                    
+
                                 });
 
                             </script>
@@ -155,6 +152,27 @@
         </fieldset>
     </nav>
 </form>
+
+
+@{
+    var message = TempData["Message"] as string;
+}
+
+@await Html.PartialAsync("_AlertModal", message)
+
+<!-- El resto del contenido de tu vista -->
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('alertModal'), {
+            keyboard: false
+        });
+        myModal.show();
+    </script>
+}
+
+
 <div class="container-fluid mt-4">
     <h3>Categoría de vehículos</h3>
     <div class="row">
