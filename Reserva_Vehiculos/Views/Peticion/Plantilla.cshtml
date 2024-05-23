@@ -8,6 +8,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>@ViewData["Title"]</title>
     <style>
@@ -40,7 +41,8 @@
             margin-bottom: 10px;
             font-size: 24px;
             text-transform: uppercase;
-            color: #007bff; /* Color azul para el título */
+            color: #007bff;
+            /* Color azul para el título */
         }
 
         .header p {
@@ -52,32 +54,39 @@
         .content {
             margin-top: 20px;
             display: flex;
-            justify-content: center; /* Centra las columnas horizontalmente */
-            gap: 20px; /* Espacio entre columnas */
+            justify-content: center;
+            /* Centra las columnas horizontalmente */
+            gap: 20px;
+            /* Espacio entre columnas */
         }
 
         .column {
-            width: 45%; /* Ajusta el ancho según sea necesario */
+            width: 45%;
+            /* Ajusta el ancho según sea necesario */
             text-align: left;
         }
 
         .item {
             margin-bottom: 20px;
             display: flex;
-            flex-direction: row; /* Asegura que los elementos estén en la misma línea */
+            flex-direction: row;
+            /* Asegura que los elementos estén en la misma línea */
         }
 
-            .item .title {
-                font-size: 18px;
-                font-weight: bold;
-                color: #007bff; /* Color azul para los títulos */
-                margin-right: 10px; /* Espacio entre el título y el contenido */
-            }
+        .item .title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            /* Color azul para los títulos */
+            margin-right: 10px;
+            /* Espacio entre el título y el contenido */
+        }
 
-            .item p {
-                margin: 0; /* Elimina márgenes adicionales */
-                font-size: 16px;
-            }
+        .item p {
+            margin: 0;
+            /* Elimina márgenes adicionales */
+            font-size: 16px;
+        }
 
         .footer {
             text-align: center;
@@ -101,18 +110,19 @@
             transition: background-color 0.3s ease;
         }
 
-            .btn-generar-pdf:hover {
-                background-color: #0056b3;
-            }
+        .btn-generar-pdf:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <img src="~/images/logo.png" alt="Logo de la empresa">
             <h1>{Nombre de la Empresa}</h1>
-            <p>Fecha de Inicio: {Fecha de Inicio}</p>
-            <p>Fecha de Fin: {Fecha de Fin}</p>
+            <p>NIT: {nit}</p>
+
         </div><br><br><br>
         <div class="content">
             <div class="column">
@@ -148,13 +158,11 @@
                 </div>
             </div>
         </div>
-        <a href="@Url.Action("reporte", "Plantilla")" class="btn-generar-pdf">Generar PDF</a>
-        <a href="@Url.Action("EnviarReportePorCorreo", "Plantilla")" class="btn-generar-pdf">Enviar PDF por Correo</a>
         <div class="footer">
             <p>{Dirección}</p>
             <p>Teléfono: {Teléfono}</p>
             <p>Correo Electrónico: {Correo Electrónico}</p>
-            <p>Reporte generado el: {Fecha y Hora Actual}</p>
+            <p>Reporte generado el: {Fecha}</p>
         </div>
     </div>
 </body>

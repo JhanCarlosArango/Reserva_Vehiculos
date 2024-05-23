@@ -125,8 +125,7 @@ namespace Reserva_Vehiculos.Controllers
             string destinatarioEmail = corre; // Dirección de correo predefinida 
 
             // Generar el PDF si aún no se ha generado
-            _pdfBytes = GenerarPDF();
-            //GenerarPDFp();
+            _pdfBytes = GenerarPDF(model_PDF_pet);
 
             // Enviar el PDF por correo y obtener el resultado
             int envioExitoso = EnviarCorreoConPDF(destinatarioEmail, _pdfBytes);
@@ -146,7 +145,7 @@ namespace Reserva_Vehiculos.Controllers
             //return File(bytes, "application/pdf", "ReporteDeReservas.pdf", true); 
         }
 
-        private byte[] GenerarPDF()
+        private byte[] GenerarPDF(Obj_ViewModel PDF_pet)
         {
             // Obtener la ruta completa de la imagen
             string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "logo.png");
@@ -157,10 +156,19 @@ namespace Reserva_Vehiculos.Controllers
             // Reemplazar los marcadores de posición con los valores obtenidos desde el modelo
             html = html
                 .Replace("{Nombre de la Empresa}", "Nombre de la Empresa Dinámico")
-                .Replace("{Fecha de Inicio}", DateTime.Now.ToString("dd/MM/yyyy"))
-                .Replace("{Fecha de Fin}", DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"))
-                .Replace("{1}", "Hola")
-                .Replace("{2}", "Hola2");
+                .Replace("{nit}", "")
+                .Replace("{1}", PDF_pet._Pet_Reserva.fecha_ini.ToString("dd/MM/yyyy"))
+                .Replace("{2}", PDF_pet._Pet_Reserva.hora_ini)
+                .Replace("{3}", PDF_pet._ubi_.Ubicacion_ini)
+                .Replace("{4}", PDF_pet.categoria.tipo_vehiculo)
+                .Replace("{5}", PDF_pet._Pet_Reserva.fecha_fin.ToString("dd/MM/yyyy"))
+                .Replace("{6}", PDF_pet._Pet_Reserva.hora_fin)
+                .Replace("{7}", PDF_pet._ubi_.ubicacion_fin)
+                .Replace("{8}", PDF_pet._Pet_Reserva.costo.ToString())
+                .Replace("{Dirección}", "")
+                .Replace("{Teléfono}", "")
+                .Replace("{Correo Electrónico}", "")
+                .Replace("{Fecha}", DateTime.Now.ToString("dd/MM/yyyy"));
 
             // Crear un MemoryStream para el PDF
             MemoryStream output = new MemoryStream();
@@ -182,7 +190,7 @@ namespace Reserva_Vehiculos.Controllers
             }
 
             // Definir la ruta completa de la vista
-            string viewPath = Path.Combine("Views", "Plantilla", $"{viewName}.cshtml");
+            string viewPath = Path.Combine("Views", "Peticion", $"{viewName}.cshtml");
 
             // Obtener la vista usando la ruta completa
             var viewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewPath, isMainPage: false);
@@ -280,31 +288,6 @@ namespace Reserva_Vehiculos.Controllers
             }
         }
 
-        /// pruena 
-        public IActionResult GenerarPDFp()
-        {
-            // Obtener la ruta completa de la imagen
-            string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "logo.png");
-
-            // Renderizar la vista Plantilla a una cadena HTML
-            string html = RenderViewToString("Plantilla", new { ImageSrc = imagePath });
-
-            // Reemplazar los marcadores de posición con los valores obtenidos desde el modelo
-            html = html
-                .Replace("{Nombre de la Empresa}", "Nombre de la Empresa Dinámico")
-                .Replace("{Fecha de Inicio}", DateTime.Now.ToString("dd/MM/yyyy"))
-                .Replace("{Fecha de Fin}", DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"))
-                .Replace("{1}", "Hola")
-                .Replace("{2}", "Hola2");
-
-            // Crear un MemoryStream para el PDF
-            MemoryStream output = new MemoryStream();
-
-            // Convertir HTML a PDF
-            HtmlConverter.ConvertToPdf(html, output);
-
-            return File(output.ToArray(), "application/pdf", "ReporteDeReservas.pdf");
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
