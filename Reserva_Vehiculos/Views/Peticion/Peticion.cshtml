@@ -1,9 +1,10 @@
 @model Obj_ViewModel
 @using Microsoft.AspNetCore.Identity
+@using Reserva_Vehiculos.Models.DAO;
 @{
     ViewData["Title"] = "peticion";
 }
-@using Reserva_Vehiculos.Models.DAO;
+
 <form asp-action="peticion" asp-controller="Peticion" method="post">
     <nav id="mi-navbar" class="navbar navbar-expand-lg navbar-light bg-ligh">
         <fieldset>
@@ -180,13 +181,13 @@
             <!-- Cambia el tamaño del contenedor del carrusel -->
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner bg-secondary">
-                    @for (int i = 0; i < @Model.ListaCategorias.Count - 1 ; i++)
+                    @for (int i = 0; i < @Model.ListaCategorias.Count - 1; i++)
                     {
                         if (i == 0)
                         {
                             <div class="carousel-item active">
-                                <img src="@Model.ListaCategorias[i].RutaImagen" alt="Vehiculo" class="d-block mx-auto" width="700"
-                                    height="400" /> <!-- Ajusta el tamaño de la imagen -->
+                                <img src="@Model.ListaCategorias[i].RutaImagen" alt="Vehiculo" class="d-block mx-auto"
+                                    width="700" height="400" /> <>
                                 <div class="carousel-caption d-none d-md-block text-center mt-3">
                                     <h5>@Model.ListaCategorias[i].tipo_vehiculo</h5>
                                 </div>
@@ -195,17 +196,17 @@
                         else
                         {
                             <div class="carousel-item">
-                                <img src="@Model.ListaCategorias[i+1].RutaImagen" alt="Vehiculo" class="d-block mx-auto" width="700"
-                                    height="400" /> <!-- Ajusta el tamaño de la imagen -->
+                                <img src="@Model.ListaCategorias[i+1].RutaImagen" alt="Vehiculo" class="d-block mx-auto"
+                                    width="700" height="400" /> <>
                                 <div class="carousel-caption d-none d-md-block text-center mt-3">
-                                    <h5>@Model.ListaCategorias[i+1].tipo_vehiculo</h5>
+                                    <h5>@Model.ListaCategorias[i + 1].tipo_vehiculo</h5>
                                 </div>
                             </div>
                         }
                     }
 
                     <ol class="carousel-indicators">
-                        @for (int i = 0; i < @Model.ListaCategorias.Count-1; i++)
+                        @for (int i = 0; i < @Model.ListaCategorias.Count - 1; i++)
                         {
                             <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i"
                                 class="@((i == 0) ? "active" : "")"></li>
